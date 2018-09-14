@@ -11,7 +11,7 @@ Depense::Depense()
 
 //Constructeur par parametre
 
-Depense::Depense(string &titre,double montant)// mmeyttre un const string
+Depense::Depense(string &titre,double montant)// mettre un const string
 //l'eperluette
 {
 	cout << "contructeur par defaut"<<endl;
@@ -54,7 +54,7 @@ void Depense::setTitre(string& titre)// l'eperluette pour un appel par parametre
 
 // methode d'affichage  //afficher en passant par des methodes constantes
 void Depense::afficherDepense() const {
-	cout << "la depense effectue est :" << montant_ << "par" << titre_;//on peut utiliser les attibuts 
+	cout << " La depense effectue est :" << montant_ << "par" << titre_;//on peut utiliser les attibuts 
 	//prives car la fonction appartient a la classe//grace a la definition de la classe 
 	//on aurait pu ecrire aussi :
 	//cout << "la depense effectue est :" << getMontant()<< "par" << getTitre();

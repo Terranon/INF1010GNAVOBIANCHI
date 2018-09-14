@@ -65,12 +65,16 @@ void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur)
 	{
 		Utilisateur** temp = new Utilisateur*[tailleTabUtilisateurs_ + 5];
 		for (unsigned int i = 0; i < nombreUtilisateurs_; i++)
-			{
-		temp[i] = listeUtilisateurs_[i];
-		 listeUtilisateurs_ = temp;
-		delete []temp;
-			}
+		{
+			//declarer une liste
+			temp[i] = listeUtilisateurs_[i];
+			
+			
+		}
+		delete [] listeUtilisateurs_;
+		listeUtilisateurs_ = temp;
 	}
+	
 	listeUtilisateurs_[nombreUtilisateurs_] = unUtilisateur;
 	nombreUtilisateurs_++;
 	//le mettre a l'interieur de if?
@@ -97,12 +101,25 @@ void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur)
 
 }
 //methode d'ajout de depense
-void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)
+void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)//verifiersi le tableau de depense du groupe a assez de place
 // l'ajouter a la liste depense prend un utilisateur et les depenses
 	{
-	if (tailleTabUtilisateurs_ < nombreUtilisateurs_)
-		ajouterUtilisateur(payePar);
+	if (nombreDepenses_ > tailleTabDepenses_) {//si le nombre de depense est superieur a celle de la liste
+										 //////////////	{
+		Depense** temp = new Depense*[tailleTabDepenses_ + 5];//ajouter un element depense* a la liste de depense										 //////////////		
+		for (unsigned int i = 0; i < tailleTabDepenses_; i++) {//efface les espaces inutiles dans le tableau
+			listeDepenses_ = new Depense*[1];
+			temp[i] = listeDepenses_[i];
+
+
+		}
+		delete[] listeDepenses_;//supprime le tableau liste de pense:il ne pointe plus sur rien
+
+		listeDepenses_ = temp;//liste depense et temp pointe sur les mm choses donc pas de fuite de memoire
+	}
 	
+	//for (unsigned int i=0;i<;i++) verifier  l'utilisateur correspondantau nom donne
+
 	payePar -> ajouterDepense(uneDepense)  ;
 	
 	
@@ -113,12 +130,13 @@ void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)
 //- Une méthode calculerTotalDepenses()
 void Groupe::calculerTotalDepenses()
 {
-	for (unsigned int i = 0; i < nombreUtilisateurs_; i++)
+	for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++)
 	{
-		totalDepenses_ = totalDepenses_ + listeUtilisateurs_[i]->getTotal();
+		totalDepenses_ =  + listeUtilisateurs_[i]->getTotal();
+		
 		cout << totalDepenses_;
 	}
-	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) { // met la difference entre la depense totale de chaque utilisateur et la moyenne de depenses totales
+	for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++) { // met la difference entre la depense totale de chaque utilisateur et la moyenne de depenses totales
 		comptes_[i] = listeUtilisateurs_[i]->getTotal() - (totalDepenses_ / nombreUtilisateurs_);
 		cout << comptes_[i];
 	}
@@ -136,7 +154,7 @@ void Groupe::equilibrerComptes()
 					listeTransferts_[i]->setMontant(comptes_[j]);
 					listeTransferts_[i]->setDonneur(listeUtilisateurs_[j]);
 					listeTransferts_[i]->setReceveur(listeUtilisateurs_[i]);//uti j envoie a utili i le montant de comte
-
+					//travailler avec les valeurs min et max
 					comptes_[j] = 0;
 					comptes_[i] = comptes_[i] - comptes_[j];
 				}// ce n'est^pas sans faille repetitition der comptes

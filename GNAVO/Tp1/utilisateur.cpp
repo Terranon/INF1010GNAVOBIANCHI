@@ -47,17 +47,20 @@ void Utilisateur::setNom(string&nom)  //toujours mettre le type en parametre aus
 
 }
 //methode d'ajout de depenses
-void Utilisateur::ajouterDepense(Depense* uneDepense)
+void Utilisateur::ajouterDepense(Depense* uneDepense)//le tableau de depense de l'utilisateur a assez de place
 {
 	if (nombreDepenses_ > tailleTabDepense_) {//si le nombre de depense est superieur a celle de la liste
 											 //////////////	{
 		Depense** temp = new Depense*[tailleTabDepense_+ 5];//ajouter un element depense* a la liste de depense										 //////////////		
-		for (unsigned int i = 0; i < tailleTabDepense_; i++) {//efface les espaces inutiles dans le tableau
+		for (unsigned int i = 0; i < tailleTabDepense_; i++){//efface les espaces inutiles dans le tableau
+			listeDepenses_ = new Depense*[1];
 			temp[i] = listeDepenses_[i];
-			listeDepenses_ = temp;
-				delete [] temp;
+			
+				
 		}
-		
+		delete [] listeDepenses_;//supprime le tableau liste de pense:il ne pointe plus sur rien
+
+		listeDepenses_ = temp;//liste depense et temp pointe sur les mm choses donc pas de fuite de memoire
 	}
 		listeDepenses_[nombreDepenses_] = uneDepense;
 		nombreDepenses_++;// vu que le nombre de depenses 
@@ -81,12 +84,12 @@ void Utilisateur::ajouterDepense(Depense* uneDepense)
 void Utilisateur::calculerTotal() 
 {
 	for (unsigned int i = 0; i < nombreDepenses_; i++)
-		totalDepense_ = totalDepense_+listeDepenses_[i]->getMontant();//car le pc m'a propose l'heperluette
+		totalDepense_ += listeDepenses_[i]->getMontant();//car le pc m'a propose l'heperluette
 	// ici il faut utiliser une methode pour acceder aux attributs prives de Depenses de depense
 }
 
 // methode d'affichage
 void Utilisateur ::afficherUtilisateur()
 {
-	cout << nom_ << "a effectuer" << nombreDepenses_ << "depenses d'un montant total de" << totalDepense_ << endl;
+	cout << nom_ << " a effectuer " << nombreDepenses_ << " depenses d'un montant total de " << totalDepense_ << endl;
 }
