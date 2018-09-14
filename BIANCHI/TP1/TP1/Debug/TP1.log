@@ -1,0 +1,7 @@
+﻿  utilisateur.cpp
+  transfert.cpp
+  groupe.cpp
+  depense.cpp
+c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\bianchi\tp1\tp1\depense.cpp(8): fatal error C1083: Cannot open include file: 'depense.h': No such file or directory
+  main.cpp
+  Generating Code...
