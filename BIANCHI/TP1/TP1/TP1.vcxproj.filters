@@ -35,5 +35,8 @@
     <ClInclude Include="depense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utilisateur.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

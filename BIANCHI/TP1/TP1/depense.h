@@ -22,8 +22,8 @@ public:
 	Depense(string& titre, double montant);
 
 	// methodes d'accès
-	string getTitre();
-	double getMontant();
+	string getTitre()const;
+	double getMontant()const;
 
 	//methodes de modifications
 	void setTitre(string& titre);
@@ -31,7 +31,7 @@ public:
 
 
 	//methode d'affichage
-	void afficherDepense();
+	void afficherDepense()const;
 
 private:
 	string titre_;
