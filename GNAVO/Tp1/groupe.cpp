@@ -7,12 +7,12 @@ Groupe:: Groupe()
 {
 	nom_ = "unknown";
 	totalDepenses_ = 0;
-	listeUtilisateurs_ = new Utilisateur*[1];
+	listeUtilisateurs_ = new Utilisateur*[5];
 	nombreDepenses_=0;
 	nombreUtilisateurs_=0;
 	tailleTabUtilisateurs_=0;
 	tailleTabDepenses_=5;
-	listeDepenses_=new Depense*[1];
+	listeDepenses_=new Depense*[5];
 	comptes_ = new double[1];
 	listeTransferts_= new Transfert* [1];
 	nombreTrensferts_=0;
@@ -27,7 +27,7 @@ Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleT
 	nombreUtilisateurs_ = 0;
 	tailleTabUtilisateurs_ = tailleTabUtilisateurs;
 	tailleTabDepenses_ = tailleTabDepenses;
-	listeDepenses_ = new Depense*[1];//toujoirs mettre des taILLES DS LES TABLEAUX
+	listeDepenses_ = new Depense*[5];//toujoirs mettre des taILLES DS LES TABLEAUX
 	comptes_ = new double[1];
 	listeTransferts_ = new Transfert*[1];
 	nombreTrensferts_ = 0;
@@ -121,6 +121,7 @@ void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)//verifier
 	//for (unsigned int i=0;i<;i++) verifier  l'utilisateur correspondantau nom donne
 
 	payePar -> ajouterDepense(uneDepense)  ;
+	nombreDepenses_++;
 	
 	
 }
@@ -130,15 +131,16 @@ void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)//verifier
 //- Une méthode calculerTotalDepenses()
 void Groupe::calculerTotalDepenses()
 {
-	for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++)
+	for (unsigned int i = 0; i < nombreUtilisateurs_; i++)
 	{
-		totalDepenses_ =  + listeUtilisateurs_[i]->getTotal();
+		totalDepenses_= totalDepenses_ + listeUtilisateurs_[i]->getTotal();
 		
-		cout << totalDepenses_;
+		
+
 	}
 	for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++) { // met la difference entre la depense totale de chaque utilisateur et la moyenne de depenses totales
 		comptes_[i] = listeUtilisateurs_[i]->getTotal() - (totalDepenses_ / nombreUtilisateurs_);
-		cout << comptes_[i];
+		//cout << comptes_[i];
 	}
 }
 
@@ -188,40 +190,4 @@ void Groupe::afficherGroupe()
 
 
 
-//private:
-//	string nom_;
-//	double totalDepenses_;
-//	Utilisateur** listeUtilisateurs_;
-//	unsigned int nombreDepenses;           //1
-//	unsigned int nombreUtilisateurs_;
-//	unsigned int tailleTabUtilisateurs_;
-//	unsigned int tailleTabDepenses_;         //1
-//	Depense** listeDepenses_;                 ///1
-//	double* comptes_;
-//	Transfert** listeTransferts_;
-//	unsigned int nombreTrensferts_;
-//Methodes d'ajout
-//////////////void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)
-//////////////{
-//////////////	if (nombreDepenses_ < tailleTabDepenses_)//si le nombre de depense est superieur a celle de la liste
-//////////////	{
-//////////////		listeDepenses_=new Depense*[tailleTabDepenses_++];//ajouter un element depense* a la liste de depense
-//////////////		
-//////////////														  puis ajouter une element a la valeur pointer par le une depense (liste depense [0,1...])
-//////////////
-//////////////	}
-//////////////
-//////////////};
-
-
-
-//////////////////void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur) {
-//////////////////
-//////////////////
-//////////////////}
-
-//Une méthode calculerTotal(), qui calcule le montant total des dépenses effectuées.
-
-
-// methode d'affichage
 

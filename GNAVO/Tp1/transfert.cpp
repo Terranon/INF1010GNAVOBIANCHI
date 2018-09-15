@@ -3,11 +3,7 @@
 #include "utilisateur.h"
 
 Transfert::Transfert(){	montant_ = 0;	donneur_ = new Utilisateur [1];	receveur_ = new Utilisateur[1];}
-//Un constructeur par défaut qui initialise les attributs aux valeurs par défaut.//Transfert::Transfert()
-//{
-//	montant_ = 0;
-//	donneur_ = nullptr;
-//	receveur_ = nullptr;//}//Un constructeur par paramètres qui initialise les attributs aux valeurs correspondantes.Transfert::Transfert(double montant, Utilisateur* de, Utilisateur* pour){	montant_ = montant;	donneur_ = de;	receveur_ = pour;}//Les méthodes d’accès.
+Transfert::Transfert(double montant, Utilisateur* de, Utilisateur* pour){	montant_ = montant;	donneur_ = de;	receveur_ = pour;}//Les méthodes d’accès.
 Utilisateur* Transfert::getDonneur()const // Definir utilisateur;
 {
 	return donneur_;

@@ -83,8 +83,11 @@ void Utilisateur::ajouterDepense(Depense* uneDepense)//le tableau de depense de 
 // méthode calculerTotal(), qui calcule le montant total des dépenses effectuées.
 void Utilisateur::calculerTotal() 
 {
-	for (unsigned int i = 0; i < nombreDepenses_; i++)
-		totalDepense_ += listeDepenses_[i]->getMontant();//car le pc m'a propose l'heperluette
+	for (unsigned int i = 0; i < nombreDepenses_; i++) 
+	{
+		totalDepense_+=   listeDepenses_[i]->getMontant();
+		
+	}//car le pc m'a propose l'heperluette
 	// ici il faut utiliser une methode pour acceder aux attributs prives de Depenses de depense
 }
 

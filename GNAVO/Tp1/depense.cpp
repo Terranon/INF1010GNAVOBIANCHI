@@ -28,7 +28,7 @@ Depense::Depense(string &titre,double montant)// mettre un const string
 //type nomdelaclasse::nomfonction(parametre)
 double Depense::getMontant() const
 {
-	return montant_;// la methode  un acces direct au attributs de depense
+	return montant_;  // la methode  un acces direct au attributs de depense
 
 }
 string Depense::getTitre() const 
