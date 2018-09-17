@@ -123,6 +123,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depense.h" />
+    <ClInclude Include="groupe.h" />
+    <ClInclude Include="transfert.h" />
     <ClInclude Include="utilisateur.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

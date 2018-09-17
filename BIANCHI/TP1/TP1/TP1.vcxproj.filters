@@ -38,5 +38,11 @@
     <ClInclude Include="utilisateur.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="groupe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transfert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

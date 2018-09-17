@@ -37,7 +37,7 @@ public:
 	//Methode de calcul total
 	void calculerTotal();
 
-	//Mathode d'affichage
+	//Methode d'affichage
 	void afficherUtilisateur();
 
 private:
