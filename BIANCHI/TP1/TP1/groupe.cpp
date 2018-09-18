@@ -15,14 +15,18 @@
 */
 Groupe::Groupe() :
 	tailleTabDepenses_(5),
-	tailleTabUtilisateurs_(10) {
+	tailleTabUtilisateurs_(10),
+	nombreUtilisateurs_(0),
+	nombreDepenses_(0) {
 	listeDepenses_ = new Depense*[tailleTabDepenses_];
 	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_];
 }
 Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleTabUtilisateurs) :
 	nom_(nom),
 	tailleTabDepenses_(tailleTabDepenses),
-	tailleTabUtilisateurs_(tailleTabUtilisateurs) {
+	tailleTabUtilisateurs_(tailleTabUtilisateurs),
+	nombreUtilisateurs_(0),
+	nombreDepenses_(0) {
 	listeDepenses_ = new Depense*[tailleTabDepenses_];
 	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_];
 }
@@ -31,6 +35,26 @@ Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleT
 * \brief destructeur pour groupe
 */
 Groupe::~Groupe() {
+	for (unsigned int i = 0; i < tailleTabDepenses_; i++) { // desallouer le tableau de depense
+		delete listeDepenses_[i];
+		listeDepenses_[i] = nullptr;
+	}
+	delete listeDepenses_;
+	listeDepenses_ = nullptr;
+	for (unsigned int j = 0; j < tailleTabUtilisateurs_; j++) { // desallouer le tableau d'utilisateurs
+		delete listeUtilisateurs_[j];
+		listeUtilisateurs_[j] = nullptr;
+	}
+	delete listeUtilisateurs_;
+	listeUtilisateurs_ = nullptr;
+	for (unsigned int k = 0; k < nombreUtilisateurs_; k++) { // desallouer le tableau de transfert
+		delete listeTransferts_[k];
+		listeTransferts_[k] = nullptr;
+	}
+	delete listeTransferts_;
+	listeTransferts_ = nullptr;
+	delete comptes_;			// desallouer les comptes
+	comptes_ = nullptr;
 }
 
 /**
@@ -68,7 +92,7 @@ void Groupe::setNom(string& nom) {
 /**
 * \brief ajoute une depense associe a un utilisateur au tableau de depense
 * \param uneDepense : le titre et le montant d'une depense
-*		 payePar	: le nom de l'utilisateur qui a fait la depense
+*		 payePar	: l'utilisateur qui a fait la depense
 */
 void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar) {
 	bool depenseAjouterUtilisateur = false;
@@ -123,6 +147,9 @@ void Groupe::calculerTotalDepenses() {
 	totalDepenses_ = 0;
 	for (unsigned int i = 0; i < nombreDepenses_; i++) {
 		totalDepenses_ += listeDepenses_[i]->getMontant();
+	}
+	for (unsigned int j = 0; j < nombreUtilisateurs_; j++) {
+		listeUtilisateurs_[j]->calculerTotal();
 	}
 }
 

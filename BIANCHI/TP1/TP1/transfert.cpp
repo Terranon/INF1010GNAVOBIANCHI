@@ -23,6 +23,16 @@ Transfert::Transfert(double montant, Utilisateur* de, Utilisateur* pour) :
 }
 
 /**
+* \brief destructeur pour transfert
+*/
+Transfert::~Transfert() {
+	delete donneur_;
+	donneur_ = nullptr;
+	delete receveur_;
+	receveur_ = nullptr;
+}
+
+/**
 * \brief retourne l'utilisateur qui donne le transfert
 * \return utilisateur*
 */

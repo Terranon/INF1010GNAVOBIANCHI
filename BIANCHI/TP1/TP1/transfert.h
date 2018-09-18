@@ -18,6 +18,9 @@ public:
 	Transfert();
 	Transfert(double montant, Utilisateur* de, Utilisateur* pour);
 
+	// Destructeur
+	~Transfert();
+
 	// Méthodes d'accès
 
 	Utilisateur* getDonneur()const;

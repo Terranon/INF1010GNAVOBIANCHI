@@ -26,6 +26,12 @@ Utilisateur::Utilisateur(string& nom) :
 * \brief destructeur pour utilisateur
 */
 Utilisateur::~Utilisateur() {
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) {
+		delete listeDepenses_[i];
+		listeDepenses_[i] = nullptr;
+	}
+	delete listeDepenses_;
+	listeDepenses_ = nullptr;
 }
 
 /**
