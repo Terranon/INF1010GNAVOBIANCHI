@@ -94,4 +94,8 @@ void Utilisateur::calculerTotal() {
 void Utilisateur::afficherUtilisateur() {
 	calculerTotal();
 	cout << nom_ << " a un total de depense de: " << getTotal() << endl;
+	cout << "Liste de depense:" << endl;
+	for (unsigned int j = 0; j < nombreDepenses_; j++) {
+		listeDepenses_[j]->afficherDepense();
+	}
 }

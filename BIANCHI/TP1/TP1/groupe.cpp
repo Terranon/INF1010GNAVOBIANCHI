@@ -6,57 +6,180 @@
 \******************************************************************************/
 #include "groupe.h"
 
-//Constructeurs
+/**
+* \brief constructeurs par défaut et parametres
+* \param nom					: le nom du groupe
+*		 tailleTabDepenses		: le nombre estime de depenses
+*		 tailleTabUtilisateurs	: le nombre estime d'utilisateurs
+* \return groupe
+*/
 Groupe::Groupe() :
-	nombreUtilisateurs_(5),
-	nombreDepenses_(10) {
-	listeUtilisateurs_ = new Utilisateur*[nombreUtilisateurs_];
-	listeDepenses_ = new Depense*[nombreDepenses_];
+	tailleTabDepenses_(5),
+	tailleTabUtilisateurs_(10) {
+	listeDepenses_ = new Depense*[tailleTabDepenses_];
+	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_];
 }
 Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleTabUtilisateurs) :
 	nom_(nom),
-	nombreDepenses_{
-
+	tailleTabDepenses_(tailleTabDepenses),
+	tailleTabUtilisateurs_(tailleTabUtilisateurs) {
+	listeDepenses_ = new Depense*[tailleTabDepenses_];
+	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_];
 }
 
-//Destructeur
+/**
+* \brief destructeur pour groupe
+*/
 Groupe::~Groupe() {
-
 }
 
-//methode d'acces
+/**
+* \brief retourne le nom du groupe
+* \return string
+*/
 string Groupe::getNom()const {
-
+	return nom_;
 }
+
+/**
+* \brief retourne le nombre de depenses du groupe
+* \return unsigned int
+*/
 unsigned int Groupe::getNombreDepenses()const {
-
+	return nombreDepenses_;
 }
+
+/**
+* \brief retourne le total des depenses du groupe
+* \return string
+*/
 double Groupe::getTotal()const {
-
+	return totalDepenses_;
 }
 
-//Methodes de modification
+/**
+* \brief modifie le nom du groupe
+* \param string
+*/
 void Groupe::setNom(string& nom) {
-
+	nom_ = nom;
 }
 
-//Methodes d'ajout
+/**
+* \brief ajoute une depense associe a un utilisateur au tableau de depense
+* \param uneDepense : le titre et le montant d'une depense
+*		 payePar	: le nom de l'utilisateur qui a fait la depense
+*/
 void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar) {
-
+	bool depenseAjouterUtilisateur = false;
+	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
+		if (listeUtilisateurs_[i]->getNom() == payePar->getNom()) {
+			depenseAjouterUtilisateur = true;
+			listeUtilisateurs_[i]->ajouterDepense(uneDepense);
+			cout << "depense de " << uneDepense->getMontant() << " fait par "
+				 << payePar->getNom() << endl;
+		}
+	}
+	if (tailleTabDepenses_ <= nombreDepenses_) {
+		tailleTabDepenses_ = (tailleTabDepenses_ * 2);
+		Depense** listeDepensesTemporaire = new Depense*[tailleTabDepenses_];
+		for (unsigned int i = 0; i < tailleTabDepenses_; i++) {
+			listeDepensesTemporaire[i] = listeDepenses_[i];
+		}
+		delete listeDepenses_;
+		listeDepenses_ = listeDepensesTemporaire;
+	}
+	listeDepenses_[nombreDepenses_] = uneDepense;
+	nombreDepenses_++;
+	if (depenseAjouterUtilisateur == false) {
+		cout << "Incapable de trouver l'utilisateur" << endl;
+	}
 }
+
+/**
+* \brief verifie si on peut ajoute un Utilisateur au tableau de d'utilisateurs
+*		 si oui: rajoute l'utilisateur
+*		 si non: double la taille du tableau et rajoute l'utilisateur
+* \param unUtilisateur : l'utilisateur a rajouter a la liste
+*/
 void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur) {
-
+	if (tailleTabUtilisateurs_ <= nombreUtilisateurs_) {
+		tailleTabUtilisateurs_ = (tailleTabUtilisateurs_ * 2);
+		Utilisateur** listeUtilisateurTemporaire = new Utilisateur*[tailleTabUtilisateurs_];
+		for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++) {
+			listeUtilisateurTemporaire[i] = listeUtilisateurs_[i];
+		}
+		delete listeUtilisateurs_;
+		listeUtilisateurs_ = listeUtilisateurTemporaire;
+	}
+	listeUtilisateurs_[nombreUtilisateurs_] = unUtilisateur;
+	nombreUtilisateurs_++;
 }
 
-//Méthode de calcul
+/**
+* \brief calcul le total de toutes depense fais par tout utilisateurs dans le groupe
+*/
 void Groupe::calculerTotalDepenses() {
-
+	totalDepenses_ = 0;
+	for (unsigned int i = 0; i < nombreDepenses_; i++) {
+		totalDepenses_ += listeDepenses_[i]->getMontant();
+	}
 }
+
+/**
+* \brief equilibre les comptes entre les utilisateur
+*	premiere boucle for : rajoute les montants que chaques utilisateur doit au groupe
+*	deuxieme boucle for : egalise les montants pour que chaques utilisateur doit 0$
+*/
 void Groupe::equilibrerComptes() {
-
+	comptes_ = new double[nombreUtilisateurs_];
+	listeTransferts_ = new Transfert*[nombreUtilisateurs_];
+	calculerTotalDepenses();
+	double depenseMoyen = totalDepenses_ / nombreUtilisateurs_;
+	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
+		listeUtilisateurs_[i]->calculerTotal();
+		comptes_[i] = listeUtilisateurs_[i]->getTotal() - depenseMoyen;
+	}
+	nombreTransferts_ = 0;
+	for (int i = 0; i < nombreUtilisateurs_; i++) {
+		if (comptes_[i] < 0) {
+			for (unsigned int j = 0; j < nombreUtilisateurs_ || comptes_[i] == 0; j++) {
+				if (i != j && comptes_[j] > 0) {
+					if ((-comptes_[i]) >= comptes_[j]) {
+						listeTransferts_[nombreTransferts_]->setMontant(comptes_[j]);
+						comptes_[i] = comptes_[i] + comptes_[j];
+						comptes_[j] = 0;
+					}
+					else if ((-comptes_[i]) < comptes_[j]) {
+						listeTransferts_[nombreTransferts_]->setMontant(-comptes_[i]);
+						comptes_[i] = 0;
+						comptes_[j] = comptes_[i] + comptes_[j];
+					}
+					listeTransferts_[nombreTransferts_]->setDonneur(listeUtilisateurs_[i]);
+					listeTransferts_[nombreTransferts_]->setReceveur(listeUtilisateurs_[j]);
+					nombreTransferts_++;
+				}
+			}
+			i--; // on recule de 1 dans le tableau de compte pour etre sur qu'il est a zero
+		}
+	}
 }
 
-//methode d'affichage
+/**
+* \brief affiche les depenses du groupe et explique les transfert requis pour egaliser
+*		 tout les comptes.
+*/
 void Groupe::afficherGroupe() {
-
+	cout << "L'evenement: " << getNom() 
+		 << " a coute un total pour le groupe de: " << getTotal() << endl;
+	cout << "Voici les depenses:" << endl;
+	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
+		listeUtilisateurs_[i]->afficherUtilisateur;
+	}
+	cout << "pour equilibrer les comptes: " << endl;
+	for (unsigned int k = 0; k < nombreTransferts_; k++) {
+		cout << "Transfert de " << listeTransferts_[k]->getDonneur() << " a "
+			<< listeTransferts_[k]->getReceveur() << " d'un montant de: "
+			<< listeTransferts_[k]->getMontant() << endl;
+	}
 }

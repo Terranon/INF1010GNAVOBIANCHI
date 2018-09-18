@@ -51,7 +51,7 @@ private:
 	Depense** listeDepenses_;
 	double* comptes_;
 	Transfert** listeTransferts_;
-	unsigned int nombreTrensferts_;
+	unsigned int nombreTransferts_;
 
 };
 

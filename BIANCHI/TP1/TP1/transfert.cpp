@@ -75,6 +75,6 @@ void Transfert::setReceveur(Utilisateur* receveur) {
 * \brief Affiche le transfert
 */
 void Transfert::afficherTransfert() {
-	cout << donneur_->getNom() << " a transfere " << getMontant() 
+	cout << donneur_->getNom() << " doit transferer " << getMontant() 
 		 <<"$ a " << receveur_->getNom() << endl;
 }
