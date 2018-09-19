@@ -29,7 +29,7 @@ Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleT
 	tailleTabDepenses_ = tailleTabDepenses;
 	listeDepenses_ = new Depense*[5];//toujoirs mettre des taILLES DS LES TABLEAUX
 	comptes_ = new double[1];
-	listeTransferts_ = new Transfert*[1];
+	listeTransferts_ = new Transfert*[4];
 	nombreTrensferts_ = 0;
 }
 //appel au destructeur
@@ -68,8 +68,6 @@ void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur)
 		{
 			//declarer une liste
 			temp[i] = listeUtilisateurs_[i];
-			
-			
 		}
 		delete [] listeUtilisateurs_;
 		listeUtilisateurs_ = temp;
@@ -77,38 +75,19 @@ void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur)
 	
 	listeUtilisateurs_[nombreUtilisateurs_] = unUtilisateur;
 	nombreUtilisateurs_++;
-	//le mettre a l'interieur de if?
-	
-	//faire attention avec es declarartions globales et locales
-	// ancien code
-	//if (nombreUtilisateurs_ > tailleTabUtilisateurs_)
-		//{//si le nombre de depense est superieur a celle de la liste
-		//										 //////////////	{
-		//	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_++];//ajouter un element depense* a la liste de depense										 //////////////		
 
-		//	listeUtilisateurs_[tailleTabUtilisateurs_] = unUtilisateur;
-		//}
-		//else
-		//	listeUtilisateurs_[nombreUtilisateurs_] = unUtilisateur;// vu que le nombre de depenses 
-		////n'atteint pas la taille du tableau  il faut mettre la prochaine valeur directement a sa suite
-
-		//for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++) 
-		//{//efface les espaces inutiles dans le tableau
-		//	if (listeUtilisateurs_[i] != nullptr)
-		//		delete listeUtilisateurs_[i];
-		//}
 
 
 }
 //methode d'ajout de depense
 void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)//verifiersi le tableau de depense du groupe a assez de place
 // l'ajouter a la liste depense prend un utilisateur et les depenses
-	{
+{
 	if (nombreDepenses_ > tailleTabDepenses_) {//si le nombre de depense est superieur a celle de la liste
 										 //////////////	{
 		Depense** temp = new Depense*[tailleTabDepenses_ + 5];//ajouter un element depense* a la liste de depense										 //////////////		
 		for (unsigned int i = 0; i < tailleTabDepenses_; i++) {//efface les espaces inutiles dans le tableau
-			listeDepenses_ = new Depense*[1];
+			listeDepenses_ = new Depense*[5];
 			temp[i] = listeDepenses_[i];
 
 
@@ -117,12 +96,29 @@ void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)//verifier
 
 		listeDepenses_ = temp;//liste depense et temp pointe sur les mm choses donc pas de fuite de memoire
 	}
-	
-	//for (unsigned int i=0;i<;i++) verifier  l'utilisateur correspondantau nom donne
 
-	payePar -> ajouterDepense(uneDepense)  ;
+	//for (unsigned int i=0;i<;i++) verifier  l'utilisateur correspondantau nom donne
+//	bool existe=true;
+//	for (int i = 0; i > nombreUtilisateurs_; i++)
+//	{
+//		if (payePar == listeUtilisateurs_[i])
+//			existe = true;
+//		else
+//			existe = false;
+//
+//	}
+//	if (existe)
+//	{
+//		ajouterUtilisateur(payePar);
+//
+//	}
+//	else
+//	{
+//		ajouterUtilisateur(payePar);
+//
+//	}
+	payePar->ajouterDepense(uneDepense);
 	nombreDepenses_++;
-	
 	
 }
 
@@ -133,54 +129,103 @@ void Groupe::calculerTotalDepenses()
 {
 	for (unsigned int i = 0; i < nombreUtilisateurs_; i++)
 	{
-		totalDepenses_= totalDepenses_ + listeUtilisateurs_[i]->getTotal();
-		
-		
-
+		totalDepenses_= totalDepenses_+listeUtilisateurs_[i]->getTotal();	
 	}
-	for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++) { // met la difference entre la depense totale de chaque utilisateur et la moyenne de depenses totales
-		comptes_[i] = listeUtilisateurs_[i]->getTotal() - (totalDepenses_ / nombreUtilisateurs_);
-		//cout << comptes_[i];
+	double moyenne = (totalDepenses_/nombreUtilisateurs_);
+	
+	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
+		
+		// met la difference entre la depense totale de chaque utilisateur et la moyenne de depenses totales
+		comptes_[i] = listeUtilisateurs_[i]-> getTotal() - moyenne;
+
+		
 	}
 }
 
-//
-//- Une méthode équilibrerComptes()
-void Groupe::equilibrerComptes()
-{
-	
-	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {//je sais pas encore comment minimiser les transferts
-		while (comptes_[i] != 0) {
-			for (unsigned int j = 0; i < nombreUtilisateurs_; i++) {
-				if (comptes_[i] > comptes_[j]) {//si i `j alors envoie ompte de j a compte i et diminue compte i a 0
-					listeTransferts_[i]->setMontant(comptes_[j]);
-					listeTransferts_[i]->setDonneur(listeUtilisateurs_[j]);
-					listeTransferts_[i]->setReceveur(listeUtilisateurs_[i]);//uti j envoie a utili i le montant de comte
-					//travailler avec les valeurs min et max
-					comptes_[j] = 0;
-					comptes_[i] = comptes_[i] - comptes_[j];
-				}// ce n'est^pas sans faille repetitition der comptes
-			}
-			
-				
-		}
-					//fera lexcecution si compte i = omote j
-			/*if (comptes_[i] < 0) {
-			int montant = comptes_[i];
-			string donneur
-				= listeUtilisateurs_[i]->getNom();
-			for (unsigned int i=i+1; i < nombreUtilisateurs_; i++)
-				if (comptes_[i]==montant)*/
 
-		}
+
+
+void Groupe::equilibrerComptes()
+{//on cherche le compte max puis  les autres luis donnes
+	Transfert** t = new Transfert*[5]();
+	//nbfor (int i=0;i>nombreUtilisateurs_;i++)
+
+
+
+	for (unsigned int i = 0; i < 2; i++) {//je sais pas encore comment minimiser les transferts
+			//Utilisateur* code= listeTransferts_[i]->getReceveur();
+			//cout << code;
+			cout << "entrer1";
+			
+			/*if (max<comptes_[i])
+			max = comptes_[i];*/
+			//while (comptes_[i] != 0) {
+		for (unsigned int j = 1; i < 5; i++)
+		{
+			//listeTransferts_[i] = *t;//initiaisation
+		
+				//listeTransferts_[i][i].setReceveur(listeUtilisateurs_[i]);//pourquoi je peux pas ecrire sdans la classe transfert
+					 cout << " entrer 2 ";
+				if ((comptes_[i]>comptes_[j]) && (comptes_[j]<0)) {
+					cout << "entrer 3 ";
+					//si i j alors envoie compte de j a compte i et diminue compte i a 0
+					cout << listeUtilisateurs_[j];
+					//ex le  compte a 4 frcs et le compte a -24frc ne peut lui donner que 4frcs
+					if (comptes_[i] < abs(comptes_[j]))//le donneur est a 24 et le receveur a 4
+					{
+						cout << "entrer 4 ";
+						
+						listeTransferts_[i]->setMontant(comptes_[i]);
+						listeTransferts_[i]->setDonneur(listeUtilisateurs_[j]);
+						listeTransferts_[i]->setReceveur(listeUtilisateurs_[i]);
+						nombreTrensferts_++;
+						cout << "le compte le plus petit j" << j << " devient " << comptes_[j]+comptes_[i];
+						comptes_[i] = 0;
+						cout << "le compte le plus grand i" << i << " est " << comptes_[i];
+						comptes_[j] =  comptes_[j] + comptes_[i];
+						break;//sortir du for car le compte i est a 0;
+					}
+					if (comptes_[i] > abs(comptes_[j])) // receveur 56    donneur -4 
+					
+					{
+						cout << " entrer 5";
+						listeTransferts_[i]->setDonneur(listeUtilisateurs_[j]);
+						listeTransferts_[i]->setReceveur(listeUtilisateurs_[i]);
+						
+						double t = abs(comptes_[j]);
+						listeTransferts_[i] -> setMontant(4);
+						
+						
+						nombreTrensferts_++;
+						cout << "le compte le plus petit j" << j << "devient " << comptes_[j];
+						comptes_[i] = comptes_[i] + comptes_[j];
+						cout << "le compte le plus grand i" << i << "est " << comptes_[i];
+						comptes_[j] = 0;
+					}
+					
+					
+					
+					
+					
+				}	//travailler avec les valeurs min et max
+				
+				
+					
+					
+				
+			}
+
+
+		
 
 
 	}
 
 
+}
 
 
-//Une méthode d’affichag
+//Une méthode d’affichage
 void Groupe::afficherGroupe() 
 {
 	//for (unsigned int i = 0; i < tailleTabUtilisateurs_; i++)

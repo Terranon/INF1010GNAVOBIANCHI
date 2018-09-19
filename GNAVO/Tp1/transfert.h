@@ -15,9 +15,9 @@ public:
 
 	// Méthodes d'accès
 
-	Utilisateur* getDonneur()const;
-	Utilisateur* getReceveur()const;
-	double getMontant()const;
+	Utilisateur* getDonneur();//mettre des conste aopres 
+	Utilisateur* getReceveur();
+	double getMontant();
 
 
 	//Méthode d'affichage
