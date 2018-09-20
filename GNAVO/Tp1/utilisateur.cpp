@@ -62,8 +62,8 @@ void Utilisateur::ajouterDepense(Depense* uneDepense)//le tableau de depense de 
 
 		listeDepenses_ = temp;//liste depense et temp pointe sur les mm choses donc pas de fuite de memoire
 	}
-		listeDepenses_[nombreDepenses_] = uneDepense;
-		nombreDepenses_++;// vu que le nombre de depenses 
+		listeDepenses_[nombreDepenses_++] = uneDepense;
+		// vu que le nombre de depenses 
 	//n'atteint pas la taille du tableau   il faut mettre la prochaine valeur directement a sa suite
 		//mm si il ayyeint la taille du tableau
 

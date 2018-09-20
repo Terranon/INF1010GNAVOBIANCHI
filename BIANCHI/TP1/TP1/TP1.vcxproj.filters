@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\fichiersTP1\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="depense.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -30,12 +27,21 @@
     <ClCompile Include="utilisateur.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depense.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utilisateur.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="groupe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="transfert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

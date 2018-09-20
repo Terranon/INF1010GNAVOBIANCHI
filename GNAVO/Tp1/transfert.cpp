@@ -2,19 +2,19 @@
 #include "transfert.h"
 #include "utilisateur.h"
 
-Transfert::Transfert(){		montant_=0.0; donneur_=new Utilisateur[3]; receveur_=new Utilisateur[3];	}
-//Transfert::Transfert() :montant_(0.0), donneur_(new Utilisateur[3]), receveur_(new Utilisateur[3])//{////////}//Transfert::Transfert(double montant,Utilisateur* de,Utilisateur* pour)//{//	montant_=(montant); donneur_=(de); receveur_=(pour);//}Transfert::Transfert(double montant, Utilisateur* de, Utilisateur* pour):montant_(montant),donneur_ = (de),receveur_ = (pour){	}//Les méthodes d’accès.
-Utilisateur* Transfert::getDonneur() // Definir utilisateur;
+Transfert::Transfert(){		montant_=0.0; donneur_=new Utilisateur[5]; receveur_=new Utilisateur[5];	}
+//Transfert::Transfert(double montant, Utilisateur* de, Utilisateur* pour):montant_(montant),donneur_ = (de),receveur_ = (pour)//{//	//}Transfert::Transfert(double montant, Utilisateur* de, Utilisateur* pour){	montant_ = montant; donneur_ = de; receveur_ = pour;}//Les méthodes d’accès.
+Utilisateur* Transfert::getDonneur()const   // Definir utilisateur;
 {
 	return donneur_;
 
 }
-double Transfert::getMontant()
+double Transfert::getMontant()  const
 {
 	return montant_;
 }	
 
-Utilisateur* Transfert::getReceveur()
+Utilisateur* Transfert::getReceveur() const
 {
 	return receveur_;
 }
@@ -45,5 +45,6 @@ void Transfert::afficherTransfert()
 {
 	//pour l'utiliser il faut effectuer une surcharge d'operateur
 	//cout << "le montant transferé par " << donneur_ << "a"<< receveur_ << "est" << montant_;
-	cout << "Le montant du transfert est" << montant_ << endl;
+	cout << "Le montant du transfert est " << montant_ << endl;
 }
+//Transfert::Transfert() :montant_(0.0), donneur_(new Utilisateur[3]), receveur_(new Utilisateur[3])//{////////}//Transfert::Transfert(double montant,Utilisateur* de,Utilisateur* pour)//{//	montant_=(montant); donneur_=(de); receveur_=(pour);//}

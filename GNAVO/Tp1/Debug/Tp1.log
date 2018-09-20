@@ -1,4 +1,6 @@
-﻿  Tp1.cpp
-  groupe.cpp
-  Génération de code en cours...
+﻿  groupe.cpp
+c:\users\serge\desktop\tp1\groupe.cpp(276): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp1\groupe.cpp(297): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp1\groupe.cpp(300): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp1\groupe.cpp(308): warning C4018: '<' : incompatibilité signed/unsigned
   Tp1.vcxproj -> C:\Users\serge\Desktop\Tp1\Debug\Tp1.exe

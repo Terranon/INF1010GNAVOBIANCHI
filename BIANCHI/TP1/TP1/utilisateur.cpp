@@ -12,15 +12,26 @@
 * \param nom	: le nom de l'utilisateur
 * \return utilisateur
 */
-Utilisateur::Utilisateur(){}
+Utilisateur::Utilisateur() :
+	tailleTabDepense_(5) {
+	listeDepenses_ = new Depense*[tailleTabDepense_];
+}
 Utilisateur::Utilisateur(string& nom) :
-	nom_(nom) {
+	nom_(nom),
+	tailleTabDepense_(5) {
+	listeDepenses_ = new Depense*[tailleTabDepense_];
 }
 
 /**
 * \brief destructeur pour utilisateur
 */
 Utilisateur::~Utilisateur() {
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) {
+		delete listeDepenses_[i];
+		listeDepenses_[i] = nullptr;
+	}
+	delete listeDepenses_;
+	listeDepenses_ = nullptr;
 }
 
 /**
@@ -73,8 +84,24 @@ void Utilisateur::ajouterDepense(Depense* uneDepense) {
 	nombreDepenses_++;
 }
 
-//Methode de calcul total
-void calculerTotal();
+/**
+* \brief calculer le total des depenses d'un utilisateur
+*/
+void Utilisateur::calculerTotal() {
+	totalDepense_ = 0;
+	for (unsigned int i = 0; i < nombreDepenses_; i++) {
+		totalDepense_ += listeDepenses_[i]->getMontant();
+	}
+}
 
-//Mathode d'affichage
-void afficherUtilisateur();
+/**
+* \brief afficher l'utilisateur et ses depense
+*/
+void Utilisateur::afficherUtilisateur() {
+	calculerTotal();
+	cout << nom_ << " a un total de depense de: " << getTotal() << endl;
+	cout << "Liste de depense:" << endl;
+	for (unsigned int j = 0; j < nombreDepenses_; j++) {
+		listeDepenses_[j]->afficherDepense();
+	}
+}

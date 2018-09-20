@@ -115,14 +115,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\fichiersTP1\main.cpp" />
     <ClCompile Include="depense.cpp" />
     <ClCompile Include="groupe.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="transfert.cpp" />
     <ClCompile Include="utilisateur.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="depense.h" />
+    <ClInclude Include="groupe.h" />
+    <ClInclude Include="transfert.h" />
     <ClInclude Include="utilisateur.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
