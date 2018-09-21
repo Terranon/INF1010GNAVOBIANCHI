@@ -4,6 +4,9 @@
 
 using namespace std;
 
+static const unsigned int NOMBREUTILISATEUR = 5;
+static const unsigned int NOMBREDEPENSE = 7;
+
 int main(int argc, const char * argv[]) {
 	cout << "\t \tBienvenue sur PolyCount " << endl << " *****************************************" << endl;
 	// Creer un  groupe pour  6 depenses et 4 utilisateurs.
@@ -15,52 +18,60 @@ int main(int argc, const char * argv[]) {
 
 	// Creer 5 utlisateurs.
 	string nomUtilisateur;
-	unsigned int rang = 0;
-	Utilisateur** listeTempUtilisateur = new Utilisateur*[5];
-	while (rang < 5) {
-		cout << endl << "Entrer le nom du participant " << rang << " :";
+	unsigned int rangUtilisateur = 0;
+	Utilisateur** listeTempUtilisateur = new Utilisateur*[NOMBREUTILISATEUR];
+	while (rangUtilisateur < NOMBREUTILISATEUR) {
+		listeTempUtilisateur[rangUtilisateur] = nullptr;
+		cout << endl << "Entrer le nom du participant " << rangUtilisateur << " :";
 		cin >> nomUtilisateur;
-		Utilisateur* utilisateur = new Utilisateur(nomUtilisateur);
-		listeTempUtilisateur[rang] = utilisateur;
-		delete utilisateur;
-		utilisateur = nullptr;
+		Utilisateur* utilisateurTemp = new Utilisateur(nomUtilisateur);
+		utilisateurTemp->afficherUtilisateur();
+		listeTempUtilisateur[rangUtilisateur] = utilisateurTemp;
+		listeTempUtilisateur[rangUtilisateur]->afficherUtilisateur();
+		rangUtilisateur++;
 	}
 
 	//Creer 7 dépenses.
 	string titreDepense;
 	double montantDepense;
-	rang = 0;
-	while (rang < 7) {
-		cout << endl << "Maintenant nous allons entrez les depense pour chaque participant." << endl
-			<< "Entrer le nom du participant qui a fait la depense: ";
-		cin >> nomUtilisateur;
-		bool utilisateurTrouve = false;
-		for (unsigned int i = 0; i < 5 || utilisateurTrouve; i++) {
-			if (listeTempUtilisateur[i]->getNom == nomUtilisateur) {
-				utilisateurTrouve = true;
-				cout << endl << "Entrer le titre de la depense " << rang << ": ";
-				cin >> titreDepense;
-				cout << endl << "Entrer le montant de la depense " << rang << ": ";
-				cin >> montantDepense;
-				Depense* depense = new Depense(titreDepense, montantDepense);
-				groupe.ajouterDepense(depense, listeTempUtilisateur[i]);
-				delete depense;
-				depense = nullptr;
-			}
-			if (i == 4 && utilisateurTrouve == false) {
-				cout << endl << "Ce participant n'est pas dans la liste";
-				rang--;
-			}
+	unsigned int rangDepense = 0;
+	Depense** listeTempDepense = new Depense*[NOMBREDEPENSE];
+	while (rangDepense < 7) {
+		listeTempDepense[rangDepense] = nullptr;
+		cout << endl << "Maintenant nous allons entrer les depense pour chaque participant." << endl
+			<< "Entrer le titre de la premiere depense: ";
+		cin >> titreDepense;
+		cout << endl << "Entrer les montant de la premiere depense :";
+		cin >> montantDepense;
+		Depense* depenseTemp = new Depense(titreDepense, montantDepense);
+		depenseTemp->afficherDepense();
+		listeTempDepense[rangDepense] = depenseTemp;
+		listeTempDepense[rangDepense]->afficherDepense();
+		cout << endl << "Qui a fait la depense? " << endl;
+		rangUtilisateur = 0;
+		while (rangUtilisateur < NOMBREUTILISATEUR) {
+			cout << "Pour " << listeTempUtilisateur[rangUtilisateur]->getNom() << " entrer " << rangUtilisateur << endl;
+			rangUtilisateur++;
 		}
+		cin >> rangUtilisateur;
+		groupe.ajouterDepense(depenseTemp, listeTempUtilisateur[rangUtilisateur]);
+		groupe.afficherGroupe();
+		rangDepense++;
 	}
 
 
 	//ajouter les utilisateurs au groupe
-
-
+	rangUtilisateur = 0;
+	while (rangUtilisateur < NOMBREUTILISATEUR) {
+		Utilisateur* utilisateurTemp = new Utilisateur;
+		utilisateurTemp = nullptr;
+		utilisateurTemp = listeTempUtilisateur[rangUtilisateur];
+		groupe.ajouterUtilisateur(utilisateurTemp);
+		groupe.afficherGroupe();
+		rangUtilisateur++;
+	}
+	
 	//ajouter les depenses au groupe
-
-
 
 	//calculer le total du groupe et de chaque utilisateur
 	groupe.calculerTotalDepenses();
@@ -81,5 +92,6 @@ int main(int argc, const char * argv[]) {
 	}
 	delete listeTempUtilisateur;
 	listeTempUtilisateur = nullptr;
+
 	return 0;
 }

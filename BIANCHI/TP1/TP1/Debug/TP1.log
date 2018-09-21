@@ -1,16 +1,2 @@
 ﻿  main.cpp
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\bianchi\tp1\tp1\main.cpp(39): error C3867: 'Utilisateur::getNom': non-standard syntax; use '&' to create a pointer to member
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\bianchi\tp1\tp1\main.cpp(39): error C2678: binary '==': no operator found which takes a left-hand operand of type 'overloaded-function' (or there is no acceptable conversion)
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\system_error(374): note: could be 'bool std::operator ==(const std::error_condition &,const std::error_condition &) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\system_error(368): note: or       'bool std::operator ==(const std::error_condition &,const std::error_code &) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\system_error(362): note: or       'bool std::operator ==(const std::error_code &,const std::error_condition &) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\system_error(356): note: or       'bool std::operator ==(const std::error_code &,const std::error_code &) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\exception(329): note: or       'bool std::operator ==(const std::exception_ptr &,std::nullptr_t) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\exception(324): note: or       'bool std::operator ==(std::nullptr_t,const std::exception_ptr &) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\exception(319): note: or       'bool std::operator ==(const std::exception_ptr &,const std::exception_ptr &) noexcept'
-  c:\program files (x86)\microsoft visual studio\2017\enterprise\vc\tools\msvc\14.12.25827\include\xstring(3877): note: or       'bool std::operator ==<char,std::char_traits<char>,std::allocator<char>>(const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &,const std::basic_string<char,std::char_traits<char>,std::allocator<char>> &) noexcept'
-  c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\bianchi\tp1\tp1\main.cpp(39): note: while trying to match the argument list '(overloaded-function, std::string)'
-  groupe.cpp
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\bianchi\tp1\tp1\groupe.cpp(171): warning C4018: '<': signed/unsigned mismatch
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\bianchi\tp1\tp1\groupe.cpp(204): error C3867: 'Utilisateur::afficherUtilisateur': non-standard syntax; use '&' to create a pointer to member
-  Generating Code...
+  TP1.vcxproj -> C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\BIANCHI\TP1\Debug\TP1.exe

@@ -19,7 +19,13 @@ Groupe::Groupe() :
 	nombreUtilisateurs_(0),
 	nombreDepenses_(0) {
 	listeDepenses_ = new Depense*[tailleTabDepenses_];
+	for (unsigned int i = 0; i < tailleTabDepenses_; i++) {
+		listeDepenses_[i] = nullptr;
+	}
 	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_];
+	for (unsigned int j = 0; j < tailleTabUtilisateurs_; j++) {
+		listeUtilisateurs_[j] = nullptr;
+	}
 }
 Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleTabUtilisateurs) :
 	nom_(nom),
@@ -28,7 +34,13 @@ Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleT
 	nombreUtilisateurs_(0),
 	nombreDepenses_(0) {
 	listeDepenses_ = new Depense*[tailleTabDepenses_];
+	for (unsigned int i = 0; i < tailleTabDepenses_; i++) {
+		listeDepenses_[i] = nullptr;
+	}
 	listeUtilisateurs_ = new Utilisateur*[tailleTabUtilisateurs_];
+	for (unsigned int j = 0; j < tailleTabUtilisateurs_; j++) {
+		listeUtilisateurs_[j] = nullptr;
+	}
 }
 
 /**
@@ -201,7 +213,7 @@ void Groupe::afficherGroupe() {
 		 << " a coute un total pour le groupe de: " << getTotal() << endl;
 	cout << "Voici les depenses:" << endl;
 	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
-		listeUtilisateurs_[i]->afficherUtilisateur;
+		listeUtilisateurs_[i]->afficherUtilisateur();
 	}
 	cout << "pour equilibrer les comptes: " << endl;
 	for (unsigned int k = 0; k < nombreTransferts_; k++) {
