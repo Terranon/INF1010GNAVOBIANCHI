@@ -1,6 +1,9 @@
 ﻿  groupe.cpp
-c:\users\serge\desktop\tp1\groupe.cpp(276): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\serge\desktop\tp1\groupe.cpp(297): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\serge\desktop\tp1\groupe.cpp(300): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\serge\desktop\tp1\groupe.cpp(308): warning C4018: '<' : incompatibilité signed/unsigned
-  Tp1.vcxproj -> C:\Users\serge\Desktop\Tp1\Debug\Tp1.exe
+c:\users\serge\music\tp1\groupe.cpp(220): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\music\tp1\groupe.cpp(225): warning C4553: '==' : résultat de l'expression non utilisé ; souhaitiez-vous utiliser '=' ?
+c:\users\serge\music\tp1\groupe.cpp(328): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\music\tp1\groupe.cpp(331): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\music\tp1\groupe.cpp(344): warning C4018: '<' : incompatibilité signed/unsigned
+  transfert.cpp
+  Génération de code en cours...
+  Tp1.vcxproj -> C:\Users\serge\Music\Tp1\Debug\Tp1.exe

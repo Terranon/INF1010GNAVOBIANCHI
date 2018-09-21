@@ -7,10 +7,16 @@
 Utilisateur::Utilisateur()
 {
 	nom_="unknown";
-	tailleTabDepense_=5;
+	tailleTabDepense_= TAILLEDEPENSEINITIALE;//BONNE PRATIQUE
 	nombreDepenses_=0;
 	totalDepense_=0;
 	listeDepenses_ = new Depense*[5];//nullptr ;// initialiser par defaut a nullptr?
+	for(unsigned int i =0;i<nombreDepenses_;i++) 
+	{
+		listeDepenses_[i] = nullptr;
+	
+	}
+		
 
 }
 Utilisateur::Utilisateur(string& nom)
@@ -20,11 +26,25 @@ Utilisateur::Utilisateur(string& nom)
 	nombreDepenses_ = 0;
 	totalDepense_ = 0;
 	listeDepenses_ =new Depense*[5] ;
+	for (unsigned int i = 0; i < nombreDepenses_; i++)
+	{
+		listeDepenses_[i] = nullptr;
 
+	}
 }
 Utilisateur::~Utilisateur()
 {
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) 
+	{//effacer la taille du tableau
+		delete listeDepenses_[i];
+		listeDepenses_[i] = nullptr;
+	}
+	delete listeDepenses_;
+	listeDepenses_ = nullptr;
+
 }
+
+
 
 //Methode d'acces
 string Utilisateur::getNom()const {
@@ -50,39 +70,27 @@ void Utilisateur::setNom(string&nom)  //toujours mettre le type en parametre aus
 void Utilisateur::ajouterDepense(Depense* uneDepense)//le tableau de depense de l'utilisateur a assez de place
 {
 	if (nombreDepenses_ > tailleTabDepense_) {//si le nombre de depense est superieur a celle de la liste
-											 //////////////	{
-		Depense** temp = new Depense*[tailleTabDepense_+ 5];//ajouter un element depense* a la liste de depense										 //////////////		
+		tailleTabDepense_ += 5;
+		Depense** temp = new Depense*[tailleTabDepense_];//ajouter un element depense* a la liste de depense										 //////////////		
 		for (unsigned int i = 0; i < tailleTabDepense_; i++){//efface les espaces inutiles dans le tableau
-			listeDepenses_ = new Depense*[1];
-			temp[i] = listeDepenses_[i];
 			
-				
+			temp[i] = nullptr;
+			temp[i] = listeDepenses_[i];
 		}
+
 		delete [] listeDepenses_;//supprime le tableau liste de pense:il ne pointe plus sur rien
 
 		listeDepenses_ = temp;//liste depense et temp pointe sur les mm choses donc pas de fuite de memoire
 	}
-		listeDepenses_[nombreDepenses_++] = uneDepense;
-		// vu que le nombre de depenses 
-	//n'atteint pas la taille du tableau   il faut mettre la prochaine valeur directement a sa suite
-		//mm si il ayyeint la taille du tableau
-
-	//for (unsigned int i = 0; i < tailleTabDepense_; i++) {//efface les espaces inutiles dans le tableau
-	//	if (listeDepenses_[i] != nullptr)
-	//		delete listeDepenses_[i];
-	//}
-		 // ajout de la depense a la position de la taille du tableau
+		listeDepenses_[nombreDepenses_] = uneDepense;//listeDepenses_[nombreDepenses_++];
+		nombreDepenses_++;
 	
-	//je propose : if (nombreDepenses_<=tailleTabDepense_)
-	//                 listeDepenses_[nombreDepenses_] = uneDepense;
-//////////////	n'oublie pas de delete	----non pas necessaire car on ajoute et le pointeur n'a fait qu'etre utiliser ds la fonction
-	/*for (int i = 0; i<nombreDepenses_; i++)
-		delete listeDepenses_[i]*/
-
 }
 // méthode calculerTotal(), qui calcule le montant total des dépenses effectuées.
 void Utilisateur::calculerTotal() 
 {
+	totalDepense_ = 0;//pour eviter un ajout de total depense a cahque fois
+	//que la methode est nouvellemenrt calcule
 	for (unsigned int i = 0; i < nombreDepenses_; i++) 
 	{
 		totalDepense_+=   listeDepenses_[i]->getMontant();
@@ -94,5 +102,13 @@ void Utilisateur::calculerTotal()
 // methode d'affichage
 void Utilisateur ::afficherUtilisateur()
 {
-	cout << nom_ << " a effectuer " << nombreDepenses_ << " depenses d'un montant total de " << totalDepense_ << endl;
+//	cout << nom_ << " a effectuer " << nombreDepenses_ << " depenses d'un montant total de " << totalDepense_ << endl;
+	
+	cout << nom_ << " a un total de depenses de " << getTotal() << endl;
+	cout << "Liste de depenses:" << endl;
+	for (unsigned int i = 0; i < nombreDepenses_; i++)
+	{
+		listeDepenses_[i]->afficherDepense();
+	}
+
 }

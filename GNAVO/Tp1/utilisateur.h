@@ -8,6 +8,7 @@
 #include "depense.h"
 
 using namespace std;
+static const unsigned int TAILLEDEPENSEINITIALE = 5;
 
 class Utilisateur {
 public:
