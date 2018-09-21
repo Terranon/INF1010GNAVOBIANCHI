@@ -15,11 +15,17 @@
 Utilisateur::Utilisateur() :
 	tailleTabDepense_(5) {
 	listeDepenses_ = new Depense*[tailleTabDepense_];
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) {
+		listeDepenses_[i] = nullptr;
+	}
 }
 Utilisateur::Utilisateur(string& nom) :
 	nom_(nom),
 	tailleTabDepense_(5) {
 	listeDepenses_ = new Depense*[tailleTabDepense_];
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) {
+		listeDepenses_[i] = nullptr;
+	}
 }
 
 /**
@@ -75,10 +81,17 @@ void Utilisateur::ajouterDepense(Depense* uneDepense) {
 		tailleTabDepense_ = (tailleTabDepense_ * 2);
 		Depense** listeDepenseTemporaire = new Depense*[tailleTabDepense_];
 		for (unsigned int i = 0; i < tailleTabDepense_; i++) {
+			listeDepenseTemporaire[i] = nullptr;
 			listeDepenseTemporaire[i] = listeDepenses_[i];
 		}
 		delete listeDepenses_;
 		listeDepenses_ = listeDepenseTemporaire;
+		for (unsigned int j = 0; j < tailleTabDepense_; j++) {
+			delete listeDepenseTemporaire[j];
+			listeDepenseTemporaire[j] = nullptr;
+		}
+		delete listeDepenseTemporaire;
+		listeDepenseTemporaire = nullptr;
 	}
 	listeDepenses_[nombreDepenses_] = uneDepense;
 	nombreDepenses_++;
