@@ -1,4 +1,10 @@
-
+/******************************************************************************\
+* Authors:     Serge Gnavo 1869985
+*			   Maximilien Bianchi 1893352
+* Name:        depense.h - TP1 INF1010
+* Description: contient les primitives(public), et attributs(prive) de la classe
+* Version: 1.0
+\******************************************************************************/
 #ifndef DEPENSE_H
 #define DEPENSE_H
 
@@ -14,16 +20,14 @@ public:
 
 	// constructeurs par défaut et parametres
 	Depense();
-	Depense(string& titre, double montant);//j'ai passe montant en parametre 
-										   //pour que le montant soitt modifie
+	Depense(string& titre, double montant);
 
-										   // methodes d'accès
-	string getTitre()const; //methode constante pour éviter 
-							//qu'elle ne change rien dans les attributs qu'elle retourne 
+	// methodes d'accès
+	string getTitre()const;
 	double getMontant() const;
 
 	//methodes de modifications
-	void setTitre(string& titre);//je crois qu'il faut que la methode qui prenne soit constante
+	void setTitre(string& titre);
 	void setMontant(double montant);
 
 
@@ -35,6 +39,5 @@ private:
 	double montant_;
 
 };
-
 #endif
 
