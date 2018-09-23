@@ -69,7 +69,7 @@ void Utilisateur::setNom(string&nom)  //toujours mettre le type en parametre aus
 //methode d'ajout de depenses
 void Utilisateur::ajouterDepense(Depense* uneDepense)//le tableau de depense de l'utilisateur a assez de place
 {
-	if (nombreDepenses_ > tailleTabDepense_) {//si le nombre de depense est superieur a celle de la liste
+	if (nombreDepenses_ >= tailleTabDepense_) {//si le nombre de depense est superieur a celle de la liste
 		tailleTabDepense_ += 5;
 		Depense** temp = new Depense*[tailleTabDepense_];//ajouter un element depense* a la liste de depense										 //////////////		
 		for (unsigned int i = 0; i < tailleTabDepense_; i++){//efface les espaces inutiles dans le tableau

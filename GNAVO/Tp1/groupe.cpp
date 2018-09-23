@@ -1,7 +1,7 @@
 #include "pch.h"//fonctio ajouter depenses 
 #include "groupe.h"
 //inclure les utilisateur
-#include "utilisateur.h"
+
 
 Groupe::Groupe():nom_ ( "unknown"),tailleTabDepenses_ ( 10),tailleTabUtilisateurs_ ( 5),nombreDepenses_ ( 0),nombreUtilisateurs_ ( 0),totalDepenses_ (0),nombreTrensferts_ ( 0)
 {
@@ -101,9 +101,6 @@ void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur)
 
 	listeUtilisateurs_[nombreUtilisateurs_] = unUtilisateur;
 	nombreUtilisateurs_++;
-	
-
-
 }
 //methode d'ajout de depense
 void Groupe::ajouterDepense(Depense* uneDepense, Utilisateur* payePar)
@@ -149,7 +146,9 @@ void Groupe::calculerTotalDepenses()
 	{
 		listeUtilisateurs_[j]->calculerTotal();
 	}
+	cout << totalDepenses_<<endl;
 		double moyenne=totalDepenses_ / nombreUtilisateurs_;
+		cout <<"La moyenne du groupe"<< moyenne<<endl;
 		comptes_ = new double[nombreUtilisateurs_];
 	for (unsigned int k = 0; k < nombreUtilisateurs_; k++) { // utiliser le nombre d'utilsateurs a la place de la tailletabutilisateur
 		//cout << comptes_[i];
@@ -167,13 +166,14 @@ void Groupe::equilibrerComptes()
 		for (int k = 0; k < nombreUtilisateurs_; k++) 
 		{
 			listeTransferts_[k] = new Transfert  ();
+			cout << " voici le compte  "<< k<<" " << comptes_[k]<<endl;
 		}
 
-	
+	 
 
 	for (unsigned int i = 0; i < nombreUtilisateurs_; i++)
 	{
-		while (comptes_[i] >= 1)//pour le faire passer la boucle
+		while (comptes_[i] >= 0.00001)// la valeur est diefferente de 0 pour supplanter le cas  des fractios irreductibles
 		{
 			
 			
