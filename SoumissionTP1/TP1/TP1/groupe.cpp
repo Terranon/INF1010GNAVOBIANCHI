@@ -18,12 +18,12 @@
 */
 Groupe::Groupe() :
 	nom_("unknown"), 
-	tailleTabDepenses_(TAILLEDEPENSEINITIALE), 
-	tailleTabUtilisateurs_(TAILLEUTILISATEURINITIAL), 
+	tailleTabDepenses_(TAILLEDEPENSEGROUPE), 
+	tailleTabUtilisateurs_(TAILLEUTILISATEURGROUPE), 
 	nombreDepenses_(0), 
 	nombreUtilisateurs_(0), 
 	totalDepenses_(0), 
-	nombreTrensferts_(0) {
+	nombreTransferts_(0) {
 	listeDepenses_ = new Depense*[tailleTabDepenses_];
 	for (unsigned int i = 0; i < tailleTabDepenses_; i++) {
 		listeDepenses_[i] = nullptr;
@@ -40,7 +40,7 @@ Groupe::Groupe(string& nom, unsigned int tailleTabDepenses, unsigned int tailleT
 	nombreDepenses_(0), 
 	nombreUtilisateurs_(0), 
 	totalDepenses_(0), 
-	nombreTrensferts_(0) {
+	nombreTransferts_(0) {
 	listeDepenses_ = new Depense*[tailleTabDepenses_];
 	for (unsigned int i = 0; i < tailleTabDepenses_; i++) {
 		listeDepenses_[i] = nullptr;
@@ -177,6 +177,7 @@ void Groupe::calculerTotalDepenses() {
 void Groupe::equilibrerComptes() {
 	listeTransferts_ = new Transfert*[nombreUtilisateurs_];
 	for (unsigned int k = 0; k < nombreUtilisateurs_; k++) {
+		listeTransferts_[k] = nullptr;
 		listeTransferts_[k] = new Transfert();
 	}
 	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
@@ -184,29 +185,18 @@ void Groupe::equilibrerComptes() {
 			for (unsigned int j = 0; j < nombreUtilisateurs_ || comptes_[j] == 0; j++) {
 				if (i != j && comptes_[j] < 0) {
 					if (comptes_[i] > abs(comptes_[j])) {
-						listeTransferts_[nombreTrensferts_]->setDonneur(listeUtilisateurs_[j]);
-						listeTransferts_[nombreTrensferts_]->setReceveur(listeUtilisateurs_[i]);
-						listeTransferts_[nombreTrensferts_]->setMontant(abs(comptes_[j]));
-
+						listeTransferts_[nombreTransferts_]->setMontant(abs(comptes_[j]));
 						comptes_[i] = comptes_[i] + comptes_[j];
 						comptes_[j] = 0;
-						cout << " voici le compte j dans la boucle " << comptes_[j] << endl;
-						cout << " voici le compte i dans la boucle " << comptes_[i];
-
-						nombreTrensferts_++;
-
-						cout << " le nombre de transferts" << nombreTrensferts_ << endl;
 					}
 					else {
-						listeTransferts_[nombreTrensferts_]->setMontant(comptes_[i]);
-						listeTransferts_[nombreTrensferts_]->setDonneur(listeUtilisateurs_[j]);
-						listeTransferts_[nombreTrensferts_]->setReceveur(listeUtilisateurs_[i]);
-
+						listeTransferts_[nombreTransferts_]->setMontant(comptes_[i]);
 						comptes_[j] = comptes_[i] + comptes_[j];
 						comptes_[i] = 0;
-						nombreTrensferts_++;
-						cout << " le nombre de transferts" << nombreTrensferts_ << endl;
 					}
+					listeTransferts_[nombreTransferts_]->setDonneur(listeUtilisateurs_[j]);
+					listeTransferts_[nombreTransferts_]->setReceveur(listeUtilisateurs_[i]);
+					nombreTransferts_++;
 				}
 			}
 		}
@@ -218,20 +208,20 @@ void Groupe::equilibrerComptes() {
 *		 tout les comptes.
 */
 void Groupe::afficherGroupe() {
-	for (int i = 0; i < nombreUtilisateurs_; i++) {
+	for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
 		listeUtilisateurs_[i]->afficherUtilisateur();
 	}
-	for (int j = 0; j < nombreUtilisateurs_; j++) {
+	for (unsigned int j = 0; j < nombreUtilisateurs_; j++) {
 		if (comptes_[j] != 0) {
 			cout << "Le compte de  " << listeUtilisateurs_[j]->getNom() << " est: " 
 				<< comptes_[j] << endl;
 		}
 	}
-	for (int t = 0; t < nombreTrensferts_; t++) {
-		if (listeTransferts_[t]->getMontant() != 0) {
-			cout << "Transfert fait par" << (listeTransferts_[t]->getDonneur())->getNom() 
-				<< " pour " << (listeTransferts_[t]->getReceveur())->getNom() 
-				<< " d'un montant de " << listeTransferts_[t]->getMontant() << endl;
+	for (unsigned int k = 0; k < nombreTransferts_; k++) {
+		if (listeTransferts_[k]->getMontant() != 0) {
+			cout << "Transfert fait par " << (listeTransferts_[k]->getDonneur())->getNom() 
+				<< " pour " << (listeTransferts_[k]->getReceveur())->getNom() 
+				<< " d'un montant de " << listeTransferts_[k]->getMontant() << "$" << endl;
 		}
 	}
 }

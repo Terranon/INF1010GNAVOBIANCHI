@@ -16,7 +16,7 @@
 
 using namespace std;
 
-static const unsigned int TAILLEDEPENSEINITIALE = 5;
+static const unsigned int TAILLEDEPENSEUTILISATEUR = 5;
 
 class Utilisateur {
 public:

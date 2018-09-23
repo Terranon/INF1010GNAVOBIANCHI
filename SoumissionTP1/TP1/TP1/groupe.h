@@ -13,8 +13,8 @@
 #include <string>
 using namespace std;
 
-static const unsigned int TAILLEUTILISATEURINITIAL = 5;
-static const unsigned int TAILLEDEPENSEINITIAL = 10;
+static const unsigned int TAILLEUTILISATEURGROUPE = 5;
+static const unsigned int TAILLEDEPENSEGROUPE = 10;
 
 class Groupe {
 public:
@@ -55,7 +55,6 @@ private:
 	Depense** listeDepenses_;
 	double* comptes_;
 	Transfert** listeTransferts_;
-	unsigned int nombreTrensferts_;
-
+	unsigned int nombreTransferts_;
 };
 #endif 

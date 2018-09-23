@@ -14,11 +14,11 @@
 */
 Utilisateur::Utilisateur() :
 	nom_("unknown"),
-	tailleTabDepense_(TAILLEDEPENSEINITIALE),
+	tailleTabDepense_(TAILLEDEPENSEUTILISATEUR),
 	nombreDepenses_(0),
 	totalDepense_(0) {
-	listeDepenses_ = new Depense*[TAILLEDEPENSEINITIALE];
-	for (unsigned int i = 0; i < TAILLEDEPENSEINITIALE; i++) {
+	listeDepenses_ = new Depense*[tailleTabDepense_];
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) {
 		listeDepenses_[i] = nullptr; // initialiser chaque depense dans le tableau a nullptr
 	}
 
@@ -26,11 +26,11 @@ Utilisateur::Utilisateur() :
 }
 Utilisateur::Utilisateur(string& nom) :
 	nom_(nom),
-	tailleTabDepense_(TAILLEDEPENSEINITIALE),
+	tailleTabDepense_(TAILLEDEPENSEUTILISATEUR),
 	nombreDepenses_(0),
 	totalDepense_(0) {
-	listeDepenses_ = new Depense*[TAILLEDEPENSEINITIALE];
-	for (unsigned int i = 0; i < TAILLEDEPENSEINITIALE; i++) {
+	listeDepenses_ = new Depense*[tailleTabDepense_];
+	for (unsigned int i = 0; i < tailleTabDepense_; i++) {
 		listeDepenses_[i] = nullptr; // initialiser chaque depense dans le tableau a nullptr
 	}
 }
@@ -92,7 +92,6 @@ void Utilisateur::ajouterDepense(Depense* uneDepense) {
 			temp[i] = listeDepenses_[i]; // copier les elements un a un dans le tableau temp
 		}
 		delete[] listeDepenses_; //supprime le tableau liste depense: il ne pointe plus sur rien
-
 		listeDepenses_ = temp; //liste depense et temp pointe sur les mm choses donc pas de fuite de memoire
 	}
 	listeDepenses_[nombreDepenses_] = uneDepense;
