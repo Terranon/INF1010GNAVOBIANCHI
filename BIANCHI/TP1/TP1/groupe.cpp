@@ -166,9 +166,8 @@ void Groupe::calculerTotalDepenses() {
 }
 
 /**
-* \brief equilibre les comptes entre les utilisateur
-*	premiere boucle for : rajoute les montants que chaques utilisateur doit au groupe
-*	deuxieme boucle for : egalise les montants pour que chaques utilisateur doit 0$
+* \brief equilibre les comptes entre les utilisateur egalise les montants pour
+*        que chaques utilisateur doit 0$
 */
 void Groupe::equilibrerComptes() {
 	comptes_ = new double[nombreUtilisateurs_];
