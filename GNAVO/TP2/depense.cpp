@@ -14,12 +14,17 @@ Depense::Depense() : nom_(""), montant_(0),lieu_(nullptr)
 }
 //le nom devrait donc avoir ete crer avant d'utiliser la reference constante;;;
 //passer le nom par refernce constante dans ma tet veut dire qu'on n'effectue pas de copie donc il copie dans nom_ directement la valeur entree en parametre?
-Depense::Depense(const string& nom, double montant,  string& lieu) : nom_(nom), montant_(montant),lieu_(&lieu)//pour que le lieu soit une adresse
+Depense::Depense(const string& nom, double montant, const string& lieu) :
+	nom_(nom),
+	montant_(montant),
+	lieu_(new string(lieu))//pour que le lieu soit une adresse
 {//lieu est un pointeur et sa variable affecte doit etre auusi un pointeur
 	//passer par reference constance implique t'il que 
 	//l'argument est une adresse??==c'est a dire un passage 
 	//d'un objet par reference constante signifie t'il
 	//que l'objet dans la liste d'initialisation est une adresse?
+	
+
 }
 Depense::Depense(const Depense& objetCopie) : nom_(objetCopie.nom_), montant_(objetCopie.montant_), lieu_(nullptr)
 {
@@ -47,8 +52,8 @@ void Depense::setNom(const string& nom) {
 void Depense::setMontant(double montant) {
 	montant_ = montant;
 }
-void Depense::setLieu( string& lieu) {
-	lieu_ = &lieu;//copie l'adreese de lieu dans l'attribue lieu
+void Depense::setLieu(const string& lieu) {
+	*lieu_ = lieu;//copie l'adreese de lieu dans l'attribue lieu 0u plutot donne au contenu pointer par lui 
 }
 Depense& Depense::operator=(const Depense & objetCopie)//il s'agit de definir un = pour l'attribution
 //doit je creer un nouvelle objet Depsense(exepmle depense objet) ou reutilsise  la depense ObjetCopie?
@@ -89,7 +94,7 @@ ostream& operator<<(ostream& os, const Depense& depense) //fonctions d'ou pas de
 {
 	
 	//on veut pouvoir afficher les depenses 
-	os << "Achat:" << depense.nom_ <<"Prix" << depense.montant_ << endl;
+	os << "Achat: " << depense.nom_ <<" Prix " << depense.montant_ << endl;
 
 	return os;
 

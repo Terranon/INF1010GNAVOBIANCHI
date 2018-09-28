@@ -9,48 +9,32 @@
 
 // Constructeurs
 Groupe::Groupe() :
-	nom_(""),
-	nombreDepenses_(0),
-	nombreUtilisateurs_(0),
-	tailleTabUtilisateurs_(5),
-	tailleTabDepenses_(10),
-	depenses_(new Depense*[tailleTabDepenses_]),
-	utilisateurs_(new Utilisateur*[tailleTabUtilisateurs_]),
-	comptes_(new double[nombreUtilisateurs_]),
-	transferts_(new Transfert*[nombreUtilisateurs_]),
-	nombreTransferts_(0)
+	nom_("")
+	
 {
 }
 
-Groupe::Groupe(const string& nom, unsigned int tailleTabDepenses, unsigned int tailleTabUtilisateurs) :
-	nom_(nom),
-	nombreDepenses_(0),
-	nombreUtilisateurs_(0),
-	tailleTabUtilisateurs_(tailleTabUtilisateurs),
-	tailleTabDepenses_(tailleTabDepenses),
-	depenses_(new Depense*[tailleTabDepenses]),
-	utilisateurs_(new Utilisateur*[tailleTabUtilisateurs]),
-	comptes_(new double[nombreUtilisateurs_]),
-	transferts_(new Transfert*[nombreUtilisateurs_]),
-	nombreTransferts_(0)
+Groupe::Groupe(const string& nom):
+	nom_(nom)
+
 {
 }
 
 
 Groupe::~Groupe() {
-	for (int i = 0; i < nombreTransferts_; i++) {
+	for (int i = 0; i < transferts_.size(); i++) {
 		delete transferts_[i];
 		transferts_[i] = nullptr;
 	}
-	delete[] transferts_;
-	transferts_ = nullptr;
 
-	delete[] depenses_;
-	depenses_ = nullptr;
+	
+
+	/*delete[] depenses_;
+	depenses_ = nullptr;*/  //c'est a la classe de depense de dtruire les elements de depenses
 
 
-	delete[] utilisateurs_;
-	utilisateurs_ = nullptr;
+	//delete[] utilisateurs_;
+	//utilisateurs_ = nullptr;
 
 }
 
@@ -61,12 +45,12 @@ string Groupe::getNom() const {
 }
 
 unsigned int Groupe::getNombreDepenses() const {
-	return nombreDepenses_;
+	return depenses_.size();
 }
 
 double Groupe::getTotalDepenses() const {
 	double total = 0;
-	for (int i = 0; i < nombreDepenses_; i++) {
+	for (unsigned int i = 0; i < depenses_.size(); i++) {
 		total += depenses_[i]->getMontant();
 	}
 	return total;
@@ -78,47 +62,57 @@ void Groupe::setNom(const string& nom) {
 }
 
 // Methodes d'ajout
-void Groupe::ajouterDepense(Depense* depense, Utilisateur* utilisateur) {
-	if (nombreDepenses_ >= tailleTabDepenses_) {
+Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* utilisateur) {
+	//if (nombreDepenses_ >= tailleTabDepenses_) {
 
-		tailleTabDepenses_ *= 2;
+	//	tailleTabDepenses_ *= 2;
 
-		Depense** listeTemp = new Depense*[tailleTabDepenses_];
+	//	Depense** listeTemp = new Depense*[tailleTabDepenses_];
 
-		for (unsigned int i = 0; i < nombreDepenses_; i++) {
-			listeTemp[i] = depenses_[i];
-		}
-		delete[] depenses_;
+	//	for (unsigned int i = 0; i < nombreDepenses_; i++) {
+	//		listeTemp[i] = depenses_[i];
+	//	}
+	//	delete[] depenses_;
 
-		depenses_ = listeTemp;
-	}
+	//	depenses_ = listeTemp;
+	//}
+	depenses_.push_back(depense);
 
-	depenses_[nombreDepenses_++] = depense;
-	utilisateur->ajouterDepense(depense);
+	//depenses_[nombreDepenses_++] = depense;
+	*utilisateur+=depense;/////////////////////////////////fauxxx
+	return *this;
+}
+Groupe& Groupe::operator+=( Utilisateur* utilisateur) {
+
+	utilisateurs_.push_back( utilisateur);
+
+	return *this;
 
 }
 
-void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur) {
-	if (nombreUtilisateurs_ >= tailleTabUtilisateurs_) {
-		tailleTabUtilisateurs_ *= 2;
+//void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur) {
+//	/*if (nombreUtilisateurs_ >= tailleTabUtilisateurs_) {
+//		tailleTabUtilisateurs_ *= 2;
+//
+//		Utilisateur** listeTemp = new Utilisateur*[tailleTabUtilisateurs_];
+//
+//		for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
+//			listeTemp[i] = utilisateurs_[i];
+//		}
+//		delete[] utilisateurs_;
+//
+//		utilisateurs_ = listeTemp;
+//	}
+//	utilisateurs_[nombreUtilisateurs_++] = unUtilisateur;*/
+//	utilisateurs_.push_back(unUtilisateur);
+//
 
-		Utilisateur** listeTemp = new Utilisateur*[tailleTabUtilisateurs_];
-
-		for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
-			listeTemp[i] = utilisateurs_[i];
-		}
-		delete[] utilisateurs_;
-
-		utilisateurs_ = listeTemp;
-	}
-	utilisateurs_[nombreUtilisateurs_++] = unUtilisateur;
-}
 
 void Groupe::calculerComptes()
 {
-	double moyenne = getTotalDepenses() / nombreUtilisateurs_;
-	for (int i = 0; i < nombreUtilisateurs_; i++) {
-		comptes_[i] = ((utilisateurs_[i]->getTotalDepenses()) - moyenne);
+	double moyenne = getTotalDepenses() / utilisateurs_.size();
+	for (unsigned int i = 0; i < utilisateurs_.size(); i++) {
+		comptes_.push_back ((utilisateurs_[i]->getTotalDepenses()) - moyenne);
 	}
 }
 
@@ -133,7 +127,7 @@ void Groupe::equilibrerComptes() {
 		int indexMin = 0;
 
 		// On cherche le compte le plus eleve et le moins eleve
-		for (int i = 0; i < nombreUtilisateurs_; i++) {
+		for (unsigned int i = 0; i < utilisateurs_.size(); i++) {
 			if (comptes_[i] > max) {
 				max = comptes_[i];
 				indexMax = i;
@@ -146,13 +140,13 @@ void Groupe::equilibrerComptes() {
 
 		// On cherche lequel des deux a la dette la plus grande
 		if (-min <= max) {
-			transferts_[nombreTransferts_++] = new Transfert(-min, utilisateurs_[indexMin], utilisateurs_[indexMax]);
+			transferts_.push_back(new Transfert(-min, utilisateurs_[indexMin], utilisateurs_[indexMax]));
 			comptes_[indexMax] += min;
 			comptes_[indexMin] = 0;
 		}
 		else {
-			transferts_[nombreTransferts_++] = new Transfert(max, utilisateurs_[indexMin], utilisateurs_[indexMax]);
-			comptes_[indexMax] = 0;
+			transferts_.push_back( new Transfert(max, utilisateurs_[indexMin], utilisateurs_[indexMax]));
+	        comptes_[indexMax] = 0;
 			comptes_[indexMin] += max;
 		}
 
@@ -161,31 +155,55 @@ void Groupe::equilibrerComptes() {
 		if (-min == max) {
 			count++;
 		}
-		if (count >= nombreUtilisateurs_ - 1) {
+		if (count >= (utilisateurs_.size()) - 1) {
 			calcul = false;
 		}
 	}
 }
 
 
-// Methode d'affichage
-void Groupe::afficherGroupe() const {
-	cout << "L'evenement " << nom_ << " a coute un total de " << getTotalDepenses() << " :  \n\n";
-	for (int i = 0; i < nombreUtilisateurs_; i++) {
-		utilisateurs_[i]->afficherUtilisateur();
-	}
-	cout << endl;
+// Methode d'affichage//}
 
-	if (nombreTransferts_ != 0) {
-		cout << "Les transferts suivants ont ete realiser pour equilibrer  : " << endl;
-		for (int i = 0; i < nombreTransferts_; i++) {
-			cout << "\t";
-			transferts_[i]->afficherTransfert();
+ostream& operator<<(ostream& os, const Groupe& groupe) 
+{
+	
+	os << "L'evenement " << groupe.nom_ << " a couté un total  de "<< groupe.getTotalDepenses() << " :  \n\n";
+	for (unsigned int i = 0; i < (groupe.utilisateurs_).size(); i++) {
+		os<< *groupe.utilisateurs_[i] << endl;;
+	}
+	
+
+	if (groupe.transferts_.size() != 0) {
+		os<< "Les transferts suivants ont ete realiser pour equilibrer  : " << endl;
+		for (unsigned int i = 0; i < groupe.transferts_.size(); i++) {
+			os << "\t";
+			 os<<*groupe.transferts_[i] ;
 		}
 	}
 	else {
-		cout << "Les comptes ne sont pas equilibres" << endl << endl;
+		os << "Les comptes ne sont pas equilibres" << endl << endl;
 	}
-	cout << endl;
+	os << endl;
+	return os;
 }
+
+//void Groupe::afficherGroupe() const {
+//	cout << "L'evenement " << nom_ << " a coute un total de " << getTotalDepenses() << " :  \n\n";
+//	for (int i = 0; i < nombreUtilisateurs_; i++) {
+//		utilisateurs_[i]->afficherUtilisateur();
+//	}
+//	cout << endl;
+//
+//	if (nombreTransferts_ != 0) {
+//		cout << "Les transferts suivants ont ete realiser pour equilibrer  : " << endl;
+//		for (int i = 0; i < nombreTransferts_; i++) {
+//			cout << "\t";
+//			transferts_[i]->afficherTransfert();
+//		}
+//	}
+//	else {
+//		cout << "Les comptes ne sont pas equilibres" << endl << endl;
+//	}
+//	cout << endl;
+//}
 

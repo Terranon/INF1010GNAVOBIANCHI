@@ -30,7 +30,7 @@ public:
 
 	// TODO: Remplacer par une surcharge de l'operateur <<
 	/*void afficherTransfert() const;*/
-	friend ostream& operator<<(ostream os,const Transfert& transfert);
+	friend ostream& operator<<(ostream& os,const Transfert& transfert);
 
 private:
 	double montant_;

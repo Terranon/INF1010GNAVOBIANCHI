@@ -9,14 +9,14 @@
 
 #include <string>
 #include "transfert.h"
-
+#include <vector>
 using namespace std;
 
 class Groupe {
 public:
 	// Constructeurs
 	Groupe();
-	Groupe(const string& nom, unsigned int tailleTabDepenses, unsigned int tailleTabUtilisateurs);
+	Groupe(const string& nom);
 
 	// Destructeur
 	~Groupe();
@@ -31,28 +31,30 @@ public:
 
 	// Methodes d'ajout
 	// TODO: Modifier pour utiliser la surcharge d'operateur
-	void ajouterDepense(Depense* depense, Utilisateur* utilisateur);
-	void ajouterUtilisateur(Utilisateur* utilisateur);
-
+	Groupe& ajouterDepense(Depense* depense, Utilisateur* utilisateur);
+	//void ajouterUtilisateur(Utilisateur* utilisateur);
+	Groupe& operator+=( Utilisateur* utilisateur);
+	
 	// Methodes de calcul
 	void calculerComptes();
 	void equilibrerComptes();
 
 	// TODO: Remplacer par une surcharge de l'operateur <<
-	void afficherGroupe() const;
+	 //void afficherGroupe() const;
+	friend  ostream& operator<<(ostream& os, const Groupe& groupe_);
 
 private:
 	string nom_;
 	// Remplacer les doubles pointeurs par des vecteurs
-	Utilisateur** utilisateurs_;
-	unsigned int nombreUtilisateurs_;
-	unsigned int tailleTabUtilisateurs_;
-	Depense** depenses_;
-	unsigned int nombreDepenses_;
-	unsigned int tailleTabDepenses_;
-	Transfert** transferts_;
-	unsigned int nombreTransferts_;
-	double* comptes_;
+	vector < Utilisateur*>utilisateurs_;
+	/*unsigned int nombreUtilisateurs_;
+	unsigned int tailleTabUtilisateurs_;*/
+	vector< Depense*> depenses_;//////////////vhangement
+	/*unsigned int nombreDepenses_;
+	unsigned int tailleTabDepenses_;*/
+	vector<Transfert*> transferts_;
+	//unsigned int nombreTransferts_;//size de transferts
+	vector <double> comptes_;
 
 };
 

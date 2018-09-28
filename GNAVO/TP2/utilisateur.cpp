@@ -112,14 +112,14 @@ Utilisateur& Utilisateur::operator=(const Utilisateur& utilisateur)
 //
 //}
 
- ostream& operator<<(ostream os, const Utilisateur& utilisateur)
+ ostream& operator<<(ostream& os, const Utilisateur& utilisateur)
 
 {
 	 os << "Utilisateur :" << utilisateur.getNom() << " a depense pour un total de: " << utilisateur.getTotalDepenses() << endl;
 	 os<<"\t Liste de depenses : " << endl;
-		 	for (int i = 0; i < utilisateur.depenses_.size(); i++) {
-				os << "\t\t" << utilisateur.depenses_[i]<<endl;//vu que l'operateur a ete defini 
+		 	for (unsigned int i = 0; i < utilisateur.depenses_.size(); i++) {
+				os << "\t\t" << *utilisateur.depenses_[i]<<endl;//vu que l'operateur a ete defini 
 				//pour depense il l'affichera bien
-	}
+	        }
 			return os;
 }
