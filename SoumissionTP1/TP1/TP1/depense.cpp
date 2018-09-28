@@ -58,5 +58,5 @@ void Depense::setMontant(double montant) {
 * \brief affiche le titre de la depense et son montant
 */
 void Depense::afficherDepense()const {
-	cout << " La depense effectue est :" << montant_ << "$ pour" << titre_ << endl;
+	cout << "La depense effectue est: " << montant_ << "$ pour " << titre_ << endl;
 }

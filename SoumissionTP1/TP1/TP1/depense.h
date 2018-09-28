@@ -37,7 +37,6 @@ public:
 private:
 	string titre_;
 	double montant_;
-
 };
 #endif
 
