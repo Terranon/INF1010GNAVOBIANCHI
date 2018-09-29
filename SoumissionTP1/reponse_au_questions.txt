@@ -1,0 +1,5 @@
+Question 1:
+Le lien entre les classes Groupe et Transfert consiste en une agrégation car Transfert est un objet qui est un attribut de la classe Groupe.
+
+Question 2:
+Une méthode qui a un const ne peut pas changer la valeur des paramètres qu'elle prend en entré. Elle peut par contre, les utiliser pour modifier une variables interne et la retourner.
