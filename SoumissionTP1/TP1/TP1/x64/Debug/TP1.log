@@ -1,5 +1,0 @@
-﻿  groupe.cpp
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\inf1010gnavobianchi\soumissiontp1\tp1\tp1\groupe.cpp(222): warning C4018: '<': signed/unsigned mismatch
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\inf1010gnavobianchi\soumissiontp1\tp1\tp1\groupe.cpp(225): warning C4018: '<': signed/unsigned mismatch
-c:\users\maximilien bianchi\documents\inf1010\inf1010gnavobianchi\inf1010gnavobianchi\soumissiontp1\tp1\tp1\groupe.cpp(231): warning C4018: '<': signed/unsigned mismatch
-  TP1.vcxproj -> C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\SoumissionTP1\TP1\x64\Debug\TP1.exe
