@@ -24,6 +24,11 @@ Depense::Depense(Depense& depense) :
 	lieu_(depense.getLieu()) {
 }
 
+Depense::~Depense() {
+	delete lieu_;
+	lieu_ = nullptr;
+}
+
 // Methodes d'acces
 string Depense::getNom() const {
 	return nom_;

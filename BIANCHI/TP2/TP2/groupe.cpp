@@ -17,6 +17,32 @@ Groupe::Groupe(const string& nom) :
 
 
 Groupe::~Groupe() {
+	unsigned int nombreUtilisateurs = utilisateurs_.size();
+	for (unsigned int i = 0; i < nombreUtilisateurs; i++) {
+		delete utilisateurs_[i];
+		utilisateurs_[i] = nullptr;
+	}
+	utilisateurs_.clear();
+	utilisateurs_.shrink_to_fit();
+
+	unsigned int nombreTransferts = transferts_.size();
+	for (unsigned int i = 0; i < nombreTransferts; i++) {
+		delete transferts_[i];
+		transferts_[i] = nullptr;
+	}
+	transferts_.clear();
+	transferts_.shrink_to_fit();
+
+	unsigned int nombreDepenses = depenses_.size();
+	for (unsigned int i = 0; i < nombreDepenses; i++) {
+		delete depenses_[i];
+		depenses_[i] = nullptr;
+	}
+	depenses_.clear();
+	depenses_.shrink_to_fit();
+
+	comptes_.clear();
+	comptes_.shrink_to_fit();
 }
 
 
@@ -26,12 +52,13 @@ string Groupe::getNom() const {
 }
 
 unsigned int Groupe::getNombreDepenses() const {
-	return nombreDepenses_;
+	return depenses_.size();
 }
 
 double Groupe::getTotalDepenses() const {
 	double total = 0;
-	for (int i = 0; i < nombreDepenses_; i++) {
+	unsigned int max = depenses_.size();
+	for (unsigned int i = 0; i < max; i++) {
 		total += depenses_[i]->getMontant();
 	}
 	return total;
@@ -43,47 +70,23 @@ void Groupe::setNom(const string& nom) {
 }
 
 // Methodes d'ajout
-void Groupe::ajouterDepense(Depense* depense, Utilisateur* utilisateur) {
-	if (nombreDepenses_ >= tailleTabDepenses_) {
-
-		tailleTabDepenses_ *= 2;
-
-		Depense** listeTemp = new Depense*[tailleTabDepenses_];
-
-		for (unsigned int i = 0; i < nombreDepenses_; i++) {
-			listeTemp[i] = depenses_[i];
-		}
-		delete[] depenses_;
-
-		depenses_ = listeTemp;
-	}
-
-	depenses_[nombreDepenses_++] = depense;
-	utilisateur->ajouterDepense(depense);
-
+Groupe Groupe::ajouterDepense(Depense* depense, Utilisateur* utilisateur) {
+	depenses_.push_back(depense);
+	*utilisateur += depense;
+	return *this;
 }
 
-void Groupe::ajouterUtilisateur(Utilisateur* unUtilisateur) {
-	if (nombreUtilisateurs_ >= tailleTabUtilisateurs_) {
-		tailleTabUtilisateurs_ *= 2;
-
-		Utilisateur** listeTemp = new Utilisateur*[tailleTabUtilisateurs_];
-
-		for (unsigned int i = 0; i < nombreUtilisateurs_; i++) {
-			listeTemp[i] = utilisateurs_[i];
-		}
-		delete[] utilisateurs_;
-
-		utilisateurs_ = listeTemp;
-	}
-	utilisateurs_[nombreUtilisateurs_++] = unUtilisateur;
+Groupe Groupe::operator+=(Utilisateur* unUtilisateur) {
+	utilisateurs_.push_back(unUtilisateur);
+	return *this;
 }
 
-void Groupe::calculerComptes()
-{
-	double moyenne = getTotalDepenses() / nombreUtilisateurs_;
-	for (int i = 0; i < nombreUtilisateurs_; i++) {
-		comptes_[i] = ((utilisateurs_[i]->getTotalDepenses()) - moyenne);
+void Groupe::calculerComptes() {
+	unsigned int totalDepenses = getTotalDepenses();
+	unsigned int nombreUtilisateurs = utilisateurs_.size();
+	double moyenne = totalDepenses / nombreUtilisateurs;
+	for (int i = 0; i < nombreUtilisateurs; i++) {
+		comptes_.push_back((utilisateurs_[i]->getTotalDepenses()) - moyenne);
 	}
 }
 
@@ -91,6 +94,7 @@ void Groupe::equilibrerComptes() {
 	calculerComptes();
 	bool calcul = true;
 	int count = 0;
+	unsigned int nombreUtilisateurs = utilisateurs_.size();
 	while (calcul) {
 		double max = 0;
 		double min = 0;
@@ -98,7 +102,7 @@ void Groupe::equilibrerComptes() {
 		int indexMin = 0;
 
 		// On cherche le compte le plus eleve et le moins eleve
-		for (int i = 0; i < nombreUtilisateurs_; i++) {
+		for (int i = 0; i < nombreUtilisateurs; i++) {
 			if (comptes_[i] > max) {
 				max = comptes_[i];
 				indexMax = i;
@@ -111,12 +115,14 @@ void Groupe::equilibrerComptes() {
 
 		// On cherche lequel des deux a la dette la plus grande
 		if (-min <= max) {
-			transferts_[nombreTransferts_++] = new Transfert(-min, utilisateurs_[indexMin], utilisateurs_[indexMax]);
+			Transfert transfertMin(-min, utilisateurs_[indexMin], utilisateurs_[indexMax]);
+			transferts_.push_back(&transfertMin);
 			comptes_[indexMax] += min;
 			comptes_[indexMin] = 0;
 		}
 		else {
-			transferts_[nombreTransferts_++] = new Transfert(max, utilisateurs_[indexMin], utilisateurs_[indexMax]);
+			Transfert transfertMax(max, utilisateurs_[indexMin], utilisateurs_[indexMax]);
+			transferts_.push_back(&transfertMax);
 			comptes_[indexMax] = 0;
 			comptes_[indexMin] += max;
 		}
@@ -126,7 +132,7 @@ void Groupe::equilibrerComptes() {
 		if (-min == max) {
 			count++;
 		}
-		if (count >= nombreUtilisateurs_ - 1) {
+		if (count >= nombreUtilisateurs - 1) {
 			calcul = false;
 		}
 	}
@@ -134,22 +140,25 @@ void Groupe::equilibrerComptes() {
 
 
 // Methode d'affichage
-void Groupe::afficherGroupe() const {
+Groupe Groupe::operator<<(Groupe* groupe) const {
 	cout << "L'evenement " << nom_ << " a coute un total de " << getTotalDepenses() << " :  \n\n";
-	for (int i = 0; i < nombreUtilisateurs_; i++) {
-		utilisateurs_[i]->afficherUtilisateur();
+	unsigned int nombreUtilisateurs = utilisateurs_.size();
+	for (int i = 0; i < nombreUtilisateurs; i++) {
+		cout << utilisateurs_[i];
 	}
 	cout << endl;
 
-	if (nombreTransferts_ != 0) {
+	unsigned int nombreTransferts = transferts_.size();
+	if (nombreTransferts != 0) {
 		cout << "Les transferts suivants ont ete realiser pour equilibrer  : " << endl;
-		for (int i = 0; i < nombreTransferts_; i++) {
+		for (int i = 0; i < nombreTransferts; i++) {
 			cout << "\t";
-			transferts_[i]->afficherTransfert();
+			cout << transferts_[i];
 		}
 	}
 	else {
 		cout << "Les comptes ne sont pas equilibres" << endl << endl;
 	}
 	cout << endl;
+	return *this;
 }

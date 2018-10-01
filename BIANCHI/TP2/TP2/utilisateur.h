@@ -41,7 +41,7 @@ public:
 
 	// TODO: Remplacer par une surcharge de l'operateur <<
 	//void afficherUtilisateur() const;
-	Utilisateur operator<<(const Utilisateur& utilisateur);
+	friend ostream& operator<<(ostream& os, const Utilisateur& utilisateur);
 
 private:
 	string nom_;

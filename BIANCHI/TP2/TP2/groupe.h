@@ -31,15 +31,15 @@ public:
 
 	// Methodes d'ajout
 	// TODO: Modifier pour utiliser la surcharge d'operateur
-	void ajouterDepense(Depense* depense, Utilisateur* utilisateur);
-	void ajouterUtilisateur(Utilisateur* utilisateur);
+	Groupe ajouterDepense(Depense* depense, Utilisateur* utilisateur);
+	Groupe operator+=(Utilisateur* utilisateur);
 
 	// Methodes de calcul
 	void calculerComptes();
 	void equilibrerComptes();
 
 	// TODO: Remplacer par une surcharge de l'operateur <<
-	void afficherGroupe() const;
+	Groupe operator<<(Groupe* groupe) const;
 
 private:
 	string nom_;
@@ -47,8 +47,7 @@ private:
 	vector<Utilisateur*> utilisateurs_;
 	vector<Depense*> depenses_;
 	vector<Transfert*> transferts_;
-	double* comptes_;
-
+	vector<double> comptes_;
 };
 
 #endif

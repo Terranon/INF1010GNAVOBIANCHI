@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="depense.cpp" />
     <ClCompile Include="groupe.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="transfert.cpp" />
     <ClCompile Include="utilisateur.cpp" />
   </ItemGroup>

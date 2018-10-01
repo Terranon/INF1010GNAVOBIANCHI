@@ -22,6 +22,8 @@ public:
 	// TODO: Ajouter un constructeur par copie
 	Depense(Depense& depense);
 
+	~Depense();
+
 	// Methodes d'acces
 	string getNom() const;
 	double getMontant() const;

@@ -22,6 +22,13 @@ Utilisateur::Utilisateur(const Utilisateur& utilisateur) :
 
 //Destructeur
 Utilisateur::~Utilisateur() {
+	unsigned int nombreDepenses = depenses_.size();
+	for (unsigned int i = 0; i < nombreDepenses; i++) {
+		delete depenses_[i];
+		depenses_[i] = nullptr;
+	}
+	depenses_.clear();
+	depenses_.shrink_to_fit();
 }
 
 // Methodes d'acces
@@ -78,14 +85,14 @@ Utilisateur Utilisateur::operator=(const Utilisateur& utilisateur) {
 }
 
 // Methode d'affichage
-Utilisateur Utilisateur::operator<<(const Utilisateur& utilisateur) {
-	cout << "Utilisateur : " << nom_ << " a depense pour un total de : " << getTotalDepenses() << endl;
-	cout << "\t Liste de depenses : " << endl;
-	unsigned int max = this->depenses_.size();
-	for (unsigned int i = 0; i < max; i++) {
-		cout << "\t\t";
-		cout << depenses_[i];
+ostream& operator<<(ostream& os, const Utilisateur& utilisateur) {
+	os << "Utilisateur :" << utilisateur.getNom() << " a depense pour un total de: " << utilisateur.getTotalDepenses() << endl;
+	os << "\t Liste de depenses : " << endl;
+	for (unsigned int i = 0; i < utilisateur.depenses_.size(); i++) {
+		os << "\t\t" << *utilisateur.depenses_[i] << endl;//vu que l'operateur a ete defini 
+														  //pour depense il l'affichera bien
 	}
+	return os;
 }
 
 //void Utilisateur::afficherUtilisateur() const {

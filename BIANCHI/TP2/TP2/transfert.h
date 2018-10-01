@@ -17,6 +17,8 @@ public:
 	Transfert();
 	Transfert(double montant, Utilisateur* expediteur, Utilisateur* receveur_);
 
+	~Transfert();
+
 	// Méthodes d'accès
 	Utilisateur* getExpediteur() const;
 	Utilisateur* getReceveur() const;
@@ -36,7 +38,5 @@ private:
 	double montant_;
 	Utilisateur* expediteur_;
 	Utilisateur* receveur_;
-
-
 };
 #endif

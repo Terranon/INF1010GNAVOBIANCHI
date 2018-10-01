@@ -19,6 +19,13 @@ Transfert::Transfert(double montant, Utilisateur* expediteur, Utilisateur* recev
 	receveur_(receveur) {
 }
 
+Transfert::~Transfert() {
+	delete expediteur_;
+	expediteur_ = nullptr;
+	delete receveur_;
+	receveur_ = nullptr;
+}
+
 // Methodes d'acces
 double Transfert::getMontant() const {
 	return montant_;
@@ -49,6 +56,7 @@ void Transfert::setReceveur(Utilisateur *receveur) {
 Transfert Transfert::operator<<(const Transfert& transfert) {
 	cout << "Transfert fait par " << expediteur_->getNom() << " vers " << receveur_->getNom()
 		<< " d'un montant de " << montant_ << endl;
+	return *this;
 }
 
 //void Transfert::afficherTransfert() const {
