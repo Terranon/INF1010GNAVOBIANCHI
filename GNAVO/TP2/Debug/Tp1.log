@@ -1,2 +1,7 @@
-﻿  transfert.cpp
-c:\users\serge\desktop\tp2\transfert.cpp(51): error C4716: 'operator<<' : doit retourner une valeur
+﻿  utilisateur.cpp
+c:\users\serge\desktop\tp2\utilisateur.cpp(26): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp2\utilisateur.cpp(35): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp2\utilisateur.cpp(56): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp2\utilisateur.cpp(91): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\serge\desktop\tp2\utilisateur.cpp(100): warning C4018: '<' : incompatibilité signed/unsigned
+  Tp1.vcxproj -> C:\Users\serge\Desktop\TP2\Debug\Tp1.exe

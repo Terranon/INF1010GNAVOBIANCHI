@@ -26,9 +26,25 @@ Groupe::~Groupe() {
 		delete transferts_[i];
 		transferts_[i] = nullptr;
 	}
+	transferts_.clear();
+	transferts_.shrink_to_fit();
 
-	
+	for (int i = 0; i < depenses_.size(); i++) {
+		delete depenses_.[i];
+		depenses_[i] = nullptr;
+	}
+	depenses_.clear();
+	depenses_.shrink_to_fit();
 
+	for (int i = 0; i < utilisateurs_.size(); i++) {
+		delete utilisateurs_[i];
+		utilisateurs_[i] = nullptr;
+	}
+	utilisateurs_.clear();
+	utilisateurs_.shrink_to_fit();
+
+	comptes_.clear();
+	comptes_.shrink_to_fit();
 	/*delete[] depenses_;
 	depenses_ = nullptr;*/  //c'est a la classe de depense de dtruire les elements de depenses
 

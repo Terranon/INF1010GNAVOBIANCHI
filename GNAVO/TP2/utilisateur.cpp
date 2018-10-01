@@ -32,10 +32,11 @@ Utilisateur::Utilisateur(const Utilisateur& objetCopie)
 }
 //Destructeur
 Utilisateur::~Utilisateur() {
-	for (int i = 0; i < depenses_.size(); i++)
-	{
+	for (int i = 0; i < depenses_.size(); i++) {
 		delete depenses_[i]; depenses_[i] = nullptr;
 	}
+	depenses_.clear();
+	depenses_.shrink_to_fit();
 	
 	// delete depenses_;
 	//depenses_ = nullptr;
@@ -87,8 +88,13 @@ Utilisateur& Utilisateur::operator=(const Utilisateur& utilisateur)
 {
 	if (this != &utilisateur) {
 
-		for (int i=0; i < depenses_.size(); i++)
+		for (int i=0; i < depenses_.size(); i++) 
+		{
 			delete depenses_[i];
+		depenses_[i]=nullptr;
+		depenses_.pop_back();//reduire la taille du vecteyr a 0
+
+		}
 		//delete[] depenses_;//impossible car depenses est un tableau automatique de pointeur depenses* c'est un peu comme si on veut delete int car on a vector <int*>int
 		nom_ = utilisateur.nom_;
 		for (int i=0; i < depenses_.size(); i++)
