@@ -1,0 +1,6 @@
+Question 1:
+Les deux permets une copie d'un objet déjà existant, attribut par attribut.
+
+Question 2:
+Pour l'opérateur =, les deux objets doivent déjà exister. Cet-à-dire, que l'espace mémoire des deux objets est déjà alloueur.
+Pour le constructeur par copie, seul l'objet qui est en paramêtre du constructeur doit déjà exister.
