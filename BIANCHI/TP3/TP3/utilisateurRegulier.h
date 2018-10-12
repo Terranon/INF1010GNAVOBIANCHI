@@ -15,20 +15,16 @@ public:
 	UtilisateurRegulier(const string& nom = "");
 	UtilisateurRegulier(const Utilisateur& utilisateur);
 
-
-	//getters
-	bool estGroupe() const;
+	// getters
+	bool getEstGroupe() const;
 
 	//setters
 	void setEtatGroupe(bool etat);
 
-
-	//surcharge
+	// surcharge
 	UtilisateurRegulier& operator=(Utilisateur* utilisateur);
 	friend ostream& operator<< (ostream& os, const UtilisateurRegulier& utilisateur);
 private:
 	bool estGroupe_;
-
 };
-
 #endif // !UTILISATEUR_REGULIER_H

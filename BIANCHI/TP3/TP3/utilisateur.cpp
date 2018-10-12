@@ -95,8 +95,8 @@ Utilisateur& Utilisateur::operator=(Utilisateur* utilisateur) {
 
 // Methode d'affichage
 ostream& operator<<(ostream& os, const Utilisateur& utilisateur) {
-	os << "L'utilisateur " << utilisateur.getNom() << " avec un interet de "
-		<< utilisateur.getInteret() << "$ a les depenses suivantes: " << endl;
+	os << "L'utilisateur " << utilisateur.getNom() << " qui dois un interet de "
+		<< utilisateur.getInteret() << "$, a fait les depenses suivantes:" << endl;
 	unsigned int nombreDeDepenses = utilisateur.getNombreDepenses();
 	for (unsigned int i = 0; i < nombreDeDepenses; i++) {
 		os << utilisateur.depenses_[i] << endl;

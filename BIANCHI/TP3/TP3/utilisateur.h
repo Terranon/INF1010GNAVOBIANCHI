@@ -26,7 +26,7 @@ public:
 	Utilisateur(const string& nom = "", TypeUtilisateur type = Regulier);
 	Utilisateur(const Utilisateur& utilisateur);
 
-	//destructeur 
+	// Destructeur 
 	~Utilisateur();
 
 	// Methodes d'accès

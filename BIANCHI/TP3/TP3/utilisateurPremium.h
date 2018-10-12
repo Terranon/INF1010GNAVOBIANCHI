@@ -9,14 +9,12 @@
 
 #include "utilisateur.h"
 
-
 class UtilisateurPremium : public Utilisateur {
 public:
 
 	//constructeurs 
 	UtilisateurPremium(const string& nom = "");
 	UtilisateurPremium(const Utilisateur& utilisateur);
-
 
 	//getters
 	unsigned int getJoursRestants() const;
@@ -29,13 +27,11 @@ public:
 	void calculerTaux();
 
 	//operateurs
-	UtilisateurPremium& operator= (Utilisateur* utilisateur);
-
-	friend ostream& operator << (ostream& os, const UtilisateurPremium& utilisateur);
+	UtilisateurPremium& operator=(Utilisateur* utilisateur);
+	friend ostream& operator<<(ostream& os, const UtilisateurPremium& utilisateur);
 
 private:
 	unsigned int joursRestants_;
 	double taux_;
 };
-
 #endif 
