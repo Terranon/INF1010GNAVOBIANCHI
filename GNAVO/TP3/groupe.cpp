@@ -21,8 +21,10 @@ Groupe::Groupe() {
 Groupe::Groupe(const string& nom) : nom_(nom) {
 }
 
-Groupe::~Groupe() {
-	for (int i = 0; i < transferts_.size(); i++) {
+Groupe::~Groupe() 
+{
+	for (unsigned int i = 0; i < transferts_.size(); i++) 
+	{
 		delete transferts_[i];
 	}
 }
@@ -62,12 +64,72 @@ void Groupe::setNom(const string& nom) {
 // Methodes d'ajout
 Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour)
 {
+	bool condition =true;
+	//Verifier que tous les utilisateurs concernés soient là.
+	if (payePar == nullptr)
+		condition = false;
+	for(unsigned int i =0;i<payePour.size();i++)
+	{
+		if (payePour[i] == nullptr)
+			condition = false;
+	}
+	//Verifie que la dépense soit bien une DepenseGroupe
+	if (depense->getType() != groupe)
+		condition = false;
+	
 
+
+
+   //Si tout est bon
+	if (condition == true)
+	{
+		//Ajoute la dépense aux utilisateurs concernés 
+		for (unsigned int i = 0; i < payePour.size(); i++)
+		{
+			*payePour[i] += depense;
+
+		//Mets à jour les comptes des utilisateurs concernés
+
+			//depense de l'utilisateur - depense moyenne ;depense moyenne =depense total du groupe/bombre d'utilisateur
+			//comptes_[i] = payePour[i]->getTotalDepenses() -( (getTotalDepenses() + depense->getMontant())/ payePour.size());
+			
+			comptes_.push_back(payePour[i]->getTotalDepenses() - ((getTotalDepenses() + depense->getMontant()) / payePour.size()));
+		//Ajoute la dépense au groupe 
+			//probleme le groupe neprend que des depenses personnels
+			//comment  transformer en depense personnel
+			
+
+		}	
+		//transformation en depense groupe --perte des methodes puiscopie avec constructeur parc poe
+		DepenseGroupe* r((static_cast<DepenseGroupe*>(depense)));
+		depenses_.push_back(r);
+		//ajouter le nombre de participants
+	//r
+		//depenses_.push_back(depense);
+		//essayer de transformer classe erivee en classe de base en utilisant le constructeur par copie
+		//DepenseGroupe *p= new DepenseGroupe(depense->getNom(),depense->getMontant(),*depense->getLieu());
+		//depenses_.push_back(p);
+	
+		//	depenses_.push_back(dynamic_cast<DepenseGroupe*>(depense));
+
+		
+				
+		//ajouter une classe
+	}	
+	//Sinon affiche une erreur
+	else
+		cout << "Erreur.impossible d'ajouter depense " << endl;
+		
+	return *this;
 }
 
 Groupe& Groupe::operator+=(Utilisateur* utilisateur)
 {
-
+	//if((utilisateur->getType()==Premium)
+	utilisateurs_.push_back(utilisateur);
+	
+	//if( (utilisateur->getType() == Regulier)&&(utilisateur.))
+	return *this;
 }
 
 void Groupe::equilibrerComptes() {
@@ -81,7 +143,7 @@ void Groupe::equilibrerComptes() {
 		int indexMin = 0;
 
 		// On cherche le compte le plus eleve et le moins eleve
-		for (int i = 0; i < utilisateurs_.size(); i++) {
+		for (unsigned int i = 0; i < utilisateurs_.size(); i++) {
 			if (comptes_[i] > max) {
 				max = comptes_[i];
 				indexMax = i;
@@ -119,13 +181,30 @@ void Groupe::equilibrerComptes() {
 
 }
 
-void Groupe::calculerTotalDepense() {
-
+void Groupe::calculerTotalDepense() 
+{
+	totalDepenses_ = 0;
+	for (unsigned int i = 0; i < depenses_.size(); i++)
+		totalDepenses_ += depenses_[i]->getMontantPersonnel();
 
 }
 
 // Methode d'affichage
 ostream & operator<<(ostream& os, const Groupe& groupe)
 {
+	for (unsigned int i = 0; i < groupe.utilisateurs_.size(); i++)
+		os << *groupe.utilisateurs_[i]<<endl;
 
+	for (unsigned int i = 0; i < groupe.transferts_.size(); i++)
+		os << *groupe.transferts_[i] << endl;
+
+
+	for (unsigned int i = 0; i < groupe.comptes_.size(); i++)
+	{ 
+		if (groupe.comptes_[i] !=0)
+		os <<"le compte"<<i<<"a pour valeur"<< groupe.comptes_[i] << endl;
+	}
+
+
+	return os;
 }

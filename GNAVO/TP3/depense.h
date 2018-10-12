@@ -19,9 +19,9 @@ enum TypeDepense { groupe, individuelle };
 class Depense {
 public:
 	// Constructeurs
-
-	Depense(const string& nom = "", double montant = 0, const string& lieu = "Montreal", TypeDepense type=individuelle);
-	Depense(const Depense& depensecopie);
+	
+	Depense(const string& nom = "", double montant = 0, const string& lieu = "Montreal");
+	Depense(const Depense& depense);
 
 	// Destructeur 
 	~Depense();

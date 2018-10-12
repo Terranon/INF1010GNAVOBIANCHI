@@ -3,17 +3,20 @@
 
 
 
-DepenseGroupe::DepenseGroupe(const string& nom , double montant , const string& lieu ,const string& type) : Depense(nom , montant , lieu)//appel au constructeur de depense 
+DepenseGroupe::DepenseGroupe(const string& nom , double montant , const string& lieu ): Depense(nom , montant , lieu),nombreParticipants_( 0)
+//appel au constructeur de depense 
 {
 
-	nombreParticipants_ = 0;
-
+	setType(groupe);
+	
+	
 
 }
 DepenseGroupe::DepenseGroupe(const DepenseGroupe& depense):Depense(depense)
 {
-
-
+	/*setNom(depense.getNom());
+	setMontant(depense.getMontant());*/
+    setType(groupe);
 }
 
 unsigned int DepenseGroupe:: getNombreParticipants() const {
@@ -24,10 +27,17 @@ unsigned int DepenseGroupe:: getNombreParticipants() const {
 
 
 double DepenseGroupe::getMontantPersonnel() const {
-	if (nombreParticipants_ == 0)
-		return  0;
+	double montantpersonnel;
+	/*if (nombreParticipants_ == 0)
+		return   nombreParticipants_;
 	else
-		return (Depense::getMontant()) / nombreParticipants_;
+		return getMontant() / nombreParticipants_;
+		*/
+	if (nombreParticipants_ == 0)
+		montantpersonnel = 0;
+	else
+		montantpersonnel=getMontant() / nombreParticipants_;
+	return montantpersonnel;
 }
 
 //setters
