@@ -7,16 +7,16 @@
 #include "utilisateur.h"
 
 // Constructeurs
-Utilisateur::Utilisateur() :
-	nom_(""),
-	type_(Regulier) {
-}
-Utilisateur::Utilisateur(const string& nom = "", TypeUtilisateur type = Regulier) :
+Utilisateur::Utilisateur(const string& nom, TypeUtilisateur type) :
+	interet_(0),
 	nom_(nom),
-	type_(type) {
+	type_(type)	{
 }
-Utilisateur::Utilisateur(const Utilisateur& utilisateur) {
-	*this = utilisateur;
+Utilisateur::Utilisateur(const Utilisateur& utilisateur) :
+	interet_(utilisateur.interet_),
+	nom_(utilisateur.nom_),
+	type_(utilisateur.type_) {
+	setDepenses(utilisateur.depenses_);
 }
 
 Utilisateur::~Utilisateur() {
@@ -59,7 +59,7 @@ void Utilisateur::setNom(const string& nom) {
 void Utilisateur::setType(const TypeUtilisateur& type) {
 	type_ = type;
 }
-void Utilisateur::setDepenses(const vector <Depense*> depenses) {
+void Utilisateur::setDepenses(const vector<Depense*> depenses) {
 	unsigned int nombreDeDepenses = getNombreDepenses();
 	for (unsigned int i = 0; i < nombreDeDepenses; i++) {
 		delete depenses_[i];
@@ -68,7 +68,7 @@ void Utilisateur::setDepenses(const vector <Depense*> depenses) {
 	depenses_.clear();
 	depenses_.shrink_to_fit();
 	for (unsigned int j = 0; nombreDeDepenses; j++) {
-		depenses_.push_back(depenses[j]);
+		depenses_.push_back(new Depense(*depenses[j]));
 	}
 }
 void Utilisateur::calculerTotalDepenses() {
@@ -84,13 +84,17 @@ void Utilisateur::ajouterInteret(double montant) {
 // Operateurs
 Utilisateur& Utilisateur::operator+=(Depense* depense) {
 	depenses_.push_back(depense);
+	return *this;
 }
 Utilisateur& Utilisateur::operator=(Utilisateur* utilisateur) {
-	setInteret(utilisateur->getInteret());
-	setNom(utilisateur->getNom());
-	setType(utilisateur->getType());
-	setDepenses(utilisateur->getDepenses());
-	calculerTotalDepenses();
+	if (this != utilisateur) {
+		setInteret(utilisateur->getInteret());
+		setNom(utilisateur->getNom());
+		setType(utilisateur->getType());
+		setDepenses(utilisateur->getDepenses());
+		calculerTotalDepenses();
+	}
+	return *this;
 }
 
 // Methode d'affichage

@@ -27,9 +27,12 @@ public:
 
 	// Methodes d'acces
 	string getNom() const;
-	vector<DepenseGroupe*> getDepenses() const;
 	vector<Utilisateur*> getUtilisateurs() const;
+	unsigned int getNombreUtilisateurs() const;
+	vector<DepenseGroupe*> getDepenses() const;
+	unsigned int getNombreDepenses() const;
 	vector<Transfert*> getTransferts() const;
+	unsigned int getNombreTransferts() const;
 	double getTotalDepenses() const;
 
 	// Methodes de modification

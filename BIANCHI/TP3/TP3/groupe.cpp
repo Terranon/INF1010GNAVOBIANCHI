@@ -8,16 +8,34 @@
 
 // Constructeurs
 
-Groupe::Groupe() {
-	nom_ = "";
+Groupe::Groupe() : 
+	nom_("") {
 }
-Groupe::Groupe(const string& nom) : nom_(nom) {
+Groupe::Groupe(const string& nom) : 
+	nom_(nom) {
 }
 
 Groupe::~Groupe() {
-	for (int i = 0; i < transferts_.size(); i++) {
-		delete transferts_[i];
+	for(unsigned int i = 0; i < utilisateurs_.size(); i++) {
+		delete utilisateurs_[i];
+		utilisateurs_[i] = nullptr;
 	}
+	utilisateurs_.clear();
+	utilisateurs_.shrink_to_fit();
+	for(unsigned int j = 0; j < depenses_.size(); j++) {
+		delete depenses_[j];
+		depenses_[j] = nullptr;
+	}
+	depenses_.clear();
+	depenses_.shrink_to_fit();
+	for(unsigned int k = 0; k < transferts_.size(); k++) {
+		delete transferts_[k];
+		transferts_[k] = nullptr;
+	}
+	transferts_.clear();
+	transferts_.shrink_to_fit();
+	comptes_.clear();
+	comptes_.shrink_to_fit();
 }
 
 
@@ -26,22 +44,29 @@ string Groupe::getNom() const {
 	return nom_;
 }
 
-vector<DepenseGroupe*> Groupe::getDepenses() const
-{
-	return depenses_;
-}
-
-vector<Utilisateur*> Groupe::getUtilisateurs() const
-{
+vector<Utilisateur*> Groupe::getUtilisateurs() const {
 	return utilisateurs_;
 }
-
-vector<Transfert*> Groupe::getTransferts() const
-{
-	return transferts_;
+unsigned int Groupe::getNombreUtilisateurs() const {
+	unsigned int nombreDUtilisateurs = utilisateurs_.size();
+	return nombreDUtilisateurs;
 }
 
+vector<DepenseGroupe*> Groupe::getDepenses() const {
+	return depenses_;
+}
+unsigned int Groupe::getNombreDepenses() const {
+	unsigned int nombreDeDepenses = depenses_.size();
+	return nombreDeDepenses;
+}
 
+vector<Transfert*> Groupe::getTransferts() const {
+	return transferts_;
+}
+unsigned int Groupe::getNombreTransferts() const {
+	unsigned int nombreDeTransferts = transferts_.size();
+	return nombreDeTransferts;
+}
 double Groupe::getTotalDepenses() const {
 
 	return totalDepenses_;
@@ -53,13 +78,49 @@ void Groupe::setNom(const string& nom) {
 }
 
 // Methodes d'ajout
-Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour)
-{
-
+Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour) {
+	// TODO: Verifier que tous les utilisateurs concernés soient là.
+	bool utilisateurTrouve = false;
+	string nomUtilisateursEntre = payePar->getNom();
+	for (unsigned int i = 0; i < getNombreUtilisateurs() || !utilisateurTrouve; i++) {
+		if (utilisateurs_[i]->getNom() == nomUtilisateursEntre) {
+			utilisateurTrouve = true;
+		}
+	}
+	if (!utilisateurTrouve) { // TODO: Sinon affiche une erreur
+		cout << "Erreur: L'utilisateur qui fait la depense est introuvable.";
+	}
+	else {
+		unsigned int nombreDUtilisateurValide = 0;
+		for (unsigned int j = 0; j < getNombreUtilisateurs(); j++) {
+			if (utilisateurs_[j]->getNom() == payePour[j]->getNom()) {
+				nombreDUtilisateurValide++;
+			}
+		}
+		if (getNombreUtilisateurs() != nombreDUtilisateurValide) { // TODO: Sinon affiche une erreur
+			cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe present.";
+		}
+		else { // TODO: Verifie que la dépense soit bien une DepenseGroupe
+			if (depense->getType() != groupe) { // TODO: Sinon affiche une erreur
+				cout << "Erreur: La depense n'est pas de type 'DepenseGroupe'.";
+			}
+			else { // TODO: Si tout est bon : Ajoute la dépense aux utilisateurs concernés
+				DepenseGroupe* depenseGroupe;
+				*depenseGroupe = static_cast<DepenseGroupe>(*depense);
+				depenseGroupe->setNombreParticipants(payePour.size());
+				*payePar += depenseGroupe;
+				// TODO: Mets à jour les comptes des utilisateurs concernés
+				calculerTotalDepense();
+				equilibrerComptes();
+				// TODO: Ajoute la dépense au groupe
+				depenses_.push_back(depenseGroupe);
+			}
+		}
+	}
+	return *this;
 }
 
-Groupe& Groupe::operator+=(Utilisateur* utilisateur)
-{
+Groupe& Groupe::operator+=(Utilisateur* utilisateur) {
 
 }
 
@@ -118,7 +179,6 @@ void Groupe::calculerTotalDepense() {
 }
 
 // Methode d'affichage
-ostream & operator<<(ostream& os, const Groupe& groupe)
-{
+ostream & operator<<(ostream& os, const Groupe& groupe) {
 
 }

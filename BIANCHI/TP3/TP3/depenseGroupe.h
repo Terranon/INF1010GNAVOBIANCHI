@@ -16,9 +16,9 @@ using namespace std;
 class DepenseGroupe : public Depense {
 public:
 	//constructeur
-	DepenseGroupe();
 	DepenseGroupe(const string& nom = "", double montant = 0, const string& lieu = "Montreal");
 	DepenseGroupe(const DepenseGroupe& depense);
+	DepenseGroupe(const Depense& depense); // Rajout de se constructeur pou faciliter le static_cast
 
 	//getters 
 	unsigned int getNombreParticipants() const;
@@ -28,6 +28,7 @@ public:
 	void setNombreParticipants(unsigned int nombre);
 
 	//surcharge 
+	DepenseGroupe& operator=(const DepenseGroupe& depense);
 	friend ostream& operator<<(ostream& os, const DepenseGroupe& depense);
 
 private:
