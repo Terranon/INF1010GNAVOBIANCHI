@@ -23,6 +23,7 @@ class Utilisateur {
 public:
 	// Constructeurs
 	//Utilisateur();
+	//Utilisateur();
 	Utilisateur(const string& nom = "", TypeUtilisateur type = Regulier);
 	Utilisateur(const Utilisateur& utilisateur);
 
@@ -39,9 +40,10 @@ public:
 
 	// Methodes de modification
 	void setNom(const string& nom);
+	void setInteret(const double &interet);
 	void ajouterInteret(double montant);
 	void calculerTotalDepenses();
-
+	void setType(TypeUtilisateur type);
 	Utilisateur& operator+=(Depense* depense);
 	Utilisateur& operator=(Utilisateur* utilisateur);
 
