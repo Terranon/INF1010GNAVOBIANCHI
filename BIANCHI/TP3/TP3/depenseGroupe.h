@@ -15,24 +15,23 @@ using namespace std;
 
 class DepenseGroupe : public Depense {
 public:
-	//constructeur
+	// Constructeur
 	DepenseGroupe(const string& nom = "", double montant = 0, const string& lieu = "Montreal");
 	DepenseGroupe(const DepenseGroupe& depense);
 	DepenseGroupe(const Depense& depense); // Rajout de se constructeur pou faciliter le static_cast
 
-	//getters 
+	// Getters 
 	unsigned int getNombreParticipants() const;
 	double getMontantPersonnel() const;
 
-	//setters
+	// Setters
 	void setNombreParticipants(unsigned int nombre);
 
-	//surcharge 
-	DepenseGroupe& operator=(const DepenseGroupe& depense);
+	// Surcharge 
 	friend ostream& operator<<(ostream& os, const DepenseGroupe& depense);
 
 private:
-	//Les utilisateurs qui partageront la depense
+	// Les utilisateurs qui partageront la depense
 	unsigned int  nombreParticipants_;
 };
 #endif // !DEPENSE_GROUPEE_H

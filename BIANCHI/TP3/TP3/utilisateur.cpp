@@ -20,8 +20,9 @@ Utilisateur::Utilisateur(const Utilisateur& utilisateur) :
 }
 
 Utilisateur::~Utilisateur() {
-	unsigned int nombreDeDepenses = depenses_.size();
-	for (unsigned int i = 0; i < nombreDeDepenses; i++) {
+	// Le nombre depense reduit a chaque delete alors on cree un variable pour garder le nombre stable
+	unsigned int nombreDeDepense = getNombreDepenses(); 
+	for (unsigned int i = 0; i < nombreDeDepense; i++) {
 		delete depenses_[i];
 		depenses_[i] = nullptr;
 	}

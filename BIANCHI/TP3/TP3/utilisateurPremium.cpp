@@ -1,7 +1,7 @@
 #include "utilisateurPremium.h"
 
 // Constructeurs 
-UtilisateurPremium::UtilisateurPremium(const string& nom = "") :
+UtilisateurPremium::UtilisateurPremium(const string& nom) :
 	Utilisateur(nom),
 	joursRestants_(30),
 	taux_(0.05) {
@@ -24,6 +24,9 @@ double UtilisateurPremium::getTaux() const {
 void UtilisateurPremium::setJoursRestants(unsigned int joursRestants) {
 	joursRestants_ = joursRestants;
 }
+void UtilisateurPremium::setTaux(double taux) {
+	taux_ = taux;
+}
 
 // Methode de calcul 
 void UtilisateurPremium::calculerTaux() {
@@ -31,15 +34,15 @@ void UtilisateurPremium::calculerTaux() {
 	double nouveauTaux = taux_;
 	for (unsigned int i = 0; i < getNombreDepenses(); i+=2) {
 		nombreDeDepenses - 2;
-		if (nombreDeDepenses < 0) {
+		if (nombreDeDepenses <= 0.00) {
 			i = getNombreDepenses();
 		}
 		else {
-			nouveauTaux - 0.01;
+			nouveauTaux = nouveauTaux - 0.01;
 		}
 	}
-	if (nouveauTaux < 0.01) {
-		taux_ = 0.01;
+	if (nouveauTaux < 0.00) {
+		taux_ = 0.00;
 	}
 	else {
 		taux_ = nouveauTaux;
@@ -48,9 +51,12 @@ void UtilisateurPremium::calculerTaux() {
 
 // Operateurs
 UtilisateurPremium& UtilisateurPremium::operator=(Utilisateur* utilisateur) {
-	*this = utilisateur;
-	joursRestants_ = 30;
-	taux_ = 0.05;
+	if (this != utilisateur) {
+		*this = utilisateur;
+		setJoursRestants(30);
+		setTaux(0.5);
+	}
+	return *this;
 }
 
 

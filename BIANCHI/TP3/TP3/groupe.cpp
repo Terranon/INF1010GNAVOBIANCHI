@@ -7,10 +7,6 @@
 #include "groupe.h"
 
 // Constructeurs
-
-Groupe::Groupe() : 
-	nom_("") {
-}
 Groupe::Groupe(const string& nom) : 
 	nom_(nom) {
 }
@@ -68,7 +64,6 @@ unsigned int Groupe::getNombreTransferts() const {
 	return nombreDeTransferts;
 }
 double Groupe::getTotalDepenses() const {
-
 	return totalDepenses_;
 }
 
@@ -81,39 +76,42 @@ void Groupe::setNom(const string& nom) {
 Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour) {
 	// TODO: Verifier que tous les utilisateurs concernés soient là.
 	bool utilisateurTrouve = false;
+	unsigned int nombreDUtilisateursValides = 0;
 	string nomUtilisateursEntre = payePar->getNom();
-	for (unsigned int i = 0; i < getNombreUtilisateurs() || !utilisateurTrouve; i++) {
-		if (utilisateurs_[i]->getNom() == nomUtilisateursEntre) {
+	for (unsigned int i = 0; i < payePour.size() || !utilisateurTrouve; i++) {
+		for (unsigned int j = 0; j < getNombreDepenses(); j++) {
+			if (payePour[i]->getNom() == utilisateurs_[j]->getNom()) {
+				nombreDUtilisateursValides++;
+			}
+		}
+		if (payePour[i]->getNom() == nomUtilisateursEntre) {
 			utilisateurTrouve = true;
 		}
 	}
 	if (!utilisateurTrouve) { // TODO: Sinon affiche une erreur
 		cout << "Erreur: L'utilisateur qui fait la depense est introuvable.";
 	}
-	else {
-		unsigned int nombreDUtilisateurValide = 0;
-		for (unsigned int j = 0; j < getNombreUtilisateurs(); j++) {
-			if (utilisateurs_[j]->getNom() == payePour[j]->getNom()) {
-				nombreDUtilisateurValide++;
-			}
-		}
-		if (getNombreUtilisateurs() != nombreDUtilisateurValide) { // TODO: Sinon affiche une erreur
-			cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe present.";
-		}
-		else { // TODO: Verifie que la dépense soit bien une DepenseGroupe
-			if (depense->getType() != groupe) { // TODO: Sinon affiche une erreur
+	else if(getNombreUtilisateurs() != nombreDUtilisateursValides) { // TODO: Sinon affiche une erreur
+		cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe present.";
+	}
+	else { // TODO: Verifie que la dépense soit bien une DepenseGroupe
+		if (depense->getType() != groupe) { // TODO: Sinon affiche une erreur
 				cout << "Erreur: La depense n'est pas de type 'DepenseGroupe'.";
-			}
-			else { // TODO: Si tout est bon : Ajoute la dépense aux utilisateurs concernés
-				DepenseGroupe* depenseGroupe;
-				*depenseGroupe = static_cast<DepenseGroupe>(*depense);
-				depenseGroupe->setNombreParticipants(payePour.size());
-				*payePar += depenseGroupe;
-				// TODO: Mets à jour les comptes des utilisateurs concernés
-				calculerTotalDepense();
-				equilibrerComptes();
-				// TODO: Ajoute la dépense au groupe
-				depenses_.push_back(depenseGroupe);
+		}
+		else { // TODO: Si tout est bon : Ajoute la dépense aux utilisateurs concernés
+			DepenseGroupe* depenseGroupe;
+			*depenseGroupe = static_cast<DepenseGroupe>(*depense);
+			depenseGroupe->setNombreParticipants(payePour.size());
+			*payePar += depenseGroupe;
+			// TODO: Mets à jour les comptes des utilisateurs concernés
+			equilibrerComptes();
+			// TODO: Ajoute la dépense au groupe
+			depenses_.push_back(depenseGroupe);
+			for (unsigned int k = 0; k < payePour.size(); k++) {
+				if (utilisateurs_[k]->getType() == Premium) {
+					UtilisateurPremium* utilisateurTemp = static_cast<UtilisateurPremium*>(utilisateurs_[k]);
+					utilisateurTemp->calculerTaux();
+				}
 			}
 		}
 	}
@@ -174,8 +172,10 @@ void Groupe::equilibrerComptes() {
 }
 
 void Groupe::calculerTotalDepense() {
-
-
+	totalDepenses_ = 0;
+	for (unsigned int i = 0; i < getNombreDepenses(); i++) {
+		totalDepenses_ += depenses_[i]->getMontant();
+	}
 }
 
 // Methode d'affichage

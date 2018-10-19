@@ -19,8 +19,7 @@ using namespace std;
 class Groupe {
 public:
 	// Constructeurs
-	Groupe();
-	Groupe(const string& nom);
+	Groupe(const string& nom = "");
 
 	// Destructeur
 	~Groupe();
@@ -57,5 +56,4 @@ private:
 	double totalDepenses_;
 	vector<double> comptes_;
 };
-
 #endif

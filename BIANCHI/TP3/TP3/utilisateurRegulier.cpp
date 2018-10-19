@@ -22,8 +22,10 @@ void UtilisateurRegulier::setEtatGroupe(bool etat) {
 
 // Surcharge
 UtilisateurRegulier& UtilisateurRegulier::operator=(Utilisateur* utilisateur) {
-	*this = utilisateur;
-	setEtatGroupe(false);
+	if (this != utilisateur) {
+		*this = utilisateur;
+		setEtatGroupe(false);
+	}
 	return *this;
 }
 ostream& operator<<(ostream& os, const UtilisateurRegulier& utilisateur) {

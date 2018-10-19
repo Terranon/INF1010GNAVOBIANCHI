@@ -17,7 +17,7 @@ DepenseGroupe::DepenseGroupe(const Depense& depense) :
 	setType(groupe);
 }
 
-//getters 
+// Getters 
 unsigned int DepenseGroupe::getNombreParticipants() const {
 	return nombreParticipants_;
 }
@@ -32,20 +32,12 @@ double DepenseGroupe::getMontantPersonnel() const {
 	return montantPerso;
 }
 
-//setters
+// Setters
 void DepenseGroupe::setNombreParticipants(unsigned int nombre) {
 	nombreParticipants_ = nombre;
 }
 
-//surcharge 
-DepenseGroupe& DepenseGroupe::operator=(const DepenseGroupe& depense) {
-	setNom(depense.getNom());
-	setMontant(depense.getMontant());
-	setLieu(*depense.getLieu());
-	setType(groupe);
-	return *this;
-}
-
+// Surcharge 
 ostream& operator<<(ostream& os, const DepenseGroupe& depense) {
 	return os << depense.getNom() << " une depense de groupe fait par " << depense.getNombreParticipants() << endl
 		<< " personnes qui doivent " << depense.getMontantPersonnel() << " chaques, pour un total de "
