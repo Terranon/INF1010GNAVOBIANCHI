@@ -31,24 +31,24 @@ public:
 	~Utilisateur();
 
 	// Methodes d'acc�s
-	string getNom() const;
-	double getInteret() const;
-	double getTotalDepenses() const;
-	TypeUtilisateur getType() const;
-	vector<Depense*> getDepenses() const;
-	unsigned int getNombreDepenses() const;
+	 string getNom() const;
+	 double getInteret() const;
+	 double getTotalDepenses() const;
+	 TypeUtilisateur getType() const;
+    vector<Depense*> getDepenses() const;
+	 unsigned int getNombreDepenses() const;
 
 	// Methodes de modification
-	void setNom(const string& nom);
-	void setInteret(const double &interet);
-	void ajouterInteret(double montant);
-	void calculerTotalDepenses();
-	void setType(TypeUtilisateur type);
-	Utilisateur& operator+=(Depense* depense);
+	 void setNom(const string& nom);
+	 void setInteret(const double &interet);
+	 void ajouterInteret(double montant);
+	 void calculerTotalDepenses();
+	 void setType(TypeUtilisateur type);
+	 Utilisateur& operator+=(Depense* depense);
 	Utilisateur& operator=(Utilisateur* utilisateur);
 
 	// Methode d'affichage
-	friend ostream& operator<<(ostream& os, const Utilisateur& user);
+	friend ostream& operator<<(ostream& os, Utilisateur* utilisateur);
 
 
 private:

@@ -29,8 +29,14 @@ void UtilisateurPremium::setJoursRestants(unsigned int joursRestants)
 
 //methode de calcul 
 void UtilisateurPremium::calculerTaux()
-{
-	taux_-=  (0, 01)*(getNombreDepenses()) % 2;//mod 2 pour toutes les deux depenses 
+{ //si impair rien si
+	//double temp;
+	//if (getNombreDepenses() % 2 == 1)//si nombre depenses impair prendre le doublets
+	//	temp = getNombreDepenses() / 2;//------9 on a 4 comme facteur multiplicatif
+	//else
+	//	temp=()
+  
+	taux_-=  (0, 01)*(getNombreDepenses()) / 2;//mod 2 pour toutes les deux depenses 
 
 }
 
@@ -53,10 +59,10 @@ UtilisateurPremium& UtilisateurPremium::operator= (Utilisateur* utilisateur)
 	return *this;
 }
 
-ostream& operator << (ostream& os, const UtilisateurPremium& utilisateur)
+ostream& operator << (ostream& os,  UtilisateurPremium* utilisateur)
 {
 	
-	os << static_cast<UtilisateurPremium>(utilisateur) << "le taux est " << utilisateur.getTaux() <<"et le nombre de jours restants est :"<< utilisateur.joursRestants_<< endl;
+	os << static_cast<UtilisateurPremium*>(utilisateur) << "le taux est " << utilisateur->getTaux() <<"et le nombre de jours restants est :"<< utilisateur->joursRestants_<< endl;
 	return os;
 }
 

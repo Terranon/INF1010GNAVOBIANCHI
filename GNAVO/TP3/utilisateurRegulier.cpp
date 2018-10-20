@@ -73,9 +73,9 @@ UtilisateurRegulier& UtilisateurRegulier::operator=(Utilisateur* utilisateur)
 
 }
 
- ostream& operator<< (ostream& os, const UtilisateurRegulier& utilisateur){
+ ostream& operator<< (ostream& os,  UtilisateurRegulier* utilisateur){
 
-	 os << static_cast<Utilisateur>(utilisateur)<<"etatgroupe est"<<utilisateur.estGroupe_<<endl;
+	 os << static_cast<Utilisateur*>(utilisateur)<<"etatgroupe est"<<utilisateur->estGroupe()<<endl;
 	 return os;
 
 }

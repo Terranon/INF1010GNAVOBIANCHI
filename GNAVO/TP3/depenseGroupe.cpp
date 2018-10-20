@@ -52,7 +52,7 @@ void  DepenseGroupe::setNombreParticipants(unsigned int nombre)
 //methode rtretour nomclasse::nomvaribale(parametre)
 ostream& operator<<(ostream& os, const DepenseGroupe& depense)
 {
-	os << static_cast<Depense>(depense) << "le nombre de personnes est" << depense.nombreParticipants_ << "et le montant personnel est :" << depense.getMontant();
+	os << static_cast<Depense>(depense) << "le nombre de personnes est" << depense.nombreParticipants_ << "et le montant personnel est :" << depense.getMontantPersonnel();
 		return os;
 		//utiliser static cast
  }//erreur redefinir montant pour depense groupe

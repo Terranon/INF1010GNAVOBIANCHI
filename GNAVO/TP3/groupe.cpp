@@ -26,7 +26,23 @@ Groupe::~Groupe()
 	for (unsigned int i = 0; i < transferts_.size(); i++) 
 	{
 		delete transferts_[i];
+		transferts_.pop_back();
 	}
+	transferts_.shrink_to_fit();
+	for (unsigned int i = 0; i < depenses_.size(); i++)
+	{
+		delete depenses_[i];
+		depenses_.pop_back();
+	}
+	depenses_.shrink_to_fit();
+	
+	/*for (unsigned int i = 0; i < utilisateurs_.size(); i++)//car ils sont deja deleté
+	{
+		delete utilisateurs_[i];
+		utilisateurs_.pop_back();
+	}
+	utilisateurs_.shrink_to_fit();
+	*/
 }
 
 
@@ -64,18 +80,56 @@ void Groupe::setNom(const string& nom) {
 // Methodes d'ajout
 Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour)
 {
-	bool condition =true;
+	//faire des conditions imbriques avec ajout derreur a chaqe etape,,il resteras la fonction taux ,equilibrer comptes,et transferts..ecrire 2 fonctions et mettre la bonne variable au bon endroit concernant le compte
+	bool condition = true;
+	
+	////Verifie que la dépense soit bien une DepenseGroupe
+	unsigned int compte=0;
 	//Verifier que tous les utilisateurs concernés soient là.
-	if (payePar == nullptr)
-		condition = false;
-	for(unsigned int i =0;i<payePour.size();i++)
+
+	//if (payePar == nullptr)
+	//	condition = false;
+	//for(unsigned int i =0;i<payePour.size();i++)
+	//{
+	//	if (payePour[i] == nullptr)
+	//		condition = false;
+	//}}
+		//Verifier que tous les utilisateurs concernés soient là.
+		//et que les paye pour ausii appartiennent a la liste d'utilidateur groupe
+		for (unsigned int j = 0; j < utilisateurs_.size(); j++)
+		{
+			if (payePar->getNom() == utilisateurs_[j]->getNom()) 
+			{
+				condition = true;
+				break;
+		    }
+				
+			else
+				condition=false;
+		
+	    }
+//	que le payepar appartient a la liste dutilitsateur du groupe 
+	
+	for (unsigned int i = 0; i < payePour.size(); i++)
 	{
-		if (payePour[i] == nullptr)
-			condition = false;
+		for (unsigned int j = 0; j < utilisateurs_.size(); j++)
+		{ 
+			if (payePour[i]->getNom() == utilisateurs_[j]->getNom())//on peut aussi utiliser un break;
+				compte++;//compter le nombre der utilisateur si pauye par est un utilisateur de depenses
+			
+		}
 	}
-	//Verifie que la dépense soit bien une DepenseGroupe
-	if (depense->getType() != groupe)
+		
+	if (compte == payePour.size())
+		condition = true;//sommez tous les trucs pour croire a cela
+	else
 		condition = false;
+				
+		
+	if (depense->getType() != groupe)
+		condition = false;//faire des si imbriquees
+
+	
 	
 
 
@@ -83,28 +137,41 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
    //Si tout est bon
 	if (condition == true)
 	{
-		//Ajoute la dépense aux utilisateurs concernés 
+		//Ajoute la dépense aux utilisateurs concernés 			
+		DepenseGroupe* dgroup = new DepenseGroupe(*(static_cast<DepenseGroupe*>(depense)));
 		for (unsigned int i = 0; i < payePour.size(); i++)
 		{
-			*payePour[i] += depense;
+			dgroup->setNombreParticipants(1+payePour.size());//met le nombre de participants de la depene
+			
+			*payePour[i] += dgroup;//nomalement depense mais il y a eu un changemeng de type
+			//le mettre dans le groupe
+			
 
+			comptes_.push_back(0);
+		}	
 		//Mets à jour les comptes des utilisateurs concernés
 
-			//depense de l'utilisateur - depense moyenne ;depense moyenne =depense total du groupe/bombre d'utilisateur
-			//comptes_[i] = payePour[i]->getTotalDepenses() -( (getTotalDepenses() + depense->getMontant())/ payePour.size());
-			
-			comptes_.push_back(payePour[i]->getTotalDepenses() - ((getTotalDepenses() + depense->getMontant()) / payePour.size()));
-		//Ajoute la dépense au groupe 
-			//probleme le groupe neprend que des depenses personnels
-			//comment  transformer en depense personnel
-			
+			//Ajoute la dépense au groupe 
 
-		}	
+			depenses_.push_back(dgroup);
+            
+		
+			//delete depense;
+			//depense = nullptr;//comment resoudre la fuite de memoire?
+
+		
+		
+		
 		//transformation en depense groupe --perte des methodes puiscopie avec constructeur parc poe
-		DepenseGroupe* r((static_cast<DepenseGroupe*>(depense)));
+			
+	
+		/*dgroupe = new DepenseGroupe(static_cast<DepenseGroupe>(depense));
+	/*	DepenseGroupe* r((static_cast<DepenseGroupe*>(depense)));
 		depenses_.push_back(r);
+	*/
+
 		//ajouter le nombre de participants
-	//r
+	      
 		//depenses_.push_back(depense);
 		//essayer de transformer classe erivee en classe de base en utilisant le constructeur par copie
 		//DepenseGroupe *p= new DepenseGroupe(depense->getNom(),depense->getMontant(),*depense->getLieu());
@@ -114,7 +181,7 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 
 		
 				
-		//ajouter une classe
+	
 	}	
 	//Sinon affiche une erreur
 	else
@@ -193,7 +260,7 @@ void Groupe::calculerTotalDepense()
 ostream & operator<<(ostream& os, const Groupe& groupe)
 {
 	for (unsigned int i = 0; i < groupe.utilisateurs_.size(); i++)
-		os << *groupe.utilisateurs_[i]<<endl;
+		os << (groupe.utilisateurs_[i])<<endl;
 
 	for (unsigned int i = 0; i < groupe.transferts_.size(); i++)
 		os << *groupe.transferts_[i] << endl;

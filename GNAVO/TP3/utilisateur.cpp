@@ -59,13 +59,15 @@ Utilisateur::Utilisateur(const Utilisateur& utilisateur):nom_(utilisateur.nom_),
 
 Utilisateur::~Utilisateur() {
 //depenses_.clear;//retire tous les eleemenst du vecteur
-	for (unsigned int i = 0; i < depenses_.size(); i++) {
+	/*for (unsigned int i = 0; i < depenses_.size(); i++) {
 		delete depenses_[i];
-		depenses_ [i] = 0;
+		depenses_ [i] = nullptr;
 		depenses_.pop_back();//retire le dernier eleement du tableau}
 	}
 	depenses_.shrink_to_fit();//pour mettre le tableau a la taille et la size a 0
+	*///car le destructeur d'utilisateur detruit les depenses qui sont deja detruites
 }
+
 
 // Methodes d'acces
 
@@ -74,6 +76,7 @@ string Utilisateur::getNom() const {
 }
 
 double Utilisateur::getTotalDepenses() const {
+	
 	return totalDepense_;
 }
 
@@ -116,7 +119,7 @@ void Utilisateur::setType(TypeUtilisateur type) {
 
 void Utilisateur::calculerTotalDepenses() {
 	double totalDepense = 0;
-	for (unsigned int i = 0; i < getNombreDepenses(); i++)
+	for (unsigned int i = 0; i < depenses_.size(); i++)
 	{
 		
 		totalDepense_ += depenses_[i]->getMontant();
@@ -131,7 +134,7 @@ Utilisateur& Utilisateur::operator+=(Depense* depense) {
 
 	//ajouter toujours une depense
 	depenses_.push_back(depense);
-	
+	calculerTotalDepenses();
 	return *this;
 }
 Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
@@ -145,7 +148,24 @@ Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
 		//si il sont a la meme adresse on desaaloue
 		this->nom_ = utilisateur->nom_;
 		this->interet_ = utilisateur->interet_;
-		this->depenses_ = utilisateur->depenses_;//faire une deep copy
+		//this->depenses_ = utilisateur->depenses_;//faire une deep copy
+		for (unsigned int i = 0; i < depenses_.size(); i++)
+		{
+			delete depenses_[i];
+			depenses_[i] = 0;
+			depenses_.pop_back();//retire le dernier eleement du tableau}
+		}
+		depenses_.shrink_to_fit();
+
+		for (unsigned int i = 0; i < utilisateur->depenses_.size(); i++)
+		{
+
+			depenses_.push_back(new Depense(*utilisateur->depenses_[i]));//pour tuer le shallow copy
+		}
+
+
+
+		//this...type
 		this->type_ = utilisateur->type_;
 		calculerTotalDepenses();
 	}
@@ -158,9 +178,9 @@ Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
 
 
 // Methode d'affichage
-ostream& operator<<(ostream& os, const Utilisateur& utilisateur)
+ostream& operator<<(ostream& os,  Utilisateur* utilisateur)
 
-{
-	os << "l'utilisateur"<<utilisateur.nom_<<"a un interet de"<<utilisateur.interet_<<"et une depense total de"<<utilisateur.getTotalDepenses();
+{//gettype donne le type en letttre
+	os << "l'utilisateur "<<utilisateur->getNom()<<"("<<utilisateur->getType()<<")"<<" a un interet de"<<utilisateur->getInteret()<<" et une depense total de"<<utilisateur->getTotalDepenses();
 	return os;
 }

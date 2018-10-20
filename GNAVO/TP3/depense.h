@@ -27,16 +27,16 @@ public:
 	~Depense();
 
 	// Methodes d'acces
-	string getNom() const;
-	double getMontant() const;
-	string* getLieu() const;
-	TypeDepense getType() const;
+	virtual string getNom() const;
+	virtual double getMontant() const;
+	virtual string* getLieu() const;
+	virtual TypeDepense getType() const;
 
 	// Methodes de modifications
-	void setNom(const string& nom);
-	void setMontant(double montant);
-	void setLieu(const string& lieu);
-	void setType(TypeDepense type);
+	virtual void setNom(const string& nom);
+	virtual void setMontant(double montant);
+	virtual void setLieu(const string& lieu);
+	virtual void setType(TypeDepense type);
 
 	//operateurs
 	Depense& operator=(const Depense& depense);
