@@ -14,6 +14,7 @@ DepenseGroupe::DepenseGroupe(const DepenseGroupe& depense):Depense(depense)
 {
 	/*setNom(depense.getNom());
 	setMontant(depense.getMontant());*/
+
     setType(groupe);
 }
 
@@ -50,7 +51,8 @@ void  DepenseGroupe::setNombreParticipants(unsigned int nombre)
 //methode rtretour nomclasse::nomvaribale(parametre)
 ostream& operator<<(ostream& os, DepenseGroupe* depense)
 {
-	os << static_cast<Depense*>(depense) << "le nombre de personnes est" << depense->getNombreParticipants()<< "et le montant personnel est :" << depense->getMontantPersonnel();
+	
+	os << static_cast<Depense*>(depense) << "le nombre de personnes est " << depense->getNombreParticipants()<< " et le montant personnel est : " << depense->getMontantPersonnel();
 		return os;
 		//utiliser static cast
  }//erreur redefinir montant pour depense groupe

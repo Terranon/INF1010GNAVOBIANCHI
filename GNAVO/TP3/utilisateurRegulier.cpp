@@ -32,7 +32,7 @@ void UtilisateurRegulier::setEtatGroupe(bool etat)
 }
 void UtilisateurRegulier::ajouterInteret(double montant)
 {
-	Utilisateur::ajouterInteret( montant*0.05);
+	Utilisateur::ajouterInteret( montant);
 	
 
 }

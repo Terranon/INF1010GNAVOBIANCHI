@@ -30,7 +30,7 @@ public:
 
 
 	//surcharge 
-	friend ostream& operator<<(ostream& os, const DepenseGroupe& depense);
+	friend ostream& operator<<(ostream& os,  DepenseGroupe* depense);
 private:
 	//Les utilisateurs qui partageront la depense
 	unsigned int  nombreParticipants_;

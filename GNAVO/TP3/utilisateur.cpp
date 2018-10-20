@@ -35,12 +35,12 @@ Utilisateur::Utilisateur(const string& nom, TypeUtilisateur type):nom_(nom),inte
 Utilisateur::Utilisateur(const Utilisateur& utilisateur):nom_(utilisateur.nom_),depenses_(utilisateur.depenses_),type_(utilisateur.type_),interet_(utilisateur.interet_)
 {
 	 //tableau de vecteur...
-	/*for (unsigned int i = 0; i < depenses_.size(); i++)
+	for (unsigned int i = 0; i < depenses_.size(); i++)
 	{
 		delete depenses_[i];
 		depenses_.pop_back();
 	
-	}*/ //pare que on
+	} //pare que on
 	//crrer un vouvel objet utilisateur 
 	//et l'objet doit necessairement etre vide
 
@@ -123,23 +123,23 @@ void Utilisateur::calculerTotalDepenses()
 	//for (unsigned int i = 0; i < getNombreDepenses(); i++)
 		for (unsigned int i = 0; i < this->getNombreDepenses(); i++)
 	{
-			cout << "le monbre de depense est "<< this->getNombreDepenses()<<" fait par l'utilisateur  "<<this->getNom()<<endl;
+			//cout << "le monbre de depense est "<< this->getNombreDepenses()<<" fait par l'utilisateur  "<<this->getNom()<<endl;
 
-		if (depenses_[i]->getType() == groupe) {
-			DepenseGroupe* moi=static_cast<DepenseGroupe*>(depenses_[i]);//il pointe aum même endroit
-			cout << " le m0ntant perso "<<moi->getMontantPersonnel()<<endl;
+		if (this->depenses_[i]->getType() == groupe) {//utiliser this
+			
+			DepenseGroupe* moi=static_cast<DepenseGroupe*>(this->depenses_[i]);//il pointe aum même endroit
+		//	cout << " le m0ntant perso "<<moi->getMontantPersonnel()<<endl;
 			this->totalDepense_ +=moi->getMontantPersonnel();/// ?????????????????????????????????????
 			//ou alors 
 			//totalDepense_ += depenses_[i]->getMontant()/ depenses_[i].
-			cout << "la depense groupe total de l'utilsateur est " << this->totalDepense_ << endl;
+			//cout << "la depense groupe total de l'utilsateur est " << this->totalDepense_ << endl;
 			//delete moi;
 		}
 		else //if (depenses_[i]->getType() == individuelle )
 		{
 			this->totalDepense_ += depenses_[i]->getMontant();
-			cout << "la depense individuelle est"<<depenses_[i]->getMontant() << " fait par l'utilisateur  " << this->getNom() << endl;
+			//cout << "la depense individuelle est"<<depenses_[i]->getMontant() << " fait par l'utilisateur  " << this->getNom() << endl;
 		}
-
 	}
 }
 void Utilisateur::ajouterInteret(double montant) 
@@ -198,17 +198,19 @@ ostream& operator<<(ostream& os, Utilisateur* utilisateur)
 
 {//gettype donne le type en letttre
 	os << "l'utilisateur " << utilisateur->getNom() << "(" << utilisateur->getType() << ")" << " a un interet de" << utilisateur->getInteret() << " et une depense total de" << utilisateur->getTotalDepenses() << endl;
+	
 	for (unsigned int i = 0; i < utilisateur->getDepenses().size(); i++)
 	{
 
-		if (utilisateur->getDepenses()[i]->getType() == groupe) {
-			DepenseGroupe* moi = static_cast<DepenseGroupe*>(utilisateur->getDepenses()[i]); cout<<"nombre d eparticipants est"<<moi->getNombreParticipants();
-			os << "voici les depenses:" << moi << endl;
+		if (utilisateur->getDepenses()[i]->getType() == groupe) 
+		{
+			
+			DepenseGroupe *moi = static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) ; 
+			os << "voici les depenses:" << static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) << endl;
 		}
-		else
-			os << "voici les depenses:" << utilisateur->getDepenses()[i] << endl;
+		/*else
+			os << "voici les depenses:" << utilisateur->getDepenses()[i] << endl;*/
 	}
-
 
 	return os;
 	

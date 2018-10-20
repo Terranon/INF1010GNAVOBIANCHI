@@ -17,7 +17,7 @@ montant_ (montant),type_(individuelle)
 
 
 {
-
+	
 	if (lieu_ !=nullptr)
 		delete lieu_;
 	lieu_ = new string(lieu);
@@ -110,8 +110,8 @@ ostream& operator<<(ostream& os,  Depense* depense)
 {
 	//return os<<"le montant est" <<depense.montant_<< " fait par" << depense.nom_ << "le type" << depense.type_<<"au lieu"<<*(depense.lieu_)<<endl;
 	
-
-	os << "le montant est" <<depense->montant_<< " fait par" << depense->nom_ << "le type" << depense->type_<<"au lieu"<<*(depense->lieu_)<<endl;
+	
+	os << "le montant est " <<depense->montant_<< " fait par " << depense->nom_ << "le type " << depense->type_<<"au lieu "<<*(depense->lieu_)<<endl;
 
 		return os;
 
