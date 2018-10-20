@@ -110,9 +110,12 @@ ostream& operator<<(ostream& os,  Depense* depense)
 {
 	//return os<<"le montant est" <<depense.montant_<< " fait par" << depense.nom_ << "le type" << depense.type_<<"au lieu"<<*(depense.lieu_)<<endl;
 	
+	if (depense->getType() == groupe)
 	
-	os << "le montant est " <<depense->montant_<< " fait par " << depense->nom_ << "le type " << depense->type_<<"au lieu "<<*(depense->lieu_)<<endl;
-
+	os <<"La depense  " << depense->nom_ <<" est de type groupe" << " dont le montant est " <<depense->montant_<<" a "<<*(depense->lieu_)<<endl;
+	else
+	os << "La depense  " << depense->nom_ << "est  de type individuelle " << " dont le montant est " << depense->montant_ << " a " << *(depense->lieu_) << endl;
+	
 		return os;
 
 }

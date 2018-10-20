@@ -17,6 +17,8 @@ unsigned int UtilisateurPremium::getJoursRestants() const
 }
 double UtilisateurPremium::getTaux() const
 {
+
+	
 	return taux_;
 }
 
@@ -30,9 +32,21 @@ void UtilisateurPremium::setJoursRestants(unsigned int joursRestants)
 //methode de calcul 
 void UtilisateurPremium::calculerTaux()
 { 
-	taux_-=  (0, 01)*(getNombreDepenses()) / 2;//mod 2 pour toutes les deux depenses 
-	if (taux_ < 0)
+
+	//mod 2 pour toutes les deux depenses 
+	//calculer le nombre de depense de groupe
+	int compteur = 0;
+	for (int i = 0; i <getNombreDepenses(); i++) {
+		
+		//if (getDepenses()[i]->getType() == groupe) pas de conditions concernant le truc ci
+			compteur++;
+	}
+	if (taux_ <= 0)
 		taux_ = 0;
+	else
+		taux_-=  (0.01)*(compteur/2) ;//la depense doit etre uhe depense de groupe
+	
+	
 }
 
 //operateurs
@@ -57,7 +71,7 @@ UtilisateurPremium& UtilisateurPremium::operator= (Utilisateur* utilisateur)
 ostream& operator << (ostream& os,  UtilisateurPremium* utilisateur)
 {
 	
-	os << static_cast<Utilisateur*>(utilisateur) << "le taux est " << utilisateur->getTaux() <<"et le nombre de jours restants est :"<< utilisateur->joursRestants_<< endl;
+	os << static_cast<Utilisateur*>(utilisateur) << " le taux est " << utilisateur->getTaux() <<"et le nombre de jours restants est :"<< utilisateur->joursRestants_<< endl;
 	return os;
 }
 

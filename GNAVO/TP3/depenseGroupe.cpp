@@ -52,7 +52,7 @@ void  DepenseGroupe::setNombreParticipants(unsigned int nombre)
 ostream& operator<<(ostream& os, DepenseGroupe* depense)
 {
 	
-	os << static_cast<Depense*>(depense) << "le nombre de personnes est " << depense->getNombreParticipants()<< " et le montant personnel est : " << depense->getMontantPersonnel();
+	os << static_cast<Depense*>(depense) << " le nombre de participants est de " << depense->getNombreParticipants()<< " et le montant personnel est : " << depense->getMontantPersonnel();
 		return os;
 		//utiliser static cast
  }//erreur redefinir montant pour depense groupe

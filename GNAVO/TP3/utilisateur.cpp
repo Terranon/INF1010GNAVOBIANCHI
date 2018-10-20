@@ -197,8 +197,12 @@ Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
 ostream& operator<<(ostream& os, Utilisateur* utilisateur)
 
 {//gettype donne le type en letttre
-	os << "l'utilisateur " << utilisateur->getNom() << "(" << utilisateur->getType() << ")" << " a un interet de" << utilisateur->getInteret() << " et une depense total de" << utilisateur->getTotalDepenses() << endl;
-	
+	if(utilisateur->getType()==Premium)
+	os << "l'utilisateur " << utilisateur->getNom() << "(Premium)" << " a une depense total de " << utilisateur->getTotalDepenses() << ".Polycount prend  un interet de" << utilisateur->getInteret()<< endl;
+	else
+	os << "l'utilisateur " << utilisateur->getNom() << "(Regulier)" << " a une depense total de " << utilisateur->getTotalDepenses() << ".Polycount prend  interet de" << utilisateur->getInteret() << endl;
+
+	os << "voici les depenses:";
 	for (unsigned int i = 0; i < utilisateur->getDepenses().size(); i++)
 	{
 
@@ -206,7 +210,7 @@ ostream& operator<<(ostream& os, Utilisateur* utilisateur)
 		{
 			
 			DepenseGroupe *moi = static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) ; 
-			os << "voici les depenses:" << static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) << endl;
+			os  << static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) << endl;
 		}
 		/*else
 			os << "voici les depenses:" << utilisateur->getDepenses()[i] << endl;*/

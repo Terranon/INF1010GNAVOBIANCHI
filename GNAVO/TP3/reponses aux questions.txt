@@ -1,0 +1,10 @@
+1-
+Il est logique de dériver la classe utilisateur car les utilisateurs réguliers sont tous deux des utilisateurs mais ils
+n'ont pas les mêmes avantages d'ou le besoin de les dériver pour les attribuer des methodes etendus ou modifiés conformemement a leurs types
+
+2-
+1-
+le static cast permet de convertir un objet en un type connu.il permet notamment une conversion explicites des classes de bases en classes dérivéés
+2-
+si on ne le considere pas dans l'implémentation les objets de la classe dérivé seront converti implicitemnet en instances de la classe de base 
+nous empechant d'avoir acces aux methodes etendus, modifié ou surcharge dans l'implementation de la classe dérivé
