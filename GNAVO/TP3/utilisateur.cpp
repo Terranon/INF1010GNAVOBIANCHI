@@ -117,12 +117,29 @@ void Utilisateur::setType(TypeUtilisateur type) {
 
 }
 
-void Utilisateur::calculerTotalDepenses() {
-	double totalDepense = 0;
-	for (unsigned int i = 0; i < depenses_.size(); i++)
+void Utilisateur::calculerTotalDepenses()
+{
+	double totalDepense_ = 0;
+	//for (unsigned int i = 0; i < getNombreDepenses(); i++)
+		for (unsigned int i = 0; i < this->getNombreDepenses(); i++)
 	{
-		
-		totalDepense_ += depenses_[i]->getMontant();
+
+
+		if (depenses_[i]->getType() == groupe) {
+			DepenseGroupe* moi=static_cast<DepenseGroupe*>(depenses_[i]);//il pointe aum même endroit
+			cout << " le "<<moi->getMontantPersonnel()<<endl;
+			this->totalDepense_ +=moi->getMontantPersonnel();/// ?????????????????????????????????????
+			//ou alors 
+			//totalDepense_ += depenses_[i]->getMontant()/ depenses_[i].
+			cout << "la depense groupe ytotal de l'utilsateur" << totalDepense_;
+			//delete moi;
+		}
+		else if (depenses_[i]->getType() == individuelle )
+		{
+			this->totalDepense_ += depenses_[i]->getMontant();
+			cout << "la depense individuelle l'utilsateur"<<depenses_[i]->getMontant() << endl;
+		}
+
 	}
 }
 void Utilisateur::ajouterInteret(double montant) 
@@ -134,12 +151,12 @@ Utilisateur& Utilisateur::operator+=(Depense* depense) {
 
 	//ajouter toujours une depense
 	depenses_.push_back(depense);
-	calculerTotalDepenses();
+	//calculerTotalDepenses();
 	return *this;
 }
 Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
 {
-	if (this !=  utilisateur)//on delete si ils sont < la même adresse
+	if (this !=utilisateur)//on delete si ils sont < la même adresse
 	{
 		//L'adresse ici est celle de l'objet courant soit u1=u2 ici this est l'adresse de u1
 
@@ -152,14 +169,13 @@ Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
 		for (unsigned int i = 0; i < depenses_.size(); i++)
 		{
 			delete depenses_[i];
-			depenses_[i] = 0;
+			depenses_[i] = nullptr;/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			depenses_.pop_back();//retire le dernier eleement du tableau}
 		}
 		depenses_.shrink_to_fit();
 
 		for (unsigned int i = 0; i < utilisateur->depenses_.size(); i++)
 		{
-
 			depenses_.push_back(new Depense(*utilisateur->depenses_[i]));//pour tuer le shallow copy
 		}
 
@@ -167,7 +183,7 @@ Utilisateur& Utilisateur::operator=(Utilisateur * utilisateur)
 
 		//this...type
 		this->type_ = utilisateur->type_;
-		calculerTotalDepenses();
+		//calculerTotalDepenses();
 	}
 	
 	

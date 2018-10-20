@@ -29,12 +29,12 @@ Groupe::~Groupe()
 		transferts_.pop_back();
 	}
 	transferts_.shrink_to_fit();
-	for (unsigned int i = 0; i < depenses_.size(); i++)
+	/*for (unsigned int i = 0; i < depenses_.size(); i++)
 	{
 		delete depenses_[i];
 		depenses_.pop_back();
 	}
-	depenses_.shrink_to_fit();
+	depenses_.shrink_to_fit();*/
 	
 	/*for (unsigned int i = 0; i < utilisateurs_.size(); i++)//car ils sont deja deleté
 	{
@@ -137,52 +137,34 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
    //Si tout est bon
 	if (condition == true)
 	{
-		//Ajoute la dépense aux utilisateurs concernés 			
-		DepenseGroupe* dgroup = new DepenseGroupe(*(static_cast<DepenseGroupe*>(depense)));
+
+		DepenseGroupe* dgroup = (static_cast<DepenseGroupe*>(depense));
+		dgroup->setNombreParticipants(1 + payePour.size());
+		
+		
+		*payePar += dgroup;
 		for (unsigned int i = 0; i < payePour.size(); i++)
 		{
-			dgroup->setNombreParticipants(1+payePour.size());//met le nombre de participants de la depene
-			
+			//met le nombre de participants de la depene
+
 			*payePour[i] += dgroup;//nomalement depense mais il y a eu un changemeng de type
 			//le mettre dans le groupe
-			
+		//	cout << dgroup->getMontantPersonnel()  << endl;
 
 			comptes_.push_back(0);
-		}	
+		}	//
 		//Mets à jour les comptes des utilisateurs concernés
-
-			//Ajoute la dépense au groupe 
-
-			depenses_.push_back(dgroup);
-            
-		
-			//delete depense;
-			//depense = nullptr;//comment resoudre la fuite de memoire?
-
-		
-		
-		
-		//transformation en depense groupe --perte des methodes puiscopie avec constructeur parc poe
+		payePar->calculerTotalDepenses();
+		for (unsigned int i = 0; i < payePour.size(); i++){
+			//for (unsigned int i = 0; i < payePour[i]->getDepenses().size(); i++)
+			payePour[i]->calculerTotalDepenses();
+		}
 			
-	
-		/*dgroupe = new DepenseGroupe(static_cast<DepenseGroupe>(depense));
-	/*	DepenseGroupe* r((static_cast<DepenseGroupe*>(depense)));
-		depenses_.push_back(r);
-	*/
-
-		//ajouter le nombre de participants
-	      
-		//depenses_.push_back(depense);
-		//essayer de transformer classe erivee en classe de base en utilisant le constructeur par copie
-		//DepenseGroupe *p= new DepenseGroupe(depense->getNom(),depense->getMontant(),*depense->getLieu());
-		//depenses_.push_back(p);
-	
-		//	depenses_.push_back(dynamic_cast<DepenseGroupe*>(depense));
-
+			//Ajoute la dépense au groupe 
+			depenses_.push_back(dgroup);
 		
-				
-	
-	}	
+
+	}
 	//Sinon affiche une erreur
 	else
 		cout << "Erreur.impossible d'ajouter depense " << endl;
@@ -251,17 +233,44 @@ void Groupe::equilibrerComptes() {
 void Groupe::calculerTotalDepense() 
 {
 	totalDepenses_ = 0;
-	for (unsigned int i = 0; i < depenses_.size(); i++)
-		totalDepenses_ += depenses_[i]->getMontantPersonnel();
+	for (unsigned int i = 0; i <depenses_.size(); i++) {
+		totalDepenses_ += depenses_[i]->getMontant();
+		cout << "le montant de la depense est" << depenses_[i]->getMontant()<<endl;
 
+	}
 }
 
 // Methode d'affichage
 ostream & operator<<(ostream& os, const Groupe& groupe)
 {
 	for (unsigned int i = 0; i < groupe.utilisateurs_.size(); i++)
-		os << (groupe.utilisateurs_[i])<<endl;
+	{
 
+		//os << (groupe.utilisateurs_[i])<<endl;//cc'est un pointeur sur un type utilisateur
+		if (groupe.utilisateurs_[i]->getType() == Premium)
+		{
+			UtilisateurPremium* p = (static_cast<UtilisateurPremium*>(groupe.utilisateurs_[i]));
+			//p->getDepenses() [i].//il met la dwepense par defaut a 0
+			//p->getDepenses()[i].
+		//une fois le type verifie on converti le type utilisateir,on et on li ajoute le qualificatif premium
+				//acces a la valeur de ses méthodes
+			//pour le forcer a manipuler un utilisateur premium
+			os << p << endl;
+			/*delete p;
+			p = nullptr;*/  //ne pas delete
+
+
+		}
+		else
+		{
+
+			UtilisateurRegulier* regulier = (static_cast<UtilisateurRegulier*>(groupe.utilisateurs_[i]));//attention regarder ici
+			//je crois il est mieux d'utiliser le pointeur pour faciliteer l'utilisation de static cast;
+			os << regulier << endl;
+			
+		}
+
+	}
 	for (unsigned int i = 0; i < groupe.transferts_.size(); i++)
 		os << *groupe.transferts_[i] << endl;
 

@@ -9,8 +9,6 @@ DepenseGroupe::DepenseGroupe(const string& nom , double montant , const string& 
 
 	setType(groupe);
 	
-	
-
 }
 DepenseGroupe::DepenseGroupe(const DepenseGroupe& depense):Depense(depense)
 {
