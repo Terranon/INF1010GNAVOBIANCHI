@@ -106,12 +106,13 @@ Depense& Depense::operator=(const Depense & depense)
 	
 	return *this;
 }
-ostream& operator<<(ostream& os, const Depense& depense) 
+ostream& operator<<(ostream& os,  Depense* depense) 
 {
 	//return os<<"le montant est" <<depense.montant_<< " fait par" << depense.nom_ << "le type" << depense.type_<<"au lieu"<<*(depense.lieu_)<<endl;
 	
 
-	os << "le montant est" <<depense.montant_<< " fait par" << depense.nom_ << "le type" << depense.type_<<"au lieu"<<*(depense.lieu_)<<endl;
+	os << "le montant est" <<depense->montant_<< " fait par" << depense->nom_ << "le type" << depense->type_<<"au lieu"<<*(depense->lieu_)<<endl;
+
 		return os;
 
 }
