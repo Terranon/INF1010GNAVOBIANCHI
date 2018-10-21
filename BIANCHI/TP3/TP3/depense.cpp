@@ -63,8 +63,8 @@ Depense& Depense::operator=(const Depense& depense) {
 		setMontant(depense.getMontant());
 		setLieu(*depense.getLieu());
 		setType(depense.getType());
-		return *this;
 	}
+	return *this;
 }
 
 // Affichage

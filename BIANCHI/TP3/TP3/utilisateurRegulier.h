@@ -16,7 +16,7 @@ public:
 	UtilisateurRegulier(const Utilisateur& utilisateur);
 
 	// getters
-	bool getEstGroupe() const;
+	bool estGroupe() const;
 
 	//setters
 	void setEtatGroupe(bool etat);

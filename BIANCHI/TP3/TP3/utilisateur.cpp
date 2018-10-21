@@ -20,14 +20,6 @@ Utilisateur::Utilisateur(const Utilisateur& utilisateur) :
 }
 
 Utilisateur::~Utilisateur() {
-	// Le nombre depense reduit a chaque delete alors on cree un variable pour garder le nombre stable
-	unsigned int nombreDeDepense = getNombreDepenses(); 
-	for (unsigned int i = 0; i < nombreDeDepense; i++) {
-		delete depenses_[i];
-		depenses_[i] = nullptr;
-	}
-	depenses_.clear();
-	depenses_.shrink_to_fit();
 }
 
 // Methodes d'acces
@@ -61,21 +53,26 @@ void Utilisateur::setType(const TypeUtilisateur& type) {
 	type_ = type;
 }
 void Utilisateur::setDepenses(const vector<Depense*> depenses) {
-	unsigned int nombreDeDepenses = getNombreDepenses();
-	for (unsigned int i = 0; i < nombreDeDepenses; i++) {
+	
+	for (unsigned int i = 0; i < getNombreDepenses(); i++) {
 		delete depenses_[i];
 		depenses_[i] = nullptr;
 	}
 	depenses_.clear();
 	depenses_.shrink_to_fit();
-	for (unsigned int j = 0; nombreDeDepenses; j++) {
+	for (unsigned int j = 0; j < depenses.size(); j++) {
 		depenses_.push_back(new Depense(*depenses[j]));
 	}
 }
 void Utilisateur::calculerTotalDepenses() {
 	totalDepenses_ = 0;
 	for (unsigned int i = 0; i < getNombreDepenses(); i++) {
-		totalDepenses_ += depenses_[i]->getMontant();
+		if (individuelle == depenses_[i]->getType()) {
+			totalDepenses_ += depenses_[i]->getMontant();
+		}
+		else {
+			totalDepenses_ += static_cast<DepenseGroupe*>(depenses_[i])->getMontantPersonnel();
+		}
 	}
 }
 void Utilisateur::ajouterInteret(double montant) {

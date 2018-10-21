@@ -4,12 +4,20 @@
 UtilisateurPremium::UtilisateurPremium(const string& nom) :
 	Utilisateur(nom),
 	joursRestants_(30),
-	taux_(0.05) {
+	taux_(TAUX_REGULIER) {
+	setType(Premium);
 }
 UtilisateurPremium::UtilisateurPremium(const Utilisateur& utilisateur) :
-	Utilisateur(utilisateur),
-	joursRestants_(30),
-	taux_(0.05) {
+	Utilisateur(utilisateur) {
+	if (utilisateur.getType() == Premium) {
+		setJoursRestants(static_cast<UtilisateurPremium>(utilisateur).getJoursRestants());
+		setTaux(static_cast<UtilisateurPremium>(utilisateur).getTaux());
+	}
+	else {
+		setJoursRestants(30);
+		setTaux(TAUX_REGULIER);
+	}
+	setType(Premium);
 }
 
 // Getters
@@ -30,22 +38,13 @@ void UtilisateurPremium::setTaux(double taux) {
 
 // Methode de calcul 
 void UtilisateurPremium::calculerTaux() {
-	double nombreDeDepenses = getNombreDepenses();
-	double nouveauTaux = taux_;
-	for (unsigned int i = 0; i < getNombreDepenses(); i+=2) {
-		nombreDeDepenses - 2;
-		if (nombreDeDepenses <= 0.00) {
-			i = getNombreDepenses();
+	if (taux_ != 0.00) {
+		taux_ = TAUX_REGULIER; // on remet le taux a 5% parce que on ne sait pas si nous avons rajouter des depenses depuis le dernier calcul
+		unsigned int nombreDeDepenses = getNombreDepenses();
+		taux_ = taux_ - (nombreDeDepenses / 2)*(0.01);
+		if (taux_ < 0.00) {
+			taux_ = 0.00;
 		}
-		else {
-			nouveauTaux = nouveauTaux - 0.01;
-		}
-	}
-	if (nouveauTaux < 0.00) {
-		taux_ = 0.00;
-	}
-	else {
-		taux_ = nouveauTaux;
 	}
 }
 
@@ -53,8 +52,10 @@ void UtilisateurPremium::calculerTaux() {
 UtilisateurPremium& UtilisateurPremium::operator=(Utilisateur* utilisateur) {
 	if (this != utilisateur) {
 		*this = utilisateur;
-		setJoursRestants(30);
-		setTaux(0.5);
+		if (utilisateur->getType() == Premium) {
+			setJoursRestants(static_cast<UtilisateurPremium*>(utilisateur)->getJoursRestants());
+			setTaux(static_cast<UtilisateurPremium*>(utilisateur)->getTaux());
+		}
 	}
 	return *this;
 }

@@ -8,7 +8,7 @@ DepenseGroupe::DepenseGroupe(const string& nom, double montant, const string& li
 }
 DepenseGroupe::DepenseGroupe(const DepenseGroupe& depense) :
 	Depense(depense),
-	nombreParticipants_(0) {
+	nombreParticipants_(depense.nombreParticipants_) {
 	setType(groupe);
 }
 DepenseGroupe::DepenseGroupe(const Depense& depense) :

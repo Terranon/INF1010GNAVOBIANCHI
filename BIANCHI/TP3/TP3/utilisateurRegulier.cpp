@@ -11,7 +11,7 @@ UtilisateurRegulier::UtilisateurRegulier(const Utilisateur& utilisateur) :
 }
 
 // Getters
-bool UtilisateurRegulier::getEstGroupe() const {
+bool UtilisateurRegulier::estGroupe() const {
 	return estGroupe_;
 }
 
@@ -24,12 +24,17 @@ void UtilisateurRegulier::setEtatGroupe(bool etat) {
 UtilisateurRegulier& UtilisateurRegulier::operator=(Utilisateur* utilisateur) {
 	if (this != utilisateur) {
 		*this = utilisateur;
-		setEtatGroupe(false);
+		if (utilisateur->getType() == Regulier) {
+			setEtatGroupe(static_cast<UtilisateurRegulier*>(utilisateur)->estGroupe());
+		}
+		else {
+			setEtatGroupe(false);
+		}
 	}
 	return *this;
 }
 ostream& operator<<(ostream& os, const UtilisateurRegulier& utilisateur) {
-	if (utilisateur.getEstGroupe()) {
+	if (utilisateur.estGroupe()) {
 		os << "Membre d'un groupe, ";
 	}
 	else {

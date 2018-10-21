@@ -78,33 +78,32 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 	bool utilisateurTrouve = false;
 	unsigned int nombreDUtilisateursValides = 0;
 	string nomUtilisateursEntre = payePar->getNom();
-	for (unsigned int i = 0; i < payePour.size() || !utilisateurTrouve; i++) {
-		for (unsigned int j = 0; j < getNombreDepenses(); j++) {
+	for (unsigned int i = 0; i < getNombreUtilisateurs(); i++) {
+		for (unsigned int j = 0; j < payePour.size(); j++) {
 			if (payePour[i]->getNom() == utilisateurs_[j]->getNom()) {
 				nombreDUtilisateursValides++;
 			}
 		}
-		if (payePour[i]->getNom() == nomUtilisateursEntre) {
+		if (utilisateurs_[i]->getNom() == nomUtilisateursEntre) {
 			utilisateurTrouve = true;
 		}
 	}
 	if (!utilisateurTrouve) { // TODO: Sinon affiche une erreur
-		cout << "Erreur: L'utilisateur qui fait la depense est introuvable.";
+		cout << "Erreur: L'utilisateur qui fait la depense est introuvable." << endl;
 	}
 	else if(getNombreUtilisateurs() != nombreDUtilisateursValides) { // TODO: Sinon affiche une erreur
-		cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe present.";
+		cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe " << getNom() << endl;
 	}
 	else { // TODO: Verifie que la dépense soit bien une DepenseGroupe
 		if (depense->getType() != groupe) { // TODO: Sinon affiche une erreur
 				cout << "Erreur: La depense n'est pas de type 'DepenseGroupe'.";
 		}
 		else { // TODO: Si tout est bon : Ajoute la dépense aux utilisateurs concernés
-			DepenseGroupe* depenseGroupe;
-			*depenseGroupe = static_cast<DepenseGroupe>(*depense);
+			DepenseGroupe* depenseGroupe = static_cast<DepenseGroupe*>(depense);
 			depenseGroupe->setNombreParticipants(payePour.size());
 			*payePar += depenseGroupe;
 			// TODO: Mets à jour les comptes des utilisateurs concernés
-			equilibrerComptes();
+			
 			// TODO: Ajoute la dépense au groupe
 			depenses_.push_back(depenseGroupe);
 			for (unsigned int k = 0; k < payePour.size(); k++) {
@@ -119,7 +118,13 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 }
 
 Groupe& Groupe::operator+=(Utilisateur* utilisateur) {
-
+	if(utilisateur->getType == Premium || utilisateur.)
+	utilisateurs_.push_back(utilisateur);
+	vector<Depense*> depensesTemp = utilisateur->getDepenses();
+	for (unsigned int i = 0; i < utilisateur->getNombreDepenses(); i++) {
+		ajouterDepense(depensesTemp[i], utilisateur, getUtilisateurs());
+	}
+	
 }
 
 void Groupe::equilibrerComptes() {
