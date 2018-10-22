@@ -175,7 +175,7 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 				{
 					if (payePour[j]->getNom() == utilisateurs_[i]->getNom())
 					{
-						comptes_[i] -= (depense->getMontant() / (payePour.size()));
+						comptes_[i] -= (static_cast<DepenseGroupe*>(depense)->getMontantPersonnel());
 
 
 					}
@@ -339,8 +339,6 @@ ostream & operator<<(ostream& os, const Groupe& groupe)
 		else
 		{
 
-			
-		
 			os << static_cast<UtilisateurRegulier*>(groupe.utilisateurs_[i]) << endl;
 			
 		}
