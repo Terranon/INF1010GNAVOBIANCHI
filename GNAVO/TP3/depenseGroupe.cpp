@@ -45,7 +45,7 @@ ostream& operator<<(ostream& os, DepenseGroupe* depense)
 	
 	os <<"Depense de groupe: "<< static_cast<Depense*>(depense) << " le nombre de participants est de " << depense->getNombreParticipants()<< " et le montant par personne est : " << depense->getMontantPersonnel();
 		return os;
-		//utiliser static cast
- }//erreur redefinir montant pour depense groupe
+		
+ }
 
 	

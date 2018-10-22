@@ -48,9 +48,9 @@ UtilisateurRegulier& UtilisateurRegulier::operator=(Utilisateur* utilisateur)
 
  ostream& operator<< (ostream& os,  UtilisateurRegulier* utilisateur){
 	 if (utilisateur->estGroupe()==true)
-	 os << static_cast<Utilisateur*>(utilisateur)<<"est deja dans un groupe"<<endl;
+	 os << static_cast<Utilisateur*>(utilisateur)<<endl;
 	 else 
-		 os << static_cast<Utilisateur*>(utilisateur) << "n'est dans aucun groupe" << endl;
+		 os << static_cast<Utilisateur*>(utilisateur) << endl;
 	 return os;
 
 }

@@ -174,7 +174,7 @@ ostream& operator<<(ostream& os, Utilisateur* utilisateur)
 		if (utilisateur->getDepenses()[i]->getType() == groupe) 
 		{
 			
-			DepenseGroupe *moi = static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) ; 
+			//DepenseGroupe *moi = static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) ; 
 			os  << static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) << endl;
 		}
 		else
