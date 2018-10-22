@@ -91,7 +91,7 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 	if (!utilisateurTrouve) { // TODO: Sinon affiche une erreur
 		cout << "Erreur: L'utilisateur qui fait la depense est introuvable." << endl;
 	}
-	else if(getNombreUtilisateurs() != nombreDUtilisateursValides) { // TODO: Sinon affiche une erreur
+	if(getNombreUtilisateurs() != nombreDUtilisateursValides) { // TODO: Sinon affiche une erreur
 		cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe " << getNom() << endl;
 	}
 	else { // TODO: Verifie que la dépense soit bien une DepenseGroupe
