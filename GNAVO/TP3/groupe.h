@@ -26,22 +26,22 @@ public:
 	~Groupe();
 
 	// Methodes d'acces
-	virtual string getNom() const;
-	virtual vector<DepenseGroupe*> getDepenses() const;
-	virtual vector<Utilisateur*> getUtilisateurs() const;
-	virtual vector<Transfert*> getTransferts() const;
-	virtual double getTotalDepenses() const;
-
+	 string getNom() const;
+	 vector<DepenseGroupe*> getDepenses() const;
+	 vector<Utilisateur*> getUtilisateurs() const;
+	 vector<Transfert*> getTransferts() const;
+	 double getTotalDepenses() const;
+	 
 	// Methodes de modification
-	virtual void setNom(const string& nom);
+	 void setNom(const string& nom);
 
 	// Methodes d'ajout
-	virtual Groupe& ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour);
-	virtual Groupe& operator+=(Utilisateur* utilisateur);
+	 Groupe& ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour);
+	 Groupe& operator+=(Utilisateur* utilisateur);
 
 	// Methodes de calcul
-	virtual void equilibrerComptes();
-	virtual void calculerTotalDepense();
+	 void equilibrerComptes();
+	void calculerTotalDepense();
 
 	// Methode d'affichage
 	friend ostream& operator<<(ostream& os, const Groupe& groupe);

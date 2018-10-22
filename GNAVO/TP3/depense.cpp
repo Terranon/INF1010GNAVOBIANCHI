@@ -13,14 +13,14 @@
 //paramètre
 
 Depense::Depense(const string& nom, double montant, const string& lieu) : nom_(nom),
-montant_ (montant),type_(individuelle)
+montant_ (montant),type_(individuelle), lieu_(new string(lieu))
 
 
 {
-	
-	if (lieu_ !=nullptr)
+	/*if (lieu_ !=nullptr)
 		delete lieu_;
-	lieu_ = new string(lieu);
+	lieu_ = new string(lieu);*/
+	//car on contriit
 	
 }
 
@@ -29,8 +29,8 @@ montant_ (montant),type_(individuelle)
 Depense::Depense(const Depense& depense):nom_(depense.nom_),montant_(depense.montant_),type_(depense.type_)
 {
 
-	if (lieu_ != nullptr)
-		delete lieu_;
+	//if (lieu_ != nullptr)
+		//delete lieu_;
 	lieu_ = new string(*(depense.lieu_));
 	
 }
@@ -110,11 +110,8 @@ ostream& operator<<(ostream& os,  Depense* depense)
 {
 	//return os<<"le montant est" <<depense.montant_<< " fait par" << depense.nom_ << "le type" << depense.type_<<"au lieu"<<*(depense.lieu_)<<endl;
 	
-	if (depense->getType() == groupe)
 	
-	os <<"La depense  " << depense->nom_ <<" est de type groupe" << " dont le montant est " <<depense->montant_<<" a "<<*(depense->lieu_)<<endl;
-	else
-	os << "La depense  " << depense->nom_ << "est  de type individuelle " << " dont le montant est " << depense->montant_ << " a " << *(depense->lieu_) << endl;
+	os << "La depense  " << depense->nom_  << " dont le montant est " << depense->montant_ << " a " << *(depense->lieu_) << endl;
 	
 		return os;
 

@@ -10,11 +10,8 @@ DepenseGroupe::DepenseGroupe(const string& nom , double montant , const string& 
 	setType(groupe);
 	
 }
-DepenseGroupe::DepenseGroupe(const DepenseGroupe& depense):Depense(depense)
+DepenseGroupe::DepenseGroupe(const DepenseGroupe& depense):Depense(depense),nombreParticipants_(depense.nombreParticipants_)
 {
-	/*setNom(depense.getNom());
-	setMontant(depense.getMontant());*/
-
     setType(groupe);
 }
 
@@ -27,11 +24,7 @@ unsigned int DepenseGroupe:: getNombreParticipants() const {
 
 double DepenseGroupe::getMontantPersonnel() const {
 	double montantpersonnel;
-	/*if (nombreParticipants_ == 0)
-		return   nombreParticipants_;
-	else
-		return getMontant() / nombreParticipants_;
-		*/
+	
 	if (nombreParticipants_ == 0)
 		montantpersonnel = 0;
 	else
@@ -46,13 +39,11 @@ void  DepenseGroupe::setNombreParticipants(unsigned int nombre)
 }
 
 
-//surcharge 
-//surcharge fonction type de retour nomvariable(parametre)
-//methode rtretour nomclasse::nomvaribale(parametre)
+
 ostream& operator<<(ostream& os, DepenseGroupe* depense)
 {
 	
-	os << static_cast<Depense*>(depense) << " le nombre de participants est de " << depense->getNombreParticipants()<< " et le montant personnel est : " << depense->getMontantPersonnel();
+	os <<"Depense de groupe: "<< static_cast<Depense*>(depense) << " le nombre de participants est de " << depense->getNombreParticipants()<< " et le montant par personne est : " << depense->getMontantPersonnel();
 		return os;
 		//utiliser static cast
  }//erreur redefinir montant pour depense groupe

@@ -1,4 +1,4 @@
-#include "pch.h"//fonctio ajouter depenses 
+Ôªø#include "pch.h"//fonctio ajouter depenses 
 /********************************************
 * Titre: Travail pratique #2 - groupe.cpp
 * Date: 16 septembre 2018
@@ -36,7 +36,7 @@ Groupe::~Groupe()
 	}
 	depenses_.shrink_to_fit();*/
 	
-	/*for (unsigned int i = 0; i < utilisateurs_.size(); i++)//car ils sont deja deletÈ
+	/*for (unsigned int i = 0; i < utilisateurs_.size(); i++)//car ils sont deja delet√©
 	{
 		delete utilisateurs_[i];
 		utilisateurs_.pop_back();
@@ -79,25 +79,147 @@ void Groupe::setNom(const string& nom) {
 
 // Methodes d'ajout
 Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////max
+	/*
 {
-	//faire des conditions imbriques avec ajout derreur a chaqe etape,,il resteras la fonction taux ,equilibrer comptes,et transferts..ecrire 2 fonctions et mettre la bonne variable au bon endroit concernant le compte
-	bool condition = true;///verifier que le payeur n'est pas dans le vecteur d'utilisateur en parametre payepour
 	
-	////Verifie que la dÈpense soit bien une DepenseGroupe
+
+	bool utilisateurTrouve = false;
+	unsigned int nombreDUtilisateursValides = 0;
+	string nomUtilisateursEntre = payePar->getNom();
+		for (unsigned int i = 0; i < utilisateurs_.size(); i++) {
+			for (unsigned int j = 0; j < payePour.size(); j++) {
+				if (payePour[i]->getNom() == utilisateurs_[j]->getNom()) {
+					nombreDUtilisateursValides++;
+				}
+			}
+			if (utilisateurs_[i]->getNom() == nomUtilisateursEntre) {//utilisateurentre faitdepense
+				utilisateurTrouve = true;
+			}
+		}
+		if (!utilisateurTrouve) { // TODO: Sinon affiche une erreur
+			cout << "Erreur: L'utilisateur qui fait la depense est introuvable." << endl;
+		}
+		if (utilisateurs_.size() != nombreDUtilisateursValides) { // TODO: Sinon affiche une erreur
+			cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe " << getNom() << endl;
+		}
+		else { // TODO: Verifie que la dÔøΩpense soit bien une DepenseGroupe
+			if (depense->getType() != groupe) { // TODO: Sinon affiche une erreur
+				cout << "Erreur: La depense n'est pas de type 'DepenseGroupe'." << endl;
+			}
+			else if (payePar->getType() == Regulier && static_cast<UtilisateurRegulier*>(payePar)->estGroupe() == true) {
+				cout << "Erreur:L'utilisateur est deja groupe " << endl;
+			}
+			else if (payePar->getType() == Premium && static_cast<UtilisateurPremium*>(payePar)->getJoursRestants() == 0) {
+
+				cout << "L'utilisateur doit renouveler son abonnement " << endl;
+			}
+			else {
+				DepenseGroupe* dgroup = (static_cast<DepenseGroupe*>(depense));
+				dgroup->setNombreParticipants(1 + (payePour.size()));
+
+
+				*payePar += dgroup;
+				for (unsigned int i = 0; i < payePour.size(); i++)
+				{
+					//met le nombre de participants de la depene
+
+					*payePour[i] += dgroup;//nomalement depense mais il y a eu un changemeng de type
+					//le mettre dans le groupe
+				//	cout << dgroup->getMontantPersonnel()  << endl;
+
+
+				}	//
+				//Mets √† jour les comptes des utilisateurs concern√©s
+			//dans lordre des paye pour ajoute...
+				payePar->calculerTotalDepenses();
+				if (payePar->getType() == Regulier)
+					static_cast<UtilisateurRegulier*>(payePar)->setEtatGroupe(true);
+				for (unsigned int i = 0; i < payePour.size(); i++) {
+					//for (unsigned int i = 0; i < payePour[i]->getDepenses().size(); i++)
+					payePour[i]->calculerTotalDepenses();
+					if (payePour[i]->getType() == Regulier)
+						static_cast<UtilisateurRegulier*>(payePour[i])->setEtatGroupe(true);
+				}
+	
+
+
+				depenses_.push_back(dgroup);
+
+				for (unsigned int k = 0; k < utilisateurs_.size(); k++)
+					comptes_.push_back(0);
+
+
+
+				for (unsigned int i = 0; i < utilisateurs_.size(); i++)
+				{
+					if (payePar->getNom() == utilisateurs_[i]->getNom())
+					{
+
+						comptes_[i] += (depense->getMontant() - depense->getMontant() / (1 + payePour.size()));
+
+					}
+					else
+					{
+						for (unsigned int j = 0; j < payePour.size(); j++)
+						{
+							if (payePour[j]->getNom() == utilisateurs_[i]->getNom())
+							{
+								comptes_[i] -= (depense->getMontant() / (1 + payePour.size()));
+
+
+							}
+
+						}
+
+
+					}
+
+				}
+
+
+
+
+
+				
+
+
+			}
+
+return *this;
+
+
+
+//depelacer
+
+	    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////max
+//		
+}
+*/
+
+{
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+	//faire des conditions imbriques avec ajout derreur a chaqe etape,,il resteras la fonction taux ,equilibrer comptes,et transferts..ecrire 2 fonctions et mettre la bonne variable au bon endroit concernant le compte
+	bool condition = false;///verifier que le payeur n'est pas dans le vecteur d'utilisateur en parametre payepour
+	
+	////Verifie que la d√©pense soit bien une DepenseGroupe
 	unsigned int compte=0;
-	//Verifier que tous les utilisateurs concernÈs soient l‡.
+	//Verifier que tous les utilisateurs concern√©s soient l√†.
 
 	
-		//Verifier que tous les utilisateurs concernÈs soient l‡.
+		//Verifier que tous les utilisateurs concern√©s soient l√†.
 		//et que les paye pour ausii appartiennent a la liste d'utilidateur groupe
 		for (unsigned int j = 0; j < utilisateurs_.size(); j++)
 		{
 			if (payePar->getNom() == utilisateurs_[j]->getNom()) 
 			{
-				condition = false; break;
+				condition = true; break;
 
 			}
-
+			///////payrpar
 		
 	    }
 //	que le payepar appartient a la liste dutilitsateur du groupe 
@@ -112,9 +234,7 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 		}
 	}
 		
-	if (compte == payePour.size())
-		condition = true;//sommez tous les trucs pour croire a cela
-	else
+	if (compte != payePour.size())
 		condition = false;
 				
 		
@@ -156,7 +276,7 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 
 
 		}	//
-		//Mets ‡ jour les comptes des utilisateurs concernÈs
+		//Mets √† jour les comptes des utilisateurs concern√©s
 	//dans lordre des paye pour ajoute...
 		payePar->calculerTotalDepenses();
 		if (payePar->getType() == Regulier)
@@ -169,21 +289,21 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 		}
 		/////////////////////////////////////////////////////////////////////////////////////////
 
-		
-			depenses_.push_back(dgroup);
-		
-			for (unsigned int k = 0; k < utilisateurs_.size(); k++)
-					comptes_.push_back(0);
 
-		
-		
+		depenses_.push_back(dgroup);
+
+		for (unsigned int k = 0; k < utilisateurs_.size(); k++)
+			comptes_.push_back(0);
+
+
+
 		for (unsigned int i = 0; i < utilisateurs_.size(); i++)
 		{
-			if (payePar->getNom() == utilisateurs_[i]->getNom()) 
+			if (payePar->getNom() == utilisateurs_[i]->getNom())
 			{
-			
-				comptes_[i] += (depense->getMontant() - depense->getMontant()/(1+payePour.size()));
-				
+
+				comptes_[i] += (depense->getMontant() - depense->getMontant() / (1 + payePour.size()));
+
 			}
 			else
 			{
@@ -191,23 +311,31 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 				{
 					if (payePour[j]->getNom() == utilisateurs_[i]->getNom())
 					{
-						comptes_[i] -=  (depense->getMontant() / (1 + payePour.size()));
-					
-					
-				    }
-				
-			    }
-				
+						comptes_[i] -= (depense->getMontant() / (1 + payePour.size()));
+
+
+					}
+
+				}
+
 
 			}
-		
+
 		}
+
+
+
+
+
+
+
 
 	}
 	//Sinon affiche une erreur
 	else
 		cout << "Erreur.impossible d'ajouter depense " << endl;
-		
+	
+	
 	return *this;
 }
 

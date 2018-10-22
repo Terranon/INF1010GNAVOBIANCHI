@@ -24,7 +24,7 @@ public:
 
 	//setters 
 	void setJoursRestants(unsigned int joursRestants);
-
+	void setTaux(double taux);
 	//methode de calcul 
 	void calculerTaux();
 

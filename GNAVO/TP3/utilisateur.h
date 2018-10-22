@@ -41,6 +41,7 @@ public:
 	// Methodes de modification
 	 void setNom(const string& nom);
 	 void setInteret(const double &interet);
+	 void setDepenses(const vector<Depense*> depense);
 	 void ajouterInteret(double montant);
 	 void calculerTotalDepenses();
 	 void setType(TypeUtilisateur type);

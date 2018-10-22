@@ -2,11 +2,26 @@
 #include "utilisateurPremium.h"
 
 //constructeurs 
-UtilisateurPremium::UtilisateurPremium (const string& nom ):Utilisateur(nom),joursRestants_(30),taux_(TAUX_REGULIER)
+UtilisateurPremium::UtilisateurPremium (const string& nom ):
+	Utilisateur(nom),
+	joursRestants_(30),
+	taux_(TAUX_REGULIER)
 {
 	setType(Premium);
 }//n'oublie pas le type
-UtilisateurPremium::UtilisateurPremium(const Utilisateur& utilisateur):Utilisateur(utilisateur){ setType(Premium); }
+UtilisateurPremium::UtilisateurPremium(const Utilisateur& utilisateur):Utilisateur(utilisateur){
+	if (utilisateur.getType() == Premium) {
+		setJoursRestants(static_cast<UtilisateurPremium>(utilisateur).getJoursRestants());
+		setTaux(static_cast<UtilisateurPremium>(utilisateur).getTaux());
+	}
+	else {
+		setJoursRestants(30);
+	    setTaux(TAUX_REGULIER);
+	}
+		
+		
+
+}
 
 
 //getters
@@ -28,23 +43,20 @@ void UtilisateurPremium::setJoursRestants(unsigned int joursRestants)
 
 	joursRestants_ = joursRestants;
 }
-
+void UtilisateurPremium::setTaux(double taux) {
+	taux_ = taux;
+}
 //methode de calcul 
 void UtilisateurPremium::calculerTaux()
 { 
-
-	//mod 2 pour toutes les deux depenses 
-	//calculer le nombre de depense de groupe
-	int compteur = 0;
-	for (int i = 0; i <getNombreDepenses(); i++) {
+	if (taux_ != 0)
+		taux_ = TAUX_REGULIER;
+	unsigned int nombreDepenses=getNombreDepenses();
 		
-		//if (getDepenses()[i]->getType() == groupe) pas de conditions concernant le truc ci
-			compteur++;
-	}
 	if (taux_ <= 0)
 		taux_ = 0;
 	else
-		taux_-=  (0.01)*(compteur/2) ;//la depense doit etre uhe depense de groupe
+		taux_-=  (0.01)*(nombreDepenses /2) ;//la depense doit etre uhe depense de groupe
 	
 	
 }
@@ -53,18 +65,13 @@ void UtilisateurPremium::calculerTaux()
 UtilisateurPremium& UtilisateurPremium::operator= (Utilisateur* utilisateur)
 {
 	
-		if (this != utilisateur)
-		{
-			for (unsigned int i = 0; i < getNombreDepenses(); i++)
-			{
-				delete this->getDepenses()[i];
-				this->getDepenses().pop_back();//reduire la taille et les élements
-
-				this->setNom(utilisateur->getNom());
-				for (unsigned int j = 0; j < getNombreDepenses(); j++)
-					this->getDepenses().push_back(utilisateur->getDepenses()[i]);
+	if (this != utilisateur){
+			*this = utilisateur;
+			if (utilisateur->getType() == Premium) {
+				setJoursRestants(static_cast<UtilisateurPremium*>(utilisateur)->getJoursRestants());
+				setTaux(static_cast<UtilisateurPremium*>(utilisateur)->getTaux());
 			}
-	    }
+    }
 	return *this;
 }
 
