@@ -40,10 +40,10 @@ void  DepenseGroupe::setNombreParticipants(unsigned int nombre)
 
 
 
-ostream& operator<<(ostream& os, DepenseGroupe* depense)
+ostream& operator<<(ostream& os, const DepenseGroupe& depense)
 {
 	
-	os <<"Depense de groupe: "<< static_cast<Depense*>(depense) << " le nombre de participants est de " << depense->getNombreParticipants()<< " et le montant par personne est : " << depense->getMontantPersonnel();
+	os <<"Depense de groupe: "<< static_cast<Depense>(depense) << " le nombre de participants est de " << depense.getNombreParticipants()<< " et le montant par personne est : " << depense.getMontantPersonnel();
 		return os;
 		
  }

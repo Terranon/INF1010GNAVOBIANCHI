@@ -35,8 +35,8 @@ public:
 	 double getInteret() const;
 	 double getTotalDepenses() const;
 	 TypeUtilisateur getType() const;
-    vector<Depense*> getDepenses() const;
-	 unsigned int getNombreDepenses() const;
+    vector<Depense*> getDepenses() ;
+	 unsigned int getNombreDepenses() const ;
 
 	// Methodes de modification
 	 void setNom(const string& nom);

@@ -42,7 +42,7 @@ public:
 	Depense& operator=(const Depense& depense);
 
 	// Affichage
-	friend ostream& operator<<(ostream& os, Depense* depense);
+	friend ostream& operator<<(ostream& os, const Depense& depense);
 private:
 	string nom_;
 	double montant_;

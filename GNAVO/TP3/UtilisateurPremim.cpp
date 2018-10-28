@@ -75,10 +75,10 @@ UtilisateurPremium& UtilisateurPremium::operator= (Utilisateur* utilisateur)
 	return *this;
 }
 
-ostream& operator << (ostream& os,  UtilisateurPremium* utilisateur)
+ostream& operator << (ostream& os,  const UtilisateurPremium& utilisateur)
 {
 	
-	os << static_cast<Utilisateur*>(utilisateur) << "avec un taux de" << 100*utilisateur->getTaux() <<"% et le nombre de jours restants est :"<< utilisateur->joursRestants_<< endl;
+	os << static_cast<Utilisateur>(utilisateur) << "avec un taux de" << 100*utilisateur.getTaux() <<"% et le nombre de jours restants est :"<< utilisateur.joursRestants_<< endl;
 	return os;
 }
 

@@ -23,7 +23,7 @@ Utilisateur::Utilisateur(const Utilisateur& utilisateur):
 	interet_(utilisateur.interet_)
 {
 	
-	setDepenses(utilisateur.depenses_);
+	//setDepenses(utilisateur.getDepenses());
 
 	/*for (unsigned int i=0;i<depenses_.size();i++)
 		depenses_[i] = new Depense(utilisateur.depenses_[i]->getMontant());
@@ -66,7 +66,7 @@ unsigned int Utilisateur::getNombreDepenses() const {
 	return depenses_.size();
 }
 
-vector <Depense*> Utilisateur::getDepenses() const 
+vector <Depense*> Utilisateur::getDepenses() 
 {
 return depenses_;
 
@@ -175,11 +175,11 @@ ostream& operator<<(ostream& os, Utilisateur* utilisateur)
 		{
 			
 			//DepenseGroupe *moi = static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) ; 
-			os  << static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) << endl;
+			os  << *static_cast<DepenseGroupe*>(utilisateur->depenses_[i]) << endl;
 		}
 		else
 		{ 
-			os << "voici les depenses:" << utilisateur->getDepenses()[i] << endl;
+			os << "voici les depenses:" << *utilisateur->getDepenses()[i] << endl;
 		}
 			
 	}

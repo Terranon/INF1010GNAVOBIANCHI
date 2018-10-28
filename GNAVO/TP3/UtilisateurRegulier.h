@@ -26,7 +26,7 @@ public:
 	//surcharge
 	void ajouterInteret(double montant);//ajout
 	UtilisateurRegulier& operator=(Utilisateur* utilisateur);
-	friend ostream& operator<< (ostream& os, UtilisateurRegulier* utilisateur);
+	friend ostream& operator<< (ostream& os, const UtilisateurRegulier& utilisateur);
 private:
 	bool estGroupe_;
 

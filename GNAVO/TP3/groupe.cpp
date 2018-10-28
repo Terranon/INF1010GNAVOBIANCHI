@@ -166,7 +166,7 @@ Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Ut
 			if (payePar->getNom() == utilisateurs_[i]->getNom())
 			{
 
-				comptes_[i] += depense->getMontant() ;
+				comptes_[i] += depense->getMontant() -static_cast<DepenseGroupe*>(depense)->getMontantPersonnel();
 
 			}
 			else
@@ -327,13 +327,13 @@ ostream & operator<<(ostream& os, const Groupe& groupe)
 {
 	for (unsigned int i = 0; i < groupe.utilisateurs_.size(); i++)
 	{
-
+		
 		//os << (groupe.utilisateurs_[i])<<endl;//cc'est un pointeur sur un type utilisateur
 		if (groupe.utilisateurs_[i]->getType() == Premium)
 		{
-			
-		
-			os << static_cast<UtilisateurPremium*>(groupe.utilisateurs_[i]) << endl;
+		    UtilisateurPremium* p=new   UtilisateurPremium(*groupe.utilisateurs_[i]);
+			//cout << p;
+			os << p << endl;
 			
 		}
 		else

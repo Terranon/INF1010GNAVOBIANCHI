@@ -31,7 +31,7 @@ public:
 	//operateurs
 	UtilisateurPremium& operator= (Utilisateur* utilisateur);
 
-	friend ostream& operator << (ostream& os, UtilisateurPremium* utilisateur);
+	friend ostream& operator << (ostream& os, const UtilisateurPremium &utilisateur);
 
 private:
 	unsigned int joursRestants_;
