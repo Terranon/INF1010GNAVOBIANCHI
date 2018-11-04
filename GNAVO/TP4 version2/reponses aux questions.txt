@@ -1,11 +1,11 @@
 1-
-La sortie sera 1;
+La sortie sera 1
 2-
-il s'agit dù'un pointeur sur un objet de type A;
-3-on pouvait 
-on ajoute le qualificatif virtual a la classe A
-ou alors 
-mettre un virtual a c mais dans 
-dans l'implementation specifier B::f()
+Vu qu'il s'agit d'un pointeur sur un objet de type A la méthode appelé est donc celle de la classe de base A
+3-
+1ere solution:on retire le mot clé virtual a la fonction void de la classe B
+2eme solution:on précise dans le main la fonction auquel on se réfère a travers l'expression 
+v[0]->B::f() 
+
 4-
-on ne peut pas instancier un kobjet de type transfert car transfert est une  ;interface
+on ne peut pas instancier un objet de type transfert car transfert est une interface(classe abstraite pure)

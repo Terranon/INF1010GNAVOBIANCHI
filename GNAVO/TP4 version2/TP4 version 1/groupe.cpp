@@ -25,7 +25,7 @@ Groupe::~Groupe() {
 	depenses_.clear();
 	for (unsigned int i = 0; i < transferts_.size(); i++) {
 		delete transferts_[i];
-		transferts_[i] = nullptr;
+		transferts_[i] = nullptr;//
 		
 	}
 	transferts_.clear();
