@@ -1,189 +1,180 @@
-/********************************************
-* Titre: Travail pratique #2 - groupe.cpp
-* Date: 16 septembre 2018
-* Auteur: Wassim Khene & David Dratwa
-*******************************************/
+########       AVR Project Makefile       ########
+#####                                        #####
+#####      Makefile produit et ecrit par     #####
+#####   Simon Barrette & Jerome Collin pour  #####
+#####           INF1900 - 2016               #####
+#####                                        #####
+#####         Inspire de Pat Deegan -        #####
+#####  Psychogenic Inc (www.psychogenic.com) #####
+##################################################
 
-#include "groupe.h"
-
-// Constructeurs
-Groupe::Groupe(const string& nom) : 
-	nom_(nom) {
-}
-
-Groupe::~Groupe() {
-	for(unsigned int i = 0; i < utilisateurs_.size(); i++) {
-		delete utilisateurs_[i];
-		utilisateurs_[i] = nullptr;
-	}
-	utilisateurs_.clear();
-	utilisateurs_.shrink_to_fit();
-	for(unsigned int j = 0; j < depenses_.size(); j++) {
-		delete depenses_[j];
-		depenses_[j] = nullptr;
-	}
-	depenses_.clear();
-	depenses_.shrink_to_fit();
-	for(unsigned int k = 0; k < transferts_.size(); k++) {
-		delete transferts_[k];
-		transferts_[k] = nullptr;
-	}
-	transferts_.clear();
-	transferts_.shrink_to_fit();
-	comptes_.clear();
-	comptes_.shrink_to_fit();
-}
+# Ce Makefile vous permet de compiler des projets
+# pour les microcontroleurs Atmel AVR sur 
+# Linux ou Unix, en utilisant l'outil AVR-GCC. 
+# Ce Makefile supporte C & C++
 
 
-// Methodes d'acces
-string Groupe::getNom() const {
-	return nom_;
-}
+#####      Details specifique a la cible       #####
+#####  Vous devez les adapter a votre projet   #####
 
-vector<Utilisateur*> Groupe::getUtilisateurs() const {
-	return utilisateurs_;
-}
-unsigned int Groupe::getNombreUtilisateurs() const {
-	unsigned int nombreDUtilisateurs = utilisateurs_.size();
-	return nombreDUtilisateurs;
-}
+# Nom du microcontroleur cible
+# (exemple: 'at90s8515')
+MCU=atmega324pa
 
-vector<DepenseGroupe*> Groupe::getDepenses() const {
-	return depenses_;
-}
-unsigned int Groupe::getNombreDepenses() const {
-	unsigned int nombreDeDepenses = depenses_.size();
-	return nombreDeDepenses;
-}
+# Nom de votre projet
+# (utilisez un seul mot, exemple: 'monprojet')
+PROJECTNAME=test
 
-vector<Transfert*> Groupe::getTransferts() const {
-	return transferts_;
-}
-unsigned int Groupe::getNombreTransferts() const {
-	unsigned int nombreDeTransferts = transferts_.size();
-	return nombreDeTransferts;
-}
-double Groupe::getTotalDepenses() const {
-	return totalDepenses_;
-}
+# Fichiers sources
+# Utilisez le suffixe .cpp pour les fichiers C++
+# Listez tous les fichiers a compiler, separes par
+# un espace. exemple: 'tp1.c tp2.cpp':
+PRJSRC= compteur32bits.cpp
 
-// Methodes de modifications
-void Groupe::setNom(const string& nom) {
-	nom_ = nom;
-}
+# Inclusions additionnels (ex: -I/path/to/mydir)
+INC=
 
-// Methodes d'ajout
-Groupe& Groupe::ajouterDepense(Depense* depense, Utilisateur* payePar, vector<Utilisateur*> payePour) {
-	// TODO: Verifier que tous les utilisateurs concernés soient là.
-	bool utilisateurTrouve = false;
-	unsigned int nombreDUtilisateursValides = 0;
-	string nomUtilisateursEntre = payePar->getNom();
-	for (unsigned int i = 0; i < getNombreUtilisateurs(); i++) {
-		for (unsigned int j = 0; j < payePour.size(); j++) {
-			if (payePour[i]->getNom() == utilisateurs_[j]->getNom()) {
-				nombreDUtilisateursValides++;
-			}
-		}
-		if (utilisateurs_[i]->getNom() == nomUtilisateursEntre) {
-			utilisateurTrouve = true;
-		}
-	}
-	if (!utilisateurTrouve) { // TODO: Sinon affiche une erreur
-		cout << "Erreur: L'utilisateur qui fait la depense est introuvable." << endl;
-	}
-	if(getNombreUtilisateurs() != nombreDUtilisateursValides) { // TODO: Sinon affiche une erreur
-		cout << "Erreur: Le groupe d'utilisateur ne correspond pas au groupe " << getNom() << endl;
-	}
-	else { // TODO: Verifie que la dépense soit bien une DepenseGroupe
-		if (depense->getType() != groupe) { // TODO: Sinon affiche une erreur
-				cout << "Erreur: La depense n'est pas de type 'DepenseGroupe'.";
-		}
-		else { // TODO: Si tout est bon : Ajoute la dépense aux utilisateurs concernés
-			DepenseGroupe* depenseGroupe = static_cast<DepenseGroupe*>(depense);
-			depenseGroupe->setNombreParticipants(payePour.size());
-			*payePar += depenseGroupe;
-			// TODO: Mets à jour les comptes des utilisateurs concernés
-			
-			// TODO: Ajoute la dépense au groupe
-			depenses_.push_back(depenseGroupe);
-			for (unsigned int k = 0; k < payePour.size(); k++) {
-				if (utilisateurs_[k]->getType() == Premium) {
-					UtilisateurPremium* utilisateurTemp = static_cast<UtilisateurPremium*>(utilisateurs_[k]);
-					utilisateurTemp->calculerTaux();
-				}
-			}
-		}
-	}
-	return *this;
-}
+# Libraires a lier (ex: -lmylib)
+LIBS=
 
-Groupe& Groupe::operator+=(Utilisateur* utilisateur) {
-	if(utilisateur->getType == Premium || utilisateur.)
-	utilisateurs_.push_back(utilisateur);
-	vector<Depense*> depensesTemp = utilisateur->getDepenses();
-	for (unsigned int i = 0; i < utilisateur->getNombreDepenses(); i++) {
-		ajouterDepense(depensesTemp[i], utilisateur, getUtilisateurs());
-	}
+# Niveau d'optimization
+# Utilisez s (size opt), 1, 2, 3 ou 0 (off)
+OPTLEVEL=s
+
+# Programmer ID - Ne pas changer 
+# Liste complete des IDs disponible avec avrdude
+AVRDUDE_PROGRAMMERID=usbasp
+
+
+
+####################################################
+#####         Configuration terminee           #####
+#####                                          #####
+#####  Le reste de cette section contient les  #####
+##### details d'implementation vous permettant #####
+##### de mieux comprendre le fonctionnement de ##### 
+#####   ce Makefile en vue de sa modification  #####
+####################################################
+
+
+
+####### variables #######
+
+#compilateur utilise
+CC=avr-gcc
+#pour copier le contenu d'un fichier objet vers un autre
+OBJCOPY=avr-objcopy
+#pour permettre le transfert vers le microcontroleur
+AVRDUDE=avrdude
+#pour supprimer les fichiers lorsque l'on appel make clean
+REMOVE=rm -f
+# HEXFORMAT -- format pour les fichiers produient .hex
+HEXFORMAT=ihex
+
+
+
+####### Options de compilation #######
+
+# Flags pour le compilateur en C
+CFLAGS=-I. -MMD $(INC) -g -mmcu=$(MCU) -O$(OPTLEVEL) \
+	-fpack-struct -fshort-enums             \
+	-funsigned-bitfields -funsigned-char    \
+	-Wall                                        
+
+# Flags pour le compilateur en C++
+CXXFLAGS=-fno-exceptions     
+
+# Linker pour lier les librairies utilisees
+LDFLAGS=-Wl,-Map,$(TRG).map -mmcu=$(MCU)
+
+
+
+####### Cible (Target) #######
+
+#Nom des cibles par defaut
+TRG=$(PROJECTNAME).out
+HEXROMTRG=$(PROJECTNAME).hex
+HEXTRG=$(HEXROMTRG) $(PROJECTNAME).ee.hex
+
+
+
+####### Definition de tout les fichiers objets #######
+
+# Cette fonction permet de differencier les fichiers .c
+# des fichiers .cpp
+# Fichier C
+CFILES=$(filter %.c, $(PRJSRC))
+# Fichier C++
+CPPFILES=$(filter %.cpp, $(PRJSRC))
+
+# Liste de tout les fichiers objet que nous devons creer
+OBJDEPS=$(CFILES:.c=.o) \
+	$(CPPFILES:.cpp=.o)
 	
-}
-
-void Groupe::equilibrerComptes() {
-
-	bool calcul = true;
-	int count = 0;
-	while (calcul) {
-		double max = 0;
-		double min = 0;
-		int indexMax = 0;
-		int indexMin = 0;
-
-		// On cherche le compte le plus eleve et le moins eleve
-		for (int i = 0; i < utilisateurs_.size(); i++) {
-			if (comptes_[i] > max) {
-				max = comptes_[i];
-				indexMax = i;
-			}
-			if (comptes_[i] < min) {
-				min = comptes_[i];
-				indexMin = i;
-			}
-		}
-
-		// On cherche lequel des deux a la dette la plus grande
-		if (-min <= max && min != 0 && max != 0) {
-			transferts_.push_back(new Transfert(-min, utilisateurs_[indexMin], utilisateurs_[indexMax]));
-			comptes_[indexMax] += min;
-			comptes_[indexMin] = 0;
-
-		}
-		else if (-min > max  && min != 0 && max != 0) {
-			transferts_.push_back(new Transfert(max, utilisateurs_[indexMin], utilisateurs_[indexMax]));
-			comptes_[indexMax] = 0;
-			comptes_[indexMin] += max;
+# Pour plus d'information sur cette section, consulter :
+# http://bit.ly/257R53E	
+# Les fonctions $(filter patternÃ¢â‚¬Â¦,text) &
+# $(patsubst pattern,replacement,text) sont pertinentes
+	
 
 
-		}
+####### Creation des commandes du Makefile ####### 
 
-		// On incremente le nombre de comptes mis a 0
-		count++;
-		if (-min == max) {
-			count++;
-		}
-		if (count >= utilisateurs_.size() - 1) {
-			calcul = false;
-		}
-	}
+# Creation des cibles Phony (Phony Target)
+# En plus de la commande make qui permet de compiler
+# votre projet, vous pouvez utilisez les commandes
+# make all, make install et make clean
+.PHONY: all install clean 
 
-}
+# Make all permet simplement de compiler le projet
+#
+all: $(TRG)
 
-void Groupe::calculerTotalDepense() {
-	totalDepenses_ = 0;
-	for (unsigned int i = 0; i < getNombreDepenses(); i++) {
-		totalDepenses_ += depenses_[i]->getMontant();
-	}
-}
+# Implementation de la cible
+$(TRG): $(OBJDEPS)
+	$(CC) $(LDFLAGS) -o $(TRG) $(OBJDEPS) \
+	-lm $(LIBS)
 
-// Methode d'affichage
-ostream & operator<<(ostream& os, const Groupe& groupe) {
+# Production des fichiers object
+# De C a objet
+%.o: %.c
+	$(CC) $(CFLAGS) -c $<
+# De C++ a objet
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(CXXFLAGS) -c $<
 
-}
+# Verification des dependances (header dependencies)
+-include *.d
+
+# Pour plus d'information sur cette section, consulter:
+# http://bit.ly/2580FU8
+
+# Production des fichiers hex a partir des fichiers elf
+%.hex: %.out
+	$(OBJCOPY) -j .text -j .data \
+		-O $(HEXFORMAT) $< $@
+
+# Make install permet de compiler le projet puis
+# d'ecrire le programme en memoire flash dans votre
+# microcontroleur. Celui-ci doit etre branche par cable USB
+install: $(HEXROMTRG)				
+	$(AVRDUDE) -c $(AVRDUDE_PROGRAMMERID)   \
+	-p $(MCU) -P -e -U flash:w:$(HEXROMTRG)
+
+# Make clean permet d'effacer tout les fichiers generes
+# lors de la compilation
+clean:
+	$(REMOVE) $(TRG) $(TRG).map $(OBJDEPS) $(HEXTRG) *.d
+
+# Pour plus d'information sur les phony target, consulter:
+# http://bit.ly/1WBQe61
+
+# De plus, pour mieux comprendre les makefiles et 
+# leur fonctionnement, consulter la documentation de GNU Make:
+# http://bit.ly/23Vpk8s                                       
+
+# Finalement, ce tutoriel en ligne constitut une bonne 
+# introduction au Makefile:
+# http://bit.ly/1XvxsN3
+
+#####                   

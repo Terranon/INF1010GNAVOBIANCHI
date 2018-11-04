@@ -11,6 +11,7 @@
 
 #include "groupe.h"
 
+
 using namespace std;
 
 static const unsigned int TAILLEDEPENSEFINAL = 6;
@@ -22,6 +23,10 @@ static const unsigned int NOMBREUTILISATEURFINAL = 5;
 int main(int argc, const char * argv[]) {
 	cout << "\t \tBienvenue sur PolyCount " << endl << " *****************************************" << endl;
 	
+	// Votre ligne de code sera insérée ici.
+	
+
+
 	// Creer un evenement pour 6 depenses et 4 utilisateurs.
 	string name;
 	cout << "entrez un nom pour le groupe" << endl;
