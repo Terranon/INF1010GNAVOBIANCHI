@@ -46,7 +46,7 @@ int main() {
 	/*
 	* Depense
 	*/
-	
+
 	// Test 1: Constructeur par copie
 	tests.push_back(d2->getNom() == "test1"
 		&& d2->getMontant() == 50
@@ -192,7 +192,7 @@ int main() {
 		&& groupe1->getComptes()[2] == 20
 		&& groupe1->getComptes()[3] == -280
 		&& groupe1->getComptes()[4] == 380
-		&& groupe1->getComptes()[5] == -40 
+		&& groupe1->getComptes()[5] == -40
 		&& groupe1->getTotalDepenses() == 2040);
 
 	groupe1->equilibrerComptes();

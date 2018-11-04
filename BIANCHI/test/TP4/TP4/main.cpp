@@ -5,15 +5,20 @@
 *******************************************/
 
 #include <iostream>
-#include "depense.h";
+#include "depense.h"
 #include "utilisateur.h"
+
 #include "transfert.h"
+
 #include "groupe.h"
 
+//ajout de asert
+#include "assert.h"
 using namespace std;
 
 int main() {
 	// Initialisation des utilisateurs
+
 	UtilisateurRegulier* ur1 = new UtilisateurRegulier("Yves", Paypal, "yves@polymtl.ca", "yb");
 	UtilisateurRegulier* ur2 = new UtilisateurRegulier("Martine", Interac, "martine@polymtl.ca", "mb");
 	UtilisateurRegulier* ur3 = new UtilisateurRegulier("Samuel", Interac, "samuel@polymtl.ca", "sk");
@@ -24,8 +29,31 @@ int main() {
 	UtilisateurPremium* up3 = new UtilisateurPremium("David", Paypal, 10, "david@polymtl.ca", "dd");
 	UtilisateurPremium* up4 = new UtilisateurPremium("Gaspard", Interac, 10, "gaspard@polymtl.ca", "gdv");
 
+
+
 	Depense* d1 = new Depense("test1", 50, "IGA");
-	Depense* d2 = new Depense(*d1);
+	Depense* d2 = new Depense(*d1);//ici on doit rajouter un constructeur par copie car on veut pas que l'attribut pointe sur le meme objet .(lieu)
+								   /*
+								   test de verification que le polymorphisme est appliqué sur les utilisateurs
+
+								   vector< Utilisateur*> tab;
+								   tab.push_back(*ur1);
+								   tab.push_back(*ur2);
+								   tab.push_back(*up1);
+								   tab.push_back(*up2);
+								   for (unsigned int i = 0; i < tab.size(); i++)
+								   cout << tab[i];
+								   cout << "oui ";
+								   ///apprendree a utiliser lae passage par reference aussi pour levecteur  en vue d'utiliser le polymorphisme
+								   */
+
+
+
+
+
+
+
+
 
 	UtilisateurPremium* uptest = new UtilisateurPremium("Yves", Paypal, 10, "yves@polymtl.ca", "yb");
 
@@ -34,19 +62,36 @@ int main() {
 	transferts.push_back(new TransfertInterac(200, up2, ur1));
 	transferts.push_back(new TransfertPaypal(150, ur2, up3));
 	transferts.push_back(new TransfertInterac(300, ur3, ur4));
+	//ici peut importe le type d'utilisateur les frais se rapportent plus au type de transfert
+
+
+	/*
+	test pour verifier que les frais sont bien calculer et tout
+	for (unsigned int i = 0; i < transferts.size(); i++) {
+	cout << "le transfert realise a des frais de " << transferts[i]->getFraisTransfert();
+
+	}
+	assert(transferts[0]->getFraisTransfert() == (100 * 0.026 + 0.3));
+	assert(transferts[1]->getFraisTransfert() == 1);
+	assert(transferts[2]->getFraisTransfert() == (150 * 0.026 + 0.3));
+	assert(transferts[3]->getFraisTransfert() == 1);
+	//vu que nous somme dans une classe derive tu peux changer la classe de base mais pas le droit de la redefinir sont type sinon cettfe methode redefini est ignorééé
+	ma question ckoncerne les methodes constantes ..classe de base a une methode non const..la derive la redefini  const ilignore la methode redefini car elle change le type...
+	//class de base  const la derive la defini const--il utilise celle de la classe de base non
+	*/
 
 	Groupe* groupe1 = new Groupe("Madrid");
 	Groupe* groupe2 = new Groupe("Collocation");
 
-	/*
-	* Tests
-	*/
+
+	//* Tests
+
 	vector<bool> tests;
 
-	/*
-	* Depense
-	*/
-	
+
+	//* Depense
+
+
 	// Test 1: Constructeur par copie
 	tests.push_back(d2->getNom() == "test1"
 		&& d2->getMontant() == 50
@@ -65,9 +110,9 @@ int main() {
 		&& d2->getMontant() == 150
 		&& *d2->getLieu() == "Provigo");
 
-	/*
-	* Utilisateur
-	*/
+
+	//* Utilisateur
+
 	*uptest += d1;
 	*uptest += d2;
 
@@ -81,9 +126,9 @@ int main() {
 		&& uptest->getBalance() == -5
 		&& uptest->getTotalATransferer() == 30);
 
-	/*
-	* Transfert
-	*/
+	//assert(uptest->getBalance() == -5);
+	//* Transfert
+
 	// Test 5: Bonne initialisation des transferts
 	tests.push_back(dynamic_cast<TransfertPaypal*>(transferts[0])->getId() == "rh"
 		&& (dynamic_cast<TransfertInterac*>(transferts[1])->getCourriel() == "yves@polymtl.ca"));
@@ -135,9 +180,9 @@ int main() {
 	ur3->modifierBalanceTranferts(-300);
 	ur4->modifierBalanceTranferts(300);
 
-	/*
-	* Groupe
-	*/
+
+	//* Groupe
+
 
 	// Test 12: ajout d'un utilisateur premium
 	*groupe1 += up1;
@@ -147,7 +192,7 @@ int main() {
 	*groupe1 += up2;
 
 	// Test 13: jours restants a 0
-	tests.push_back(groupe1->getUtilisateurs().size() == 1);
+	tests.push_back(groupe1->getUtilisateurs().size() == 1);//la taille ne change pas car l'utilisateur n'a pas été ajouté
 
 	*groupe1 += up3;
 	*groupe1 += up4;
@@ -165,6 +210,8 @@ int main() {
 
 	*groupe1 += ur4;
 	// Test 16: ajout d'utilisateur deja dans un groupe
+	//enonce pas clair mais d'apres le resultat je crois comprendre 
+	//qu'on l'impossibilté d'ajouter un utilisateur dejà groupé
 	tests.push_back(groupe1->getUtilisateurs().size() == 6);
 
 	groupe1->ajouterDepense(180, up1, "d1")
@@ -192,11 +239,11 @@ int main() {
 		&& groupe1->getComptes()[2] == 20
 		&& groupe1->getComptes()[3] == -280
 		&& groupe1->getComptes()[4] == 380
-		&& groupe1->getComptes()[5] == -40 
+		&& groupe1->getComptes()[5] == -40
 		&& groupe1->getTotalDepenses() == 2040);
 
 	groupe1->equilibrerComptes();
-
+	//assert(groupe1->getUtilisateurs()[0]->getTotalATransferer() == -20);
 	// Test 20: verification des transferts
 	tests.push_back(groupe1->getTransferts().size() == 4
 		&& groupe1->getComptes()[0] == 0
@@ -206,22 +253,41 @@ int main() {
 		&& groupe1->getComptes()[4] == 0
 		&& groupe1->getComptes()[5] == 0);
 
+	//assert(transferts[0]==groupe1->getTransferts()[0]); trouver une solution pour ceci apres
+
 	// Test 21: verification de la nature des transferts
 	tests.push_back(dynamic_cast<TransfertPaypal*>(groupe1->getTransferts()[0]) != nullptr
 		&& dynamic_cast<TransfertPaypal*>(groupe1->getTransferts()[1]) != nullptr
 		&& dynamic_cast<TransfertInterac*>(groupe1->getTransferts()[2]) != nullptr
 		&& dynamic_cast<TransfertInterac*>(groupe1->getTransferts()[3]) != nullptr);
 
+	//assert(dynamic_cast<TransfertPaypal*>(transferts[0]) != nullptr);
+	//assert(dynamic_cast<TransfertPaypal*>(groupe1->getTransferts()[0]) != nullptr);
+	//le type sur qui il pointe n'est pas correcte
+	/*assert(
+	dynamic_cast<TransfertPaypal*>(groupe1->getTransferts()[1]) != nullptr
+	&& dynamic_cast<TransfertInterac*>(groupe1->getTransferts()[2]) != nullptr
+	&& dynamic_cast<TransfertInterac*>(groupe1->getTransferts()[3]) != nullptr);*/
 	// Test 22 - 27: verification des balances et montants a transferts pour les utilisateurs
-	tests.push_back(groupe1->getUtilisateurs()[0]->getTotalATransferer() == -20
+	tests.push_back(groupe1->getUtilisateurs()[0]->getTotalATransferer() == -20//pour fonctonner il faut que la fonction du haut fonctionne
+
 		&& groupe1->getUtilisateurs()[0]->getBalance() == 0);
+
+	//assert(groupe1->getUtilisateurs()[0]->getTotalATransferer() == -20
+	//&& groupe1->getUtilisateurs()[0]->getBalance() == 0);
 
 	tests.push_back(groupe1->getUtilisateurs()[1]->getTotalATransferer() == 100
 		&& groupe1->getUtilisateurs()[1]->getBalance() == -3);
+	//assert(groupe1->getUtilisateurs()[1]->getTotalATransferer() == 100
+	//&& groupe1->getUtilisateurs()[1]->getBalance() == -3);
 	tests.push_back(groupe1->getUtilisateurs()[2]->getTotalATransferer() == -20
 		&& groupe1->getUtilisateurs()[2]->getBalance() == 0);
+	//assert(groupe1->getUtilisateurs()[2]->getTotalATransferer() == -20
+	//&& groupe1->getUtilisateurs()[2]->getBalance() == 0);
 	tests.push_back(groupe1->getUtilisateurs()[3]->getTotalATransferer() == 280
 		&& floorf(groupe1->getUtilisateurs()[3]->getBalance() * 100) / 100 == floorf(7.58 * 100) / 100);
+	//assert(groupe1->getUtilisateurs()[3]->getTotalATransferer() == 280
+	//&& floorf(groupe1->getUtilisateurs()[3]->getBalance() * 100) / 100 == floorf(7.58 * 100) / 100);
 	tests.push_back(groupe1->getUtilisateurs()[4]->getTotalATransferer() == -380
 		&& groupe1->getUtilisateurs()[4]->getBalance() == 0);
 	tests.push_back(groupe1->getUtilisateurs()[5]->getTotalATransferer() == 40
@@ -241,6 +307,10 @@ int main() {
 	// Test des methodes d'affichage
 	cout << *groupe1;
 
+	// TODO: Liberation de la memoire si nécessaire
+	//creer des destructeurs virtuels--on detruit d'ABORD LES DEstructeurs des classes filles
+
+	//detruire transfert
 	for (unsigned int i = 0; i < transferts.size(); i++)
 	{
 		delete transferts[i];
@@ -269,4 +339,8 @@ int main() {
 	delete groupe2; groupe2 = nullptr;
 
 	return 0;
+
+
+
+
 }
