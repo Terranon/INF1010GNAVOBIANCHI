@@ -8,7 +8,7 @@
 #include <vector>
 
 //aurait ton pu mettre template avant de mettre gestionnairegénérique?
-class GestionnaireDepenses: public GestionnaireGenerique<Depense*,vector<Depense*>,Depense*> {
+class GestionnaireDepenses: public GestionnaireGenerique<Depense*,vector<Depense*>,Depense*, AjouterDepense> {
 public:
 	//constructeur
 

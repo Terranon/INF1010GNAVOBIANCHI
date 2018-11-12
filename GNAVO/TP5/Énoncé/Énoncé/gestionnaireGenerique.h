@@ -4,10 +4,12 @@
 * Auteur: Ryan Hardie
 *******************************************/
 #include "foncteur.h"/// ne pas inclure le fichier foncteur
-template<typename T,typename C,typename D >
+template<typename T,typename C,typename D ,typename FoncteurAjouter >
 class GestionnaireGenerique
 {
 public:
+
+	//consturcteur
 
 	C getConteneur() const {
 
@@ -15,13 +17,12 @@ public:
 		return conteneur_;
 
 	};
-		template <typename FoncteurAjouter>
-	void ajouter(T t) {
+	void ajouter(T t, FoncteurAjouter foncteur) {
 	
-
-	 
-	  FoncteurAjouter(t);
-	
+		FoncteurAjouter foncteur(C);//appel du constructeur avec en parametre le constructeur
+		//conteneur_=foncteur<C>(t);//   utilisation de l'operateur () peut etre cela est inutile 
+		conteneur_ = foncteur;
+		//conteneur_ = FoncteurAjouter<C>(t);
 	};
 		
 		
@@ -46,19 +47,19 @@ public:
 	methode retourne le nombre d'elements
 	*/
 	D getElementParIndex(int i) const {		
-//		return *next(conteneur_.begin(), i);//il avance de i elements
+		return *next(conteneur_.begin(), i);//il avance de i elements
 		/*auto position = conteneur_.begin();
 		for (i; position != i; i++) { return *position; }//la fonctiion ne fera qu'augmenter l'itérateursans effectuer d'autres instructions*/
-		auto position = conteneur_.begin();
-		position += i;
-		return *position;
+	/*	auto position = conteneur_.begin();
+		position += i;//refusé par le compilateur pourquoi?
+		return *position;*/
 		//retourne le contenu pointé par l'itérateur
 		
 	};
 
 	protected :
 	C conteneur_;
-
+	
 
 
 

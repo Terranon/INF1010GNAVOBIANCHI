@@ -8,7 +8,8 @@
 #include "utilisateurPremium.h"
 #include "utilisateurRegulier.h"
 #include <vector>
-class AjouterDepense {
+#include<functional>
+class AjouterDepense  {
 
 public:
 	//Constructeur
@@ -77,7 +78,7 @@ map<Utilisateur*, double> conteneur_;
 class FoncteurIntervalle{
 public:
 	FoncteurIntervalle(double inf,double sup):borneInf_(inf),borneSup_(sup) {};
-	bool operator()(pair<Utilisateur*, double>&(utilisateur)) { //parametre passe par référence car l'utilisateur existe
+	bool operator()(pair< Utilisateur*, double>(utilisateur)) { //parametre passe par référence car l'utilisateur existe--quand je le passe par référence le compilateur le voit comme une erreur
 	
                 //si le compte associé a paire est compris entre l'intervalle donné  on retourne le booleen true
 			if (utilisateur.second >=borneInf_ && utilisateur.second<=  borneSup_)

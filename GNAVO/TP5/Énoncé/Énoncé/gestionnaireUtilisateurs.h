@@ -4,15 +4,16 @@
 * Auteur: Ryan Hardie
 *******************************************/
 
-#pragma once
+
 
 #include "utilisateur.h"
 #include "GestionnaireGenerique.h"
 #include <vector>
 #include <map>
+
 //T est un  utilisateur* C est une map <utilisateur*,double>,D est le type de retour est une pair <Utilisateur,double.
 //en fait le veritable type de retour est un double..	quand on desindexe le conteneur on obtient un double
-class GestionnaireUtilisateurs:public GestionnaireGenerique <Utilisateur*,map<Utilisateur*,double>, pair<Utilisateur*, double>> {
+class GestionnaireUtilisateurs:public GestionnaireGenerique <Utilisateur*,map<Utilisateur*,double>, pair<Utilisateur*, double>, AjouterUtilisateur> {
 public:
 	
 	vector<double>getComptes() const;
