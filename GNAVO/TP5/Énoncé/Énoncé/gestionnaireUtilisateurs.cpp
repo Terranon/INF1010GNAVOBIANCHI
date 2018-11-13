@@ -15,6 +15,18 @@
 using namespace std;//&&&&
 using namespace std::placeholders;
 
+
+//GestionnaireUtilisateurs::GestionnaireUtilisateurs() {
+//
+//
+//	//ajouter les utilisateurs de l present dans le groupe????
+//
+//
+//
+//
+//
+//
+//};
 vector<double> GestionnaireUtilisateurs::getComptes() const {/*return ...*/
 	
 	
@@ -24,8 +36,7 @@ vector<double> GestionnaireUtilisateurs::getComptes() const {/*return ...*/
 		//pas nécessaire on connait le nombre d'élément du conteneur if (estExistant(getConteneur().begin()+i))//si l'utilisateur existe pusher son compte
        
         compte[i]= getElementParIndex(i).second;//pour obtenir le deuxieme champs des pairs retournés par l'index
-	 }
-		
+	 }		
 	return compte;*/
 	//2eme version
 	vector<double>compte;

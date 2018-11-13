@@ -3,6 +3,7 @@
 * Date: 4 novembre 2018
 * Auteur: Ryan Hardie
 *******************************************/
+#pragma once
 #include "foncteur.h"/// ne pas inclure le fichier foncteur
 template<typename T,typename C,typename D ,typename FoncteurAjouter >
 class GestionnaireGenerique
@@ -11,18 +12,17 @@ public:
 
 	//consturcteur
 
-	C getConteneur() const {
+	C  getConteneur() const {
 
 
 		return conteneur_;
 
 	};
-	void ajouter(T t, FoncteurAjouter foncteur) {
+	void ajouter(T t) {
 	
-		FoncteurAjouter foncteur(C);//appel du constructeur avec en parametre le constructeur
-		//conteneur_=foncteur<C>(t);//   utilisation de l'operateur () peut etre cela est inutile 
-		conteneur_ = foncteur;
-		//conteneur_ = FoncteurAjouter<C>(t);
+		FoncteurAjouter foncteur (conteneur_);//appel du constructeur avec en parametre le constructeur
+		
+		conteneur_=foncteur(t);//changer le conteneur directement
 	};
 		
 		

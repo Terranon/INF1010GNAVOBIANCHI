@@ -57,7 +57,10 @@ vector<Utilisateur*> Groupe::getUtilisateurs() const
 	//comment faire la même chose par un copy
 	//auto fin = gestionnaireUtilisateurs_->getConteneur().end();
 	unsigned int index = 0;
-	for (auto it = gestionnaireUtilisateurs_->getConteneur().begin(); it != gestionnaireUtilisateurs_->getConteneur().end(); it++) {
+	auto fin = gestionnaireUtilisateurs_->getConteneur().end();
+	auto it = gestionnaireUtilisateurs_->getConteneur().begin();
+	for (it; it !=fin ; it++) {
+		if (it!=fin ) //&& it->first != nullptr
 		tabUtilisateur.push_back(gestionnaireUtilisateurs_->getElementParIndex(index).first);
 		index++;
 	}
@@ -165,6 +168,8 @@ Groupe& Groupe::operator+=(Utilisateur* utilisateur)
 {
 	// Ajouté :
 	//gestionnaireUtilisateurs_->ajouter(utilisateur);
+
+	gestionnaireUtilisateurs_->ajouter(utilisateur);//;;,AjouterUtilisateur (utilisateur));
 
 	comptes_.push_back(0);
 	return *this;
