@@ -14,7 +14,7 @@ using namespace std::placeholders;
 // Constructeurs
 Groupe::Groupe() {
 	nom_ = "";
-	gestionnaireDepenses_ = new GestionnaireDepenses();  ////////////////////////////////////me faut il des constructeurs????
+	gestionnaireDepenses_ = new GestionnaireDepenses();          //////////////////////////////////////// me faut il des constructeurs????
 	gestionnaireUtilisateurs_ = new GestionnaireUtilisateurs();
 }
 
@@ -41,7 +41,7 @@ string Groupe::getNom() const {
 	return nom_;
 }
 
-// TODO : À modifier :---fait
+// TODO : À modifier : ---fait
 
 vector<Depense*> Groupe::getDepenses() const  //essaie j'enleve le onst
 {
@@ -52,19 +52,29 @@ vector<Depense*> Groupe::getDepenses() const  //essaie j'enleve le onst
 // TODO : À modifier :fait-----revoir ce qui est copié dans le conteneur
 vector<Utilisateur*> Groupe::getUtilisateurs() const
 {
-	vector<Utilisateur*>tabUtilisateur;
-
+vector<Utilisateur*>tabUtilisateur;
+	
+	//vector<pair<Utilisateur*, double>>tabUtilisateur;
 	//comment faire la même chose par un copy
 	//auto fin = gestionnaireUtilisateurs_->getConteneur().end();
-	unsigned int index = 0;
-	auto fin = gestionnaireUtilisateurs_->getConteneur().end();
-	auto it = gestionnaireUtilisateurs_->getConteneur().begin();
-	for (it; it !=fin ; it++) {
-		if (it!=fin ) //&& it->first != nullptr
-		tabUtilisateur.push_back(gestionnaireUtilisateurs_->getElementParIndex(index).first);
-		index++;
-	}
-	
+	/*unsigned int index = 0;
+	auto fin = (gestionnaireUtilisateurs_->getConteneur()).end();
+	auto it = (gestionnaireUtilisateurs_->getConteneur()).begin();
+	for (it; it != fin ; ++it) {
+		if (it != fin ) //&& it->first != nullptr
+			tabUtilisateur.push_back(gestionnaireUtilisateurs_->getElementParIndex(index).first);
+			index++;
+	}*/
+			for (pair<Utilisateur*,double>element : gestionnaireUtilisateurs_->getConteneur()) {//parcourt le conteneur
+					tabUtilisateur.push_back(element.first);
+				
+}
+
+	/*if (gestionnaireUtilisateurs_->getConteneur().empty())
+		cout << "oi";
+	copy((gestionnaireUtilisateurs_->getConteneur()).begin(), (gestionnaireUtilisateurs_->getConteneur()).end(), back_inserter(tabUtilisateur));
+	vector<Utilisateur*>tabUtilisateur1;
+	return tabUtilisateur1;*/
 	return tabUtilisateur;
 }
 
@@ -80,11 +90,13 @@ vector<double> Groupe::getComptes() const {
 	/*auto argument1 = gestionnaireUtilisateurs_->getConteneur().begin()->second;
 	auto argument2 = gestionnaireUtilisateurs_->getConteneur().end()->second;
 //	copy(argument1,argument2 , back_inserter(compte));*/
-	
+	int i = 0;
 	//auto fin = gestionnaireUtilisateurs_->getConteneur().end();//->second;
 	//	copy(argument1,argument2 , back_inserter(compte));
-	for (auto it =gestionnaireUtilisateurs_->getConteneur().begin();it != gestionnaireUtilisateurs_->getConteneur().end();it++) {
+	auto conteneur = gestionnaireUtilisateurs_->getConteneur();
+	for (auto it = conteneur.begin(); it != conteneur.end();it++) {
 		compte.push_back(it->second);
+		i++;
 
 	}
 
@@ -122,8 +134,11 @@ Groupe& Groupe::ajouterDepense(double montant, Utilisateur* payePar, const strin
 	}*/
 	//verifier si l'utilisateur existe 
 	if (!gestionnaireUtilisateurs_->estExistant(payePar))//si l'utilisateur n'existe pas retourner l'objet courant sans aucune modification
-	{
+	{ 
+		cout << "L'utilisateur auquel vous essayer d'ajouter une depense n'existe pas dans le groupe" << endl;
+
 		return *this;
+
 	}
 	Depense* depense = new Depense(nom, montant, lieu);
 
@@ -131,8 +146,11 @@ Groupe& Groupe::ajouterDepense(double montant, Utilisateur* payePar, const strin
 	// depenses_.push_back(depense);
 
 	// Ajouté :
-	//gestionnaireDepenses_->ajouter(depense)//fonction créer pour cela
+	gestionnaireDepenses_->ajouter(depense);//fonction créer pour cela
+	
+	//mettre a jour les comptes du gestionnaire utilisateur
 
+	gestionnaireUtilisateurs_->mettreAJourComptes(payePar, montant);
 	*payePar += depense;
 
 	// Mise a jour des comptes
@@ -143,24 +161,29 @@ Groupe& Groupe::ajouterDepense(double montant, Utilisateur* payePar, const strin
 			comptes_[i] -= montantReparti;
 		}
 	}*/
-
-	pair<Utilisateur*, double>p = make_pair(payePar,montant);
+	/*auto conteneur = gestionnaireUtilisateurs_->getConteneur();
+	auto debut = conteneur.begin();
+	auto fin = conteneur.end();//quand utiliser directement il refuse il faut mettre le conteneur dans une variable avant d'Y avoir acces
+	//auto t =(gestionnaireUtilisateurs_->getConteneur()).begin();//meme comme ca t contien end
+	//pair<Utilisateur*, double>p = make_pair(payePar,montant);
 //	auto fin = gestionnaireUtilisateurs_->getConteneur().end();
-	auto payeur = find_if(gestionnaireUtilisateurs_->getConteneur().begin(), gestionnaireUtilisateurs_->getConteneur().end(), bind(equal_to <pair<Utilisateur*,double>>(), _1,p ));
+	//auto payeur = find_if(gestionnaireUtilisateurs_->getConteneur().begin(), gestionnaireUtilisateurs_->getConteneur().end(), bind(equal_to <pair<Utilisateur*,double>>(), _1,p ));
+	auto payeur = find_if(debut,fin, bind
+	(equal_to <Utilisateur*>(), bind(&map<Utilisateur*, double>::value_type::first,placeholders::_1), payePar));//pour dire que je veux la valeur du premier élément
 	double montantReparti = montant/ gestionnaireUtilisateurs_->getNombreElements();
 	//lui rajouter a son compte le montant qu'il a paye moins le montant du groupe
 	payeur->second += montant - montantReparti;
 
 	//parcourir la boucle et retirer a tous les elements suf le payeur le montant reparti
 	//auto fin = gestionnaireUtilisateurs_->getConteneur().end();
-	for (auto it = gestionnaireUtilisateurs_->getConteneur().begin(); it != gestionnaireUtilisateurs_->getConteneur().end(); it++)
+	for (auto it = conteneur.begin(); it != conteneur.end(); it++)
 	{
 		//if (it->first != payePar)//si le champ Utilisateur de it est different  de l'adresse de paye par 
 		if (it != payeur)//si l'iterateur it est different de l'iterateur payeur
 			it->second -= montantReparti;
 
-	}
-
+	}*/
+	
 	return *this;
 }
 
@@ -170,7 +193,10 @@ Groupe& Groupe::operator+=(Utilisateur* utilisateur)
 	//gestionnaireUtilisateurs_->ajouter(utilisateur);
 
 	gestionnaireUtilisateurs_->ajouter(utilisateur);//;;,AjouterUtilisateur (utilisateur));
-
+	/*if (dynamic_cast<UtilisateurRegulier*>(utilisateur)->getPossedeGroupe == false)//si l'utilisateur n'a pas de groupe l'ajouter puis mettre a true le fait qu'il possede un groupe
+		dynamic_cast<UtilisateurRegulier*>(utilisateur)->setPossedeGroupe(true);
+		
+		--a faire dans le foncteur ou dans groupe:operator+= ?*/
 	comptes_.push_back(0);
 	return *this;
 }

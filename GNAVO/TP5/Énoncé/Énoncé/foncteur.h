@@ -37,27 +37,33 @@ class AjouterUtilisateur
 public:
 	//Constructeur :passage par réference constante 
 	
-	AjouterUtilisateur( map<Utilisateur*, double>& conteneur):conteneur_(conteneur) {
+	AjouterUtilisateur( map<Utilisateur*, double>& conteneur ):conteneur_(conteneur) {
 			//ici on peut directement faire cet 
 	};//ici on peut utiliser this car les conteneurs ont le meme nom
 	
 	map<Utilisateur*, double>& operator()(Utilisateur* utilisateur) {
 		//verifier si l'utilisateur est ajoutable
 			//verifier si l'utilisateur existe deja dans la map également car chaque clé est unique /*
-		 auto fin = conteneur_.end();
-		 for (auto i = conteneur_.begin(); i != fin; i++)
+		 //auto fin = conteneur_.end();
+		 //for ( auto i = conteneur_.begin() ; i != fin ; i++ )
+		 for(const pair<Utilisateur*, double> element : conteneur_) //il retourne chaque pair d'element du conteneur
 		 {
-			 if (i->first == utilisateur)
+			 if ( element.first == utilisateur )
 			 {
 				 cout << "cet utilisateur existe deja.Vous ne pouvez pas le réajouter" << endl;
-				 return conteneur_;//sortira directement de la classe sans avoir inserer la cle utilisateur
+				 return conteneur_;  //sortira directement de la classe sans avoir inserer la cle utilisateur
 			 }
 		 }
+
 		//la valeur du double sera 0 car l'utilisateur vient d'etre ajouter;
+
+
+		  
 		 if (dynamic_cast<UtilisateurPremium*>(utilisateur)) {
 			 if ( dynamic_cast<UtilisateurPremium*>(utilisateur)->getJoursRestants() != 0)
 				 //conteneur_.insert(make_pair(utilisateur, 0));
 				 conteneur_.insert(pair<Utilisateur*, double>(utilisateur, 0));//fonction insert map!!
+			 //--un insert qui fait un make pair // implace(valeurs)
 			 else
 				 cout << "l'utilisateur" << utilisateur->getNom() << "doit renouveller son abonnement" << endl;
 		 
@@ -68,9 +74,11 @@ public:
 		 }
 		 else
 		 {
-			 if (dynamic_cast<UtilisateurRegulier*>(utilisateur) && dynamic_cast<UtilisateurRegulier*>(utilisateur)->getPossedeGroupe() == 1)
+			 if ( dynamic_cast<UtilisateurRegulier*>(utilisateur)->getPossedeGroupe() == 0) {//l'utilisateur n'a pas de groupe
 				 //conteneur_.insert(pair<Utilisateur*, double>(utilisateur, 0));//fonction insert map!!
 				 conteneur_.insert(make_pair(utilisateur, 0));
+				 dynamic_cast<UtilisateurRegulier*>(utilisateur)->setPossedeGroupe(true);//l'utilisateur possede alors un groupe puisqu'il est ajouter au conteneur 
+			 }
 			 else
 				 cout << "l'utilisateur" << utilisateur->getNom() << "est deja groupe" << endl;
 		 }

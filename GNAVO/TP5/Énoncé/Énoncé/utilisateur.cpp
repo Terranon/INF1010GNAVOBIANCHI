@@ -93,7 +93,7 @@ void Utilisateur::print(ostream & os) const
 
 Utilisateur& Utilisateur::operator+=(Depense* depense) {
 	depenses_.push_back(depense);
-	return *this;
+	return *this;//on peut utiliser le foncteur qu,LIL FAUT
 }
 
 // Methode d'affichage
