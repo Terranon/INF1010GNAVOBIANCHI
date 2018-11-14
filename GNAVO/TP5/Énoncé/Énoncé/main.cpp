@@ -183,7 +183,7 @@ int main() {
 	tests.push_back(groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 150
 		&& groupe1->getComptes()[1] == -30);
 	// --------------------------------------------------------------------------------------------------------------------------------------------
-	
+	assert(groupe1->getComptes()[1] == -30);
 	// TODO : Commenter ce test et décommenter le test précédent (pour pouvoir tester avec les méthodes de la classe GestionnaireGenerique) -------
 	/*tests.push_back(groupe1->getComptes()[0] == 150
 		&& groupe1->getComptes()[1] == -30);*/
@@ -201,58 +201,60 @@ int main() {
 	// Test 19: bonne valeurs pour les comptes
 
 	// TODO : Commenter ce test et décommenter le test suivant (pour pouvoir tester avec les méthodes de la classe GestionnaireGenerique) ---------
-	tests.push_back(groupe1->getComptes()[0] == 20
+	/*tests.push_back(groupe1->getComptes()[0] == 20
 		&& groupe1->getComptes()[1] == -100
 		&& groupe1->getComptes()[2] == 20
 		&& groupe1->getComptes()[3] == -280
 		&& groupe1->getComptes()[4] == 380
 		&& groupe1->getComptes()[5] == -40
-		&& groupe1->getTotalDepenses() == 2040);
+		&& groupe1->getTotalDepenses() == 2040);*/
 	// --------------------------------------------------------------------------------------------------------------------------------------------
-	assert(groupe1->getComptes()[1] == -30);
+
 	// TODO : Décommenter ce test et commenter le précédent (pour pouvoir tester avec les méthodes de la classe GestionnaireGenerique) ------------
-	/*tests.push_back(groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 20
+	tests.push_back(groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 20
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[up3] == -100
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[up4] == 20
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur1] == -280
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur2] == 380
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur3] == -40
-		&& groupe1->getTotalDepenses() == 2040);*/
+		&& groupe1->getTotalDepenses() == 2040);
 	// --------------------------------------------------------------------------------------------------------------------------------------------
-
+	assert(groupe1->getTotalDepenses() == 2040);
 	// Test 20 - 21 : verification de la méthode getUtilisateursEntre (obtenir les utilisateur contenant un compte compris entre -100 et 100 inclusivement)
 	// TODO : Décommenter lorsque votre TP sera terminé pour tester la méthode pour -----------------------------------------------------------------------
-	/*vector<pair<Utilisateur*, double>> vec = groupe1->getGestionnaireUtilisateurs()->getUtilisateursEntre(-100, 100);
+	vector<pair<Utilisateur*, double>> vec = groupe1->getGestionnaireUtilisateurs()->getUtilisateursEntre(-100, 100);
 
 	tests.push_back(vec.size() == 4);
 
 	tests.push_back(vec[0].second == -40 
 		&& vec[1].second == 20
 		&& vec[2].second == -100
-		&& vec[3].second == 20);*/
+		&& vec[3].second == 20);
+	
 	// ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// Test 22: verification des transferts
 	groupe1->equilibrerComptes();
 
 	// TODO : Commenter ce test et décommenter le test suivant (pour pouvoir tester avec les méthodes de la classe GestionnaireGenerique) ----------------
-	tests.push_back(groupe1->getTransferts().size() == 4
+	/*tests.push_back(groupe1->getTransferts().size() == 4
 		&& groupe1->getComptes()[0] == 0
 		&& groupe1->getComptes()[1] == 0
 		&& groupe1->getComptes()[2] == 0
 		&& groupe1->getComptes()[3] == 0
 		&& groupe1->getComptes()[4] == 0
-		&& groupe1->getComptes()[5] == 0);
+		&& groupe1->getComptes()[5] == 0);*/
 	// ----------------------------------------------------------------------------------------------------------------------------------------------------
 
 	// TODO : Décommenter ce test et commenter le précédent (pour pouvoir tester avec les méthodes de la classe GestionnaireGenerique) --------------------
-	/*tests.push_back(groupe1->getTransferts().size() == 4
+	tests.push_back(groupe1->getTransferts().size() == 4
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 0
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[up3] == 0
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[up4] == 0
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur1] == 0
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur2] == 0
-		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur4] == 0);*/
+		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur4] == 0);
+	assert(groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 0);
 	// ----------------------------------------------------------------------------------------------------------------------------------------------------
 	// Test 23: verification de la nature des transferts
 	tests.push_back(dynamic_cast<TransfertPaypal*>(groupe1->getTransferts()[0]) != nullptr
@@ -263,7 +265,7 @@ int main() {
 	// Test 24 - 29: verification des balances et montants a transferts pour les utilisateurs
 	tests.push_back(up1->getTotalATransferer() == -20
 		&& up1->getBalance() == 0);
-
+	assert( up1->getBalance() == 0);
 	tests.push_back(up3->getTotalATransferer() == 100
 		&& up3->getBalance() == -3);
 	tests.push_back(up4->getTotalATransferer() == -20
@@ -277,10 +279,10 @@ int main() {
 
 	// TEST 30 : verification getUtilisateurSuivant
 	// TODO : Décommenter ce test pour pouvoir tester la méthode GetUtilisateurSuivant ----------------
-	//tests.push_back(groupe1->getGestionnaireUtilisateurs()->getUtilisateurSuivant(up1, 0) == up3);
+	tests.push_back(groupe1->getGestionnaireUtilisateurs()->getUtilisateurSuivant(up1, 0) == up3);
 	// ------------------------------------------------------------------------------------------------
 	
-
+	assert(groupe1->getGestionnaireUtilisateurs()->getUtilisateurSuivant(up1, 0) == up3);
 	// Affichage des tests
 	cout << "TESTS" << endl;
 	for (unsigned int i = 0; i < tests.size(); i++)

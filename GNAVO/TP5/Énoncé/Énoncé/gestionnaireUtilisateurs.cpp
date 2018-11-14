@@ -40,12 +40,12 @@ vector<double> GestionnaireUtilisateurs::getComptes() const {/*return ...*/
 	return compte;*/
 	//2eme version
 	vector<double>compte;
-	auto fin = compte.end();
+	
 	unsigned int index  = 0;
-	for (auto it = compte.begin(); it !=fin ; it++) {
+	for (auto it = conteneur_.begin(); it !=conteneur_.end() ; it++) {
 		//pas nécessaire on connait le nombre d'élément du conteneur if (estExistant(getConteneur().begin()+i))//si l'utilisateur existe pusher son compte
 
-		*it = getElementParIndex(index).second;//pour obtenir le deuxieme champs des pairs retournés par l'index
+		compte.push_back( getElementParIndex(index).second);//pour obtenir le deuxieme champs des pairs retournés par l'index
 		index++;
 	}
 
@@ -167,7 +167,7 @@ pair<Utilisateur*, double>& GestionnaireUtilisateurs::getMin() const {
 
 	auto fin = conteneur_.end();
 	auto it = conteneur_.begin();
-	double min = it->second;//initialisation de la valeur max a la valeur du compte du premier utilisateur
+	double min = it->second;//initialisation de la valeur maxa la valeur du compte du premier utilisateur
 	Utilisateur* umin = it->first;
 	for (it; it != fin; it++)//parcourir le conteneur (map)
 	{
@@ -234,30 +234,42 @@ auto fin = conteneur_.end();
 
 
 
-*/
-	/*
-		//avec un copy if compliqué
-	//finD if retourne l'element pour lequel le predicat est true et renvoie le dernier element du conteneur pour le resultat a false
-	auto trouve=find_if(conteneur_.begin(), conteneur_.end(),
-	
-		bind(estExistant(utilisateur), _1 ));//le premier bind renvoie true si il trouve l'iterateur en question
-	*/
-  
-	  //avec un find if simple
-	
+*///avec un find if simple
+	/*	
 	pair<Utilisateur*,double> p = make_pair(utilisateur,montant);
-	auto trouve = find_if(conteneur_.begin(), conteneur_.end(), bind(equal_to<pair<Utilisateur*,double>>(),_1,p));
-	//	find_if(conteneur_.begin(), conteneur_.end(), bind(greater_equal< double >(), conteneur_.begin()->second, _1));
-	auto suivant = trouve++;//prend la position de l'iterateur trouve ++
-	//chercher l'iterateur correspondant et le dereferenceer pour le comparer avec le pointeur d'utilisateur
-	if (estExistant(suivant->first))
+
+	auto iterateurcourant = find_if(conteneur_.begin(), conteneur_.end(), bind(equal_to<pair<Utilisateur*,double>>(),_1,p));//il trouve directemeent l"utilisateur qui suit/
+	auto trouve = iterateurcourant++;//retourne toujours le meme utilisateur sans l'ajouter
+	Utilisateur* suivant = trouve->first;//suivant est l'utilisateur de la paire sur laquelle pointe l'itérateur trouvé
+	//chercher l'iterateur correspondant et le dereferencer pour le comparer avec le pointeur d'utilisateur
+	if (estExistant(suivant))
 	{
-		return suivant->first;	// retourner l'utilisateur suivant puisqu'il existe
+		return suivant;	// retourner l'utilisateur suivant puisqu'il existe
 	}
 	else  //afficher un message d'erreur et retourner l'utilisateur courant
 	{
-		cout << "Erreur!L'utilisateur " << suivant->first->getNom() << "est le dernier utilisateur de la liste.Il n'y aucun autre qui le suit ." << endl;
+		cout << "Erreur!L'utilisateur " << suivant->getNom() << "est le dernier utilisateur de la liste.Il n'y aucun autre qui le suit ." << endl;
 		return trouve->first;
+	}*/
+	  
+	
+	pair<Utilisateur*,double> p = make_pair(utilisateur,montant);
+
+	auto iterateurcourant = find_if(conteneur_.begin(), conteneur_.end(), bind(equal_to<pair<Utilisateur*,double>>(),_1,p));//il trouve directemeent l"utilisateur qui suit/
+	//auto trouve = iterateurcourant++;//retourne toujours le meme utilisateur sans l'ajouter
+	 iterateurcourant++;//faire pointer l'itérateur courant sur le prochain
+	//Utilisateur* suivant = trouve->first;//suivant est l'utilisateur de la paire sur laquelle pointe l'itérateur trouvé
+ Utilisateur* suivant = iterateurcourant->first;
+
+	//chercher l'iterateur correspondant et le dereferencer pour le comparer avec le pointeur d'utilisateur
+	if (estExistant(suivant))
+	{
+		return suivant;	// retourner l'utilisateur suivant puisqu'il existe
+	}
+	else  //afficher un message d'erreur et retourner l'utilisateur courant
+	{
+		cout << "Erreur!L'utilisateur " << suivant->getNom() << "est le dernier utilisateur de la liste.Il n'y aucun autre qui le suit ." << endl;
+		return iterateurcourant->first;
 	}
 	
 
@@ -286,10 +298,21 @@ GestionnaireUtilisateurs& GestionnaireUtilisateurs::setCompte(pair<Utilisateur*,
 		//parcourir le conteneur a la recherche de l'utilisateur
 
 		
-		auto utilisateur=find_if(conteneur_.begin(), conteneur_.end(), bind(equal_to <pair<Utilisateur*,double>>(), _1, p));//le premier bind renvoie true si il trouve l'iterateur en question
+		//auto utilisateur=find_if(conteneur_.begin(), conteneur_.end(), bind(equal_to <pair<Utilisateur*,double>>(), _1, p));//le premier bind renvoie true si il trouve l'iterateur en question*/
+		auto it = conteneur_.begin();
+		auto fin = conteneur_.end();
+		double montant = p.second;
+		for (it; it != fin; it++) {//parcourir le conteneur
+			if (it->first == p.first)
+				it->second = p.second;//#le contenu du champs double devient egale au compte en paramètre
 
+		}
+	//auto utilisateur=find_if(conteneur_.begin(), conteneur_.end(), bind(equal_to <double>(), _1, p));//le premier bind renvoie true si il trouve l'iterateur en question
+	//ry	utilisateur->second = p.second;//esce que utilisateur qui m'a été renvoyer un iterateur l'iterateur --oui il me semble car il déréference avec la ->
+	
+		//auto utilisateur = find_if(debut, fin, bind
+		//(equal_to <double>(), bind(&map<Utilisateur*, double>::value_type::first, placeholders::_1), montant));//pour dire que je veux la valeur du premier élément
 		//une fois la bonne pair trouvé il faut changer compte
-		utilisateur->second = p.second;//esce que utilisateur qui m'a été renvoyer un iterateur l'iterateur --oui il me semble car il déréference avec la ->
 	
 	}
 	

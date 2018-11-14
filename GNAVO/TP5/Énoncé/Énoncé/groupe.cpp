@@ -148,10 +148,14 @@ Groupe& Groupe::ajouterDepense(double montant, Utilisateur* payePar, const strin
 	// Ajouté :
 	gestionnaireDepenses_->ajouter(depense);//fonction créer pour cela
 	
+
+	//ajouter la pair qui effectue la depense
+//	pair <Utilisateur*, double>payeur = make_pair(payePar,montant);
+		//gestionnaireUtilisateurs_->ajouter( payeur );
 	//mettre a jour les comptes du gestionnaire utilisateur
 
 	gestionnaireUtilisateurs_->mettreAJourComptes(payePar, montant);
-	*payePar += depense;
+	//*payePar += depense;
 
 	// Mise a jour des comptes
 	/*double montantReparti = depense->getMontant() / gestionnaireUtilisateurs_->getNombreUtilisateur();
@@ -214,13 +218,13 @@ void Groupe::equilibrerComptes() {
 
 		// On cherche le compte le plus eleve et le moins eleve
 		for (int i = 0; i < gestionnaireUtilisateurs_->getNombreElements(); i++) {
-			if (comptes_[i] > max) {
-				max = comptes_[i];
+			if (gestionnaireUtilisateurs_->getComptes()[i] > max) {
+				max = gestionnaireUtilisateurs_->getComptes()[i];
 				indexMax = i;
 			}
-			if (comptes_[i] < min) {
-				min = comptes_[i];
-				indexMin = i;
+			if (gestionnaireUtilisateurs_->getComptes()[i] < min) {
+				min = gestionnaireUtilisateurs_->getComptes()[i];
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             				indexMin = i;
 			}
 		}
 
@@ -239,8 +243,19 @@ void Groupe::equilibrerComptes() {
 				transferts_.push_back(transfert);
 				transfert->effectuerTransfert();
 			}
-			comptes_[indexMax] += min;
-			comptes_[indexMin] = 0;
+			//changement dans les conteneurs des valeurs des comptes
+			 //#declaration de variables
+
+			auto indexmax= gestionnaireUtilisateurs_->getElementParIndex(indexMax);
+		    indexmax.second +=min;	
+			//comptes_[indexMax] += min;
+			gestionnaireUtilisateurs_->setCompte(make_pair(indexmax.first, indexmax.second));
+			//#déclaration de variables 
+
+			auto indexmin = gestionnaireUtilisateurs_->getElementParIndex(indexMin);
+			indexmin.second = 0;	
+			//comptes_[indexMin] = 0;
+			gestionnaireUtilisateurs_->setCompte(make_pair(indexmin.first, 0));
 		}
 		else if (-min > max  && min != 0 && max != 0) {
 			if (gestionnaireUtilisateurs_->getElementParIndex(indexMin).first->getMethodePaiement() == Interac) {
@@ -253,8 +268,21 @@ void Groupe::equilibrerComptes() {
 				transferts_.push_back(transfert);
 				transfert->effectuerTransfert();
 			}
-			comptes_[indexMax] = 0;
-			comptes_[indexMin] += max;
+			//changement dans les conteneurs des valeurs des comptes
+			  //declaration de variable pour préparer la paire
+			auto indexmax = gestionnaireUtilisateurs_->getElementParIndex(indexMax);
+			indexmax.second = 0;	
+			//comptes_[indexMax] =0;
+
+			gestionnaireUtilisateurs_->setCompte(make_pair(indexmax.first, 0));
+
+			//declaration de variables pour préparer la paire
+
+			auto indexmin = gestionnaireUtilisateurs_->getElementParIndex(indexMin);
+			indexmin.second += max;	
+			//comptes_[indexMin] +=max;
+			gestionnaireUtilisateurs_->setCompte(make_pair(indexmin.first, indexmin.second));
+
 		}
 
 		// On incremente le nombre de comptes mis a 0
@@ -279,8 +307,9 @@ ostream & operator<<(ostream& os, const Groupe& groupe)
 	}
 	os << endl;*/
 	os << "\nGroupe " << groupe.nom_ << ".\nCout total: " << groupe.getTotalDepenses() << "$ \nUtilisateurs:    \n\n";
-	for (auto it = groupe.gestionnaireUtilisateurs_->getConteneur().begin(); it != groupe.gestionnaireUtilisateurs_->getConteneur().end();it++) {
-		os << "\t- " << it->first;// *(groupe.gestionnaireUtilisateurs_->getElementParIndex(i).first);
+	auto conteneur = groupe.gestionnaireUtilisateurs_->getConteneur();
+	for (auto it = conteneur.begin(); it != conteneur.end();it++) {
+		os << "\t- " << *it->first;// *(groupe.gestionnaireUtilisateurs_->getElementParIndex(i).first);
 	}
 	os << endl;
 

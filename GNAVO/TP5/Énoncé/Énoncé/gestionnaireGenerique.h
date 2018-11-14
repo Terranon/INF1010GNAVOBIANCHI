@@ -29,7 +29,7 @@ public:
 		
 	
 
-	int getNombreElements() const {
+	int getNombreElements() const {//peut on juste retourner le conteneur.size()
 		unsigned compteur=0;
 		auto fin = conteneur_.end();
 		//C::iterator fin = conteneur_.end();renvoie une erreur --mieux vaut utiliser auto
