@@ -30,7 +30,7 @@ public:
 	
 
 	int getNombreElements() const {//peut on juste retourner le conteneur.size()
-		unsigned compteur=0;
+		/*unsigned compteur=0;
 		auto fin = conteneur_.end();
 		//C::iterator fin = conteneur_.end();renvoie une erreur --mieux vaut utiliser auto
 	///	for (C::iterator debut = conteneur_.begin() : C::iterator fin = conteneur_.end())//parcourt chaque element du conteneur --syntaxe
@@ -39,7 +39,8 @@ public:
 		{
 			compteur++;
 		} 
-		return compteur;
+		return compteur;*/
+		return conteneur_.size();
 	};
 	/*
 	Parametres d'entree:int 

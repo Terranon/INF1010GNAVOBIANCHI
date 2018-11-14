@@ -90,13 +90,13 @@ vector<double> Groupe::getComptes() const {
 	/*auto argument1 = gestionnaireUtilisateurs_->getConteneur().begin()->second;
 	auto argument2 = gestionnaireUtilisateurs_->getConteneur().end()->second;
 //	copy(argument1,argument2 , back_inserter(compte));*/
-	int i = 0;
+	
 	//auto fin = gestionnaireUtilisateurs_->getConteneur().end();//->second;
 	//	copy(argument1,argument2 , back_inserter(compte));
 	auto conteneur = gestionnaireUtilisateurs_->getConteneur();
 	for (auto it = conteneur.begin(); it != conteneur.end();it++) {
 		compte.push_back(it->second);
-		i++;
+		
 
 	}
 
@@ -155,7 +155,7 @@ Groupe& Groupe::ajouterDepense(double montant, Utilisateur* payePar, const strin
 	//mettre a jour les comptes du gestionnaire utilisateur
 
 	gestionnaireUtilisateurs_->mettreAJourComptes(payePar, montant);
-	//*payePar += depense;
+	*payePar += depense;
 
 	// Mise a jour des comptes
 	/*double montantReparti = depense->getMontant() / gestionnaireUtilisateurs_->getNombreUtilisateur();
