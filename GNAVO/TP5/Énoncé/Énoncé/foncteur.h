@@ -30,7 +30,7 @@ public:
 
 /**/
 
-class AjouterUtilisateur 
+class AjouterUtilisateur //
 
 {
 
@@ -46,7 +46,7 @@ public:
 			//verifier si l'utilisateur existe deja dans la map également car chaque clé est unique /*
 		 //auto fin = conteneur_.end();
 		 //for ( auto i = conteneur_.begin() ; i != fin ; i++ )
-		 for(const pair<Utilisateur*, double> element : conteneur_) //il retourne chaque pair d'element du conteneur
+	/*	 for(const pair<Utilisateur*, double> element : conteneur_) //il retourne chaque pair d'element du conteneur
 		 {
 			 if ( element.first == utilisateur )
 			 {
@@ -54,7 +54,7 @@ public:
 				 return conteneur_;  //sortira directement de la classe sans avoir inserer la cle utilisateur
 			 }
 		 }
-
+		 */
 		//la valeur du double sera 0 car l'utilisateur vient d'etre ajouter;
 
 
@@ -89,7 +89,7 @@ public:
 	};
 
 private:
-map<Utilisateur*, double> conteneur_;
+map<Utilisateur*, double>& conteneur_;
 };
 //mettre le template egalement
 
@@ -97,7 +97,7 @@ map<Utilisateur*, double> conteneur_;
 class FoncteurIntervalle{
 public:
 	FoncteurIntervalle(double inf,double sup):borneInf_(inf),borneSup_(sup) {};
-	bool operator()(pair< Utilisateur*, double>(utilisateur)) { //parametre passe par référence car l'utilisateur existe--quand je le passe par référence le compilateur le voit comme une erreur
+	bool operator()(const pair< Utilisateur*, double> &( utilisateur)) { //parametre passe par référence car l'utilisateur existe--quand je le passe par référence le compilateur le voit comme une erreur
 	
                 //si le compte associé a paire est compris entre l'intervalle donné  on retourne le booleen true
 			if (utilisateur.second >=borneInf_ && utilisateur.second<=  borneSup_)

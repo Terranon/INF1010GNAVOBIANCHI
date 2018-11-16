@@ -62,8 +62,8 @@ private:
 	string nom_;
 	vector<Transfert*> transferts_;
 
-	// TODO : À modifier :
-	vector<double> comptes_;
+	// TODO : À modifier :--la modification est la suppression  
+	//vector<double> comptes_;
 
 	// Retiré :
 	// vector<Utilisateur*> utilisateurs_;
@@ -72,6 +72,15 @@ private:
 	// Ajouté :
 	GestionnaireUtilisateurs* gestionnaireUtilisateurs_;
 	GestionnaireDepenses* gestionnaireDepenses_;
+	//surcharge de l'opérateur =
+	
+	
 };
+/*pair<Utilisateur*, double>& operator=(pair<Utilisateur*, double>& paire) {
+
+
+	return paire;
+};*/
+
 
 #endif
