@@ -7,11 +7,16 @@
 #include "transfert.h"
 
 // Constructeurs
-Transfert::Transfert() : montant_(0), expediteur_(nullptr), receveur_(nullptr) {
+Transfert::Transfert() : 
+	montant_(0), 
+	expediteur_(nullptr), 
+	receveur_(nullptr) {
 }
 
 Transfert::Transfert(double montant, Utilisateur* expediteur, Utilisateur* receveur) : 
-	montant_(montant), expediteur_(expediteur), receveur_(receveur) {
+	montant_(montant), 
+	expediteur_(expediteur), 
+	receveur_(receveur) {
 }
 
 // Methodes d'acces
@@ -48,10 +53,9 @@ void Transfert::effectuerTransfert() {
 		expediteur_->modifierBalanceFrais(-montant_ * TAUX_EPARGNE);
 	}
 	receveur_->modifierBalanceTranferts(-montant_);
-
 }
 
-//Methode affichage
+// Methode affichage
 ostream& operator<<(ostream& os, const Transfert& transfert) {
 	return os << "- " << left << setw(8) <<setfill(' ') << transfert.getExpediteur()->getNom() << " -> "  
 		<< left << setw(8) << transfert.getReceveur()->getNom() << " : " << transfert.getMontant() << "$" << endl;

@@ -15,7 +15,8 @@ class UtilisateurPremium : public Utilisateur {
 public :
 
 	// Constructeurs 
-	UtilisateurPremium(const string& nom = "", MethodePaiement methodePaiement = Interac, unsigned int joursRestants = 0, const string& courriel = "", const string& idPaypal = "");
+	UtilisateurPremium(const string& nom = "", MethodePaiement methodePaiement = Interac, 
+		unsigned int joursRestants = 0, const string& courriel = "", const string& idPaypal = "");
 
 	// Methodes d'acces
 	unsigned int getJoursRestants() const; 
@@ -29,5 +30,4 @@ public :
 private : 
 	unsigned int joursRestants_;
 };
-
 #endif 

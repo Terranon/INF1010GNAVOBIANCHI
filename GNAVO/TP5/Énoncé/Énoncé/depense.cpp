@@ -8,14 +8,19 @@
 
 // Constucteurs
 
-Depense::Depense(const string& nom, double montant, const string& lieu) : nom_(nom), montant_(montant), lieu_(new string(lieu)) {
+Depense::Depense(const string& nom, double montant, const string& lieu) : 
+	nom_(nom), 
+	montant_(montant), 
+	lieu_(new string(lieu)) {
 }
 
-Depense::Depense(const Depense& depense) : nom_(depense.nom_), montant_(depense.montant_), lieu_(new string(*(depense.lieu_))) {
+Depense::Depense(const Depense& depense) : 
+	nom_(depense.nom_), 
+	montant_(depense.montant_), 
+	lieu_(new string(*(depense.lieu_))) {
 }
 
-Depense::~Depense()
-{
+Depense::~Depense() {
 	if (lieu_ != nullptr)
 		delete lieu_;
 }
@@ -29,8 +34,7 @@ double Depense::getMontant() const {
 	return montant_;
 }
 
-string* Depense::getLieu() const
-{
+string* Depense::getLieu() const {
 	return lieu_;
 }
 
@@ -43,13 +47,11 @@ void Depense::setMontant(double montant) {
 	montant_ = montant;
 }
 
-void Depense::setLieu(const string& nom)
-{
+void Depense::setLieu(const string& nom) {
 	*lieu_ = nom;
 }
 
-Depense& Depense::operator=(const Depense & depense)
-{
+Depense& Depense::operator=(const Depense & depense) {
 	if (this != &depense) {
 		nom_ = depense.nom_;
 		montant_ = depense.montant_;
@@ -59,7 +61,7 @@ Depense& Depense::operator=(const Depense & depense)
 }
 
 // Methode d'affichage
-ostream & operator<<(ostream& os, const Depense& depense)
-{
-	return os << "- Depense (a " << *depense.lieu_ << ") : "  << depense.nom_ << ". Prix : " << depense.montant_ << "$" << endl;
+ostream & operator<<(ostream& os, const Depense& depense) {
+	return os << "- Depense (a " << *depense.lieu_ << ") : "  << depense.nom_ 
+		<< ". Prix : " << depense.montant_ << "$" << endl;
 }

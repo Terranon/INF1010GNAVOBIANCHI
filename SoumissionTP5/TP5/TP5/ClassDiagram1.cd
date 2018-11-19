@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UtilisateurRegulier" Collapsed="true">
+    <Position X="9.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAAAAAAAAAACAAAABAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\utilisateurRegulier.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Depense" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIEAAAAAKABAAAAAAAAAAAAAAAiAAAAAgAzAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\depense.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AjouterDepense" Collapsed="true">
+    <Position X="5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAACAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\foncteur.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AjouterUtilisateur" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAEAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\foncteur.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FoncteurIntervalle" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEACAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\foncteur.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionnaireDepenses" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\gestionnaireDepenses.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionnaireUtilisateurs" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAQAAAAAAAAAAAAAIAAAAAAAIAAAAAAQAAAECA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\gestionnaireUtilisateurs.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Groupe" Collapsed="true">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAIEAEACAAwAAIAAAAAQQEAAQAAoAAAABAAAACABA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\groupe.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Transfert" Collapsed="true">
+    <Position X="5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oAAAAAAAAAACIRAAAAAAAQAAAAgIACAAAAAEAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\transfert.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TransfertInterac" Collapsed="true">
+    <Position X="2" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAgAgAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\transfertInterac.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TransfertPaypal" Collapsed="true">
+    <Position X="4.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAEAAQAAACAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\transfertPaypal.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Utilisateur" Collapsed="true">
+    <Position X="7" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwBJEBAEEAAAAQAAAIAAQQAACABAgAAAAAiAACBQAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\utilisateur.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UtilisateurPremium" Collapsed="true">
+    <Position X="6.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQGAAAAAAAAAAAAgAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\utilisateurPremium.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestionnaireGenerique&lt;T, C, D, FoncteurAjouter&gt;" Collapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAgGAAAAAAAAAIAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\gestionnaireGenerique.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="MethodePaiement" Collapsed="true">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>C:\Users\Maximilien Bianchi\Documents\INF1010\INF1010GNAVOBIANCHI\INF1010GNAVOBIANCHI\GNAVO\TP5\Énoncé\Énoncé\utilisateur.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

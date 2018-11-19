@@ -33,15 +33,11 @@ public:
 	// Methodes d'acces
 	string getNom() const;
 	vector<Transfert*> getTransferts() const;
-
-	// TODO : À modifier :
 	vector<double> getComptes() const;
 	double getTotalDepenses() const;
-
 	vector<Depense*> getDepenses() const;
 	vector<Utilisateur*> getUtilisateurs() const;
 
-	// Ajouté :
 	GestionnaireUtilisateurs* getGestionnaireUtilisateurs();
 	GestionnaireDepenses* getGestionnaireDepenses();
 
@@ -59,28 +55,11 @@ public:
 	friend ostream& operator<<(ostream& os, const Groupe& groupe);
 
 private:
+
 	string nom_;
 	vector<Transfert*> transferts_;
 
-	// TODO : À modifier :--la modification est la suppression  
-	//vector<double> comptes_;
-
-	// Retiré :
-	// vector<Utilisateur*> utilisateurs_;
-	// vector<Depense*> depenses_;
-
-	// Ajouté :
 	GestionnaireUtilisateurs* gestionnaireUtilisateurs_;
 	GestionnaireDepenses* gestionnaireDepenses_;
-	//surcharge de l'opérateur =
-	
-	
 };
-/*pair<Utilisateur*, double>& operator=(pair<Utilisateur*, double>& paire) {
-
-
-	return paire;
-};*/
-
-
 #endif

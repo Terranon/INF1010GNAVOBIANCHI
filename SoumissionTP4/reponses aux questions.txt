@@ -2,14 +2,14 @@
 La sortie sera "1".
 
 2-
-La raison pour laquelle la sortie est "1" malgré le fait que se soit un objet de classe B qui appelle la fonction "f()", est que par défault, on appelle la version dans la classe A. Ceci est causé par le fait que la fonction "A::f()" n'est pas "virtual".
+La raison pour laquelle la sortie est "1" malgré le fait que se soit un objet de classe B, est que par défault, on appelle la A::f(). Ceci est causé par le fait que la fonction "A::f()" n'est pas "virtual".
 
-Le vecteur est de type A* alors tous les objets dans le vecteur sont reconnu comme étant des objets de la classe A*.
+Le vecteur est de type A* alors tous les objets dans le vecteur sont reconnu comme étant des objets de la classe A*, meme si se sont des instance de classes dérivées.
 
 3- 
 On peut enlever la désignation "virtual" à la fonction "B::f()"
 ou alors 
-redéfinir C::f() comme C::F() const { B::f(); }.
+redéfinir C::f() comme < C::F() const { B::f(); }.
 
 4-
 On ne peut pas instancier un objet de type Transfert car Transfert est une interface pour les classes dérivées TransfertPaypal et TransfertInteract

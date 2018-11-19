@@ -12,8 +12,8 @@ class UtilisateurRegulier : public Utilisateur {
 public : 
 
 	// Constructeurs 
-	UtilisateurRegulier(const string& nom = "", MethodePaiement methodePaiement = Interac, const string& courriel = "", 
-		const string& idPaypal = "");
+	UtilisateurRegulier(const string& nom = "", MethodePaiement methodePaiement = Interac, 
+		const string& courriel = "", const string& idPaypal = "");
 
 	// Methode d'acces 
 	bool getPossedeGroupe() const; 
@@ -21,11 +21,10 @@ public :
 	// Methodes de modifications
 	void setPossedeGroupe(bool etat); 
 		
-	//Affichage
+	// Affichage
 	virtual void print(ostream& os) const;
 
 private :
 	bool possedeGroupe_; 
 };
-
 #endif

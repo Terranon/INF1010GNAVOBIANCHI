@@ -7,22 +7,19 @@
 #include "transfertPaypal.h"
 
 TransfertPaypal::TransfertPaypal(double montant, Utilisateur * expediteur, Utilisateur * receveur)
-	: Transfert(montant, expediteur, receveur), id_(expediteur->getIdPaypal())
-{
+	: Transfert(montant, expediteur, receveur), 
+	id_(expediteur->getIdPaypal()) {
 }
 
-string TransfertPaypal::getId() const
-{
+string TransfertPaypal::getId() const {
 	return id_;
 }
 
-void TransfertPaypal::setId(string id)
-{
+void TransfertPaypal::setId(string id) {
 	id_ = id;
 }
 
-double TransfertPaypal::getFraisTransfert() const
-{
+double TransfertPaypal::getFraisTransfert() const {
 	if (dynamic_cast<UtilisateurPremium*>(expediteur_) == nullptr) {
 		return montant_ * (COMMISSION) + FRAIS;
 	}

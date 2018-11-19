@@ -31,7 +31,7 @@ public:
 	void setMontant(double montant);
 	void setLieu(const string& lieu);
 	
-	//operateurs
+	// Operateurs
 	Depense& operator=(const Depense& depense);
 
 	// Affichage
@@ -40,6 +40,5 @@ private:
 	string nom_;
 	double montant_;
 	string* lieu_;
-
 };
 #endif

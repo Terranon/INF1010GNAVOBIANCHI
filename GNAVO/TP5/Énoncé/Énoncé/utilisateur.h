@@ -11,7 +11,6 @@
 #include <iostream>
 #include <vector>
 #include <iomanip>
-
 #include "depense.h"
 
 using namespace std;
@@ -22,7 +21,8 @@ class Utilisateur {
 public:
 	// Constructeurs
 	Utilisateur();
-	Utilisateur(const string& nom = "", MethodePaiement methodePaiement = Interac, const string& courriel = "", const string& idPaypal= "");
+	Utilisateur(const string& nom = "", MethodePaiement methodePaiement = Interac, 
+		const string& courriel = "", const string& idPaypal= "");
 
 	// Methodes d'accès
 	string getNom() const;

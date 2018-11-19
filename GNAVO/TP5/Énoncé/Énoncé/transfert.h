@@ -9,9 +9,7 @@
 
 #include "utilisateur.h"
 #include "utilisateurPremium.h"
-
 #include <iostream>
-
 #include <stdio.h>
 
 class Transfert {
@@ -39,5 +37,4 @@ protected:
 	Utilisateur* expediteur_;
 	Utilisateur* receveur_;
 };
-
 #endif
