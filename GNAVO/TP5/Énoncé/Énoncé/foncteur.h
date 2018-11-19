@@ -37,7 +37,7 @@ public:
 				 conteneur_.insert(pair<Utilisateur*, double>(utilisateur, 0));
 			 }
 			 else {
-				 cout << "l'utilisateur" << utilisateur->getNom() << "doit renouveller son abonnement" << endl;
+				 cout << "l'utilisateur " << utilisateur->getNom() << " doit renouveller son abonnement" << endl;
 			 }
 		 }
 		 else {
@@ -46,7 +46,7 @@ public:
 				 dynamic_cast<UtilisateurRegulier*>(utilisateur)->setPossedeGroupe(true);
 			 }
 			 else {
-				 cout << "l'utilisateur" << utilisateur->getNom() << "est deja groupe" << endl;
+				 cout << "l'utilisateur " << utilisateur->getNom() << " est deja groupe" << endl;
 			 }
 		 }
 		

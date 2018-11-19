@@ -57,6 +57,6 @@ void Transfert::effectuerTransfert() {
 
 // Methode affichage
 ostream& operator<<(ostream& os, const Transfert& transfert) {
-	return os << "- " << left << setw(8) <<setfill(' ') << transfert.getExpediteur()->getNom() << " -> "  
+	return os << "- " << left << setw(8) << setfill(' ') << transfert.getExpediteur()->getNom() << " -> "  
 		<< left << setw(8) << transfert.getReceveur()->getNom() << " : " << transfert.getMontant() << "$" << endl;
 }

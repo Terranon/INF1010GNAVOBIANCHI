@@ -117,8 +117,8 @@ Utilisateur * GestionnaireUtilisateurs::getUtilisateurSuivant(Utilisateur* utili
 		return suivant;	// retourner l'utilisateur suivant puisqu'il existe
 	}
 	else { //afficher un message d'erreur et retourner l'utilisateur courant
-		cout << "Erreur!L'utilisateur " << suivant->getNom() 
-			<< "est le dernier utilisateur de la liste.Il n'y aucun autre qui le suit ." << endl;
+		cout << "Erreur! L'utilisateur " << suivant->getNom() 
+			<< " est le dernier utilisateur de la liste. Il n'y aucun autre qui le suit." << endl;
 		return utilisateur;
 	}
 };
