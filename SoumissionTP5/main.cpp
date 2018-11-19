@@ -10,7 +10,7 @@
 #include "transfert.h"
 #include "groupe.h"
 #include "foncteur.h"
-#include <assert.h>
+
 
 using namespace std;
 
@@ -183,7 +183,7 @@ int main() {
 	tests.push_back(groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 150
 		&& groupe1->getComptes()[1] == -30);
 	// --------------------------------------------------------------------------------------------------------------------------------------------
-	assert(groupe1->getComptes()[1] == -30);
+
 	// TODO : Commenter ce test et décommenter le test précédent (pour pouvoir tester avec les méthodes de la classe GestionnaireGenerique) -------
 	/*tests.push_back(groupe1->getComptes()[0] == 150
 		&& groupe1->getComptes()[1] == -30);*/
@@ -219,7 +219,7 @@ int main() {
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur3] == -40
 		&& groupe1->getTotalDepenses() == 2040);
 	// --------------------------------------------------------------------------------------------------------------------------------------------
-	assert(groupe1->getTotalDepenses() == 2040);
+	
 	// Test 20 - 21 : verification de la méthode getUtilisateursEntre (obtenir les utilisateur contenant un compte compris entre -100 et 100 inclusivement)
 	// TODO : Décommenter lorsque votre TP sera terminé pour tester la méthode pour -----------------------------------------------------------------------
 	vector<pair<Utilisateur*, double>> vec = groupe1->getGestionnaireUtilisateurs()->getUtilisateursEntre(-100, 100);
@@ -254,7 +254,7 @@ int main() {
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur1] == 0
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur2] == 0
 		&& groupe1->getGestionnaireUtilisateurs()->getConteneur()[ur4] == 0);
-	assert(groupe1->getGestionnaireUtilisateurs()->getConteneur()[up1] == 0);
+	
 	// ----------------------------------------------------------------------------------------------------------------------------------------------------
 	// Test 23: verification de la nature des transferts
 	tests.push_back(dynamic_cast<TransfertPaypal*>(groupe1->getTransferts()[0]) != nullptr
@@ -265,7 +265,7 @@ int main() {
 	// Test 24 - 29: verification des balances et montants a transferts pour les utilisateurs
 	tests.push_back(up1->getTotalATransferer() == -20
 		&& up1->getBalance() == 0);
-	assert( up1->getBalance() == 0);
+
 	tests.push_back(up3->getTotalATransferer() == 100
 		&& up3->getBalance() == -3);
 	tests.push_back(up4->getTotalATransferer() == -20
@@ -281,8 +281,7 @@ int main() {
 	// TODO : Décommenter ce test pour pouvoir tester la méthode GetUtilisateurSuivant ----------------
 	tests.push_back(groupe1->getGestionnaireUtilisateurs()->getUtilisateurSuivant(up1, 0) == up3);
 	// ------------------------------------------------------------------------------------------------
-	
-	assert(groupe1->getGestionnaireUtilisateurs()->getUtilisateurSuivant(up1, 0) == up3);
+
 	// Affichage des tests
 	cout << "TESTS" << endl;
 	for (unsigned int i = 0; i < tests.size(); i++)

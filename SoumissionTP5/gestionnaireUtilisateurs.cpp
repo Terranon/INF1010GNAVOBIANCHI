@@ -119,7 +119,7 @@ Utilisateur * GestionnaireUtilisateurs::getUtilisateurSuivant(Utilisateur* utili
 	else { //afficher un message d'erreur et retourner l'utilisateur courant
 		cout << "Erreur!L'utilisateur " << suivant->getNom() 
 			<< "est le dernier utilisateur de la liste.Il n'y aucun autre qui le suit ." << endl;
-		return iterateurcourant->first;
+		return utilisateur;
 	}
 };
 

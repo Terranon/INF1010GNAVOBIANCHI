@@ -89,7 +89,7 @@ void Groupe::setNom(const string& nom) {
 Groupe& Groupe::ajouterDepense(double montant, Utilisateur* payePar, const string& nom, const string& lieu) {
 
 	if (!gestionnaireUtilisateurs_->estExistant(payePar)) { 
-		cout << "L'utilisateur auquel vous essayer d'ajouter une depense n'existe pas dans le groupe" << endl;
+		//cout << "L'utilisateur auquel vous essayer d'ajouter une depense n'existe pas dans le groupe" << endl;
 		return *this;
 	}
 
