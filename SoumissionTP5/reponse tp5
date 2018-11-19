@@ -1,0 +1,5 @@
+q1
+-Un autre gestionnaire possible serait pour les transferts. 
+Sont conteneur serait une liste car chaque transfert est effectué séquentiellement. Se gestionnaire pourrait être utile pour afficher les transferts de façon séquentielle pour bien comprendre l'ordre d'opérations.
+q2
+-L'implémentation doit être complet dans le fichier .h car le compilateur doit savoir si toutes les méthodes implémentées sont valides pour le type specifié. Si les implémentations serait fait dans un fichier .cpp, le compilateur ne pourrait pas les véfifier.
